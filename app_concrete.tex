@@ -2,17 +2,17 @@
 We discuss several possibilities for instantiating the primitives used in our constructions. Throughout the first part of this work (Section~\ref{sec:dargs} and Section~\ref{sec:distprover}), we use several cryptographic primitives, some of them quite strong. Here we refine them and show from which concrete assumptions each of them can be constructed. \TODO{CRH is not so concrete}
 
 \begin{theorem}\label{thm:concDargs}
-    Let $\Lan$ be a graph language, such that $\Lan\in \NP$. Assuming Collision Resistant Hash Families,
+    Let $\Lan$ be a graph language, such that $\Lan\in \NP$. Assuming collision-resistant hash families,
     \begin{enumerate}
         \item There is a succinct \emph{interactive} distributed argument with 4 rounds of communication for $\Lan$. 
-        \item In the Random Oracle model, there is a succinct non-interactive distributed argument for $\Lan$.
-        \item In the Common Reference String model, assuming \emph{Knowledge-of-Exponent in Bilinear Groups}, there is a succinct non-interactive distributed argument for $\Lan$. 
+        \item In the random oracle model, there is a succinct non-interactive distributed argument for $\Lan$.
+        \item In the common reference string model, assuming \emph{Knowledge-of-Exponent in Bilinear Groups}, there is a succinct non-interactive distributed argument for $\Lan$. 
     \end{enumerate}
 \end{theorem}
 From Theorem~\ref{thm:centralized} and ~\cite{merkle1989certified}, we get that part (1) follows from \cite{kilian1992note}, part (2) follows from \cite{micali2000computationally} and part (3) follows from~\cite{bitansky2013SNARKsLIPs}.
 
 \begin{theorem}\label{thm:RAMSNARGs}
-    Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Collision Resistant Hash Families, there is a succinct distributed argument for $\Lan$, assuming either
+    Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming collision-resistant hash families, there is a succinct distributed argument for $\Lan$, assuming either
     \begin{enumerate}
         \item The $O(1)-\LIN$ assumption on a pair of cryptographic groups with efficient bilinear map, or
         \item A combination of the sub-exponential $\DDH$ assumption and the $\QR$ assumption.
@@ -21,11 +21,11 @@ From Theorem~\ref{thm:centralized} and ~\cite{merkle1989certified}, we get that 
 As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies Theorem \ref{thm:RAMSNARGs}.
 
 \begin{theorem}
-    Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds and sends messages of length $\poly(n)$. Assuming Sum-Collision-Resistant Hash Families,
+    Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds and sends messages of length $\poly(n)$. Assuming sum-collision-resistant hash families,
     \begin{enumerate}
         \item There is a succinct \emph{interactive} distributed argument with 4 rounds of communication for $\Lan$. 
-        \item In the Random Oracle model, there is a succinct non-interactive distributed argument for $\Lan$.
-        \item In the Common Reference String model, assuming \emph{Knowledge-of-Exponent in Bilinear Groups}, there is a succinct non-interactive distributed argument for $\Lan$. 
+        \item In the random oracle model, there is a succinct non-interactive distributed argument for $\Lan$.
+        \item In the common reference string model, assuming \emph{Knowledge-of-Exponent in Bilinear Groups}, there is a succinct non-interactive distributed argument for $\Lan$. 
     \end{enumerate}
     Where in all of the cases above, the prover of the distributed argument has a distributed implementation.
 \end{theorem}
