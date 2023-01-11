@@ -1,2 +1,29 @@
 \section{Discussion}
 \label{sec:discuss}
+
+We conclude by briefly discussing several future research directions.
+One natural question is whether we can weaken the assumptions used to construct our
+succinct distributed arguments: for example, in Section~\ref{sec:distprover}
+we required SNARKs to ensure consistency between the messages sent by different nodes.
+However, the computation itself is deterministic, so conceivably SNARGs could suffice
+(as in Section~\ref{sec:dargsForP}).
+It is interesting to ask whether certifying a deterministic execution of several (or even two)
+Turing machines that interact with one another runs up against the same barrier presented in~\cite{gentry2011separating}
+on constructing SNARKs from standard cryptographic assumptions.
+
+Another potential direction for obtaining better constructions is to consider weaker adversary models:
+for example, we can require soundness only against an adversary that is itself an efficient \emph{distributed}
+algorithm (our constructions are sound against centralized provers).
+The motivation for distributed certification is typically not that the prover is \emph{malicious},
+but rather that it is buggy, or the network is prone to changes.
+This can be used to define weaker adversary models that would require less (or no) use of heavyweight
+cryptography.
+
+Finally, our characterization of the power of $\LDP$ algorithms
+is at present incomplete.
+One-way functions are an \emph{average-case} hardness assumption
+(the function is hard to invert on random inputs),
+and it is not clear that separating $\LDnP$ from $\LDn \cap \PP$
+requires such an assumption.
+It is interesting to investigate whether and which worst-case
+assumptions suffice to separate $\LDnP$ from $\LDn \cap \PP$.

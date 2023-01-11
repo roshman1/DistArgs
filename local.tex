@@ -389,7 +389,8 @@ where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
 	if the first $t$ nodes in the first version accept, it outputs ``0'';
 	otherwise it outputs ``1''.
 
-	We claim that our adversary correctly computes $b_n(z)$ for all $z \in \set{0,1}^n$.
+	We claim that our adversary correctly computes $b_n(z)$ for all $z \in \set{0,1}^n$,
+	breaking Definition~\ref{def:HCP}.
 	Given $w \in \set{0,1}^{m(n)}$, there is a unique $z \in \set{0,1}^n$ such that $w = f_n(z)$, because $f$ is injective.
 	If $b_n(z) = 0$,
 	then the $t$-neighborhood
@@ -407,7 +408,6 @@ where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
 	of the first node, which is at distance greater than $t$ from $v_j$.
 	But this means that $v_j$ also rejects in $(G_n, x_z) \in \calL$, contradicting the correctness of the local algorithm.
 	We conclude that at least one of the first $t$ nodes must reject, and therefore our adversary outputs ``1''.
-
-	We have now shown that $\calB(f_n(z)) = b_n(z)$ for all sufficiently large $n$ and $z \in \set{0,1}^n$.
-	This implies that $b_n$ is not a hard-core predicate, as it contradicts Definition~\ref{def:HCP}.
+	%We have now shown that $\calB(f_n(z)) = b_n(z)$ for all sufficiently large $n$ and $z \in \set{0,1}^n$.
+	%This implies that $b_n$ is not a hard-core predicate, as it contradicts Definition~\ref{def:HCP}.
 \end{proof}
