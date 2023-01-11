@@ -62,7 +62,8 @@ we mean sub-exponential in $\lambda$ and polynomial in $n$.
 The cryptographic primitives that we use are proved sound in the \emph{common reference string} (CRS) model,
 where we assume that a trusted setup phase has occurred, during which all parties get access to
 a \emph{common reference string} drawn from a known distribution.
-For example, the CRS can be used to select a hash function.
+For example, the CRS can be used to select a random hash function
+from a family of hash functions.
 %which is essentially shared randomness between the prover and the verifiers (which the prover is not able to influence): for example, the prover and the verifiers may need to agree on a hash function, which is chosen uniformly at random from a large family of functions. CRS is a common assumption, underlying most of the work on delegated computation.
 %We believe that CRS is an appropriate assumption for our setting, %where the prover is not truly ``malicious'' but rather ``misguided'' or ``misinformed'', reflecting bugs in the code or changes in the network.
 In the distributed prover of Section~\ref{sec:distprover},
@@ -78,19 +79,24 @@ $\Gen(1^\secpar, \ell)\rightarrow \hk$ is a setup procedure that takes the secur
 $\Hash(\hk, x)$ takes a hash key and a value $x$, and returns a hashed value.
 
 \paragraph{Vector commitment schemes}
-A vector commitment consists of the following algorithms.
+A vector commitment produces a short commitment for a vector $(m_1,\ldots,m_q)$,
+such that an efficient adversary cannot later convince a verifier that it committed to a value $m_i' \neq m_i$
+in any position $i$.
+The commitment
+consists of the following algorithms.
 
 \vspace{-1ex}
 \paragraph{$\Gen(1^\secpar, q)\to \crs$:} a randomized algorithm that takes as input the security parameter $\secpar$ and the length $q$ of the committed vector, and outputs a common reference string $\crs$.
 %\rc{this is slightly different than in \cite{catalano2013vector} who consider public parameters (that define $\mathcal{M}$) -- is there a reason to change?}
 \vspace{-1ex}
-\paragraph{$\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$:} a deterministic algorithm that takes $q$ messages $m_1,\ldots, m_q\in \mathcal{M}$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$
-(which may just be the values $m_1,\ldots,m_1$ themselves, but can also be more general).
-\vspace{-4ex}
-\paragraph{$\Open(\crs, m, i, \aux)\to \Lambda_i$:} a deterministic algorithm that takes the \crs, a message $m$, an index $i$, and auxiliary information \aux,
-and produces a proof $\Lambda_i$ that $m$ is the \ith committed message.
+\paragraph{$\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$:} a deterministic algorithm that takes $q$ 
+a vector $m_1,\ldots, m_q$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$
+(which may just be $m_1,\ldots,m_1$ itself, but can also be more general).
 \vspace{-1ex}
-\paragraph{$\Verify(\crs, C, m, i, \Lambda)\to b$:} the verification algorithm takes the \crs, a message $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
+\paragraph{$\Open(\crs, m, i, \aux)\to \Lambda_i$:} a deterministic algorithm that takes the \crs, a value $m$, an index $i$, and auxiliary information \aux,
+and produces a proof $\Lambda_i$ that $m$ is the \ith committed value.
+\vspace{-1ex}
+\paragraph{$\Verify(\crs, C, m, i, \Lambda)\to b$:} the verification algorithm takes the \crs, a value $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
 %
 
 \begin{definition} [Vector Commitments]\label{def:VC}
@@ -98,7 +104,7 @@ A VC $(\Gen, \Com, \Open, \Verify)$ is required to satisfy:
 \vspace{-1ex}
 \paragraph{Completeness}
 
-For every messages sequence, $m_1,\ldots m_q$,
+For every value sequence, $m_1,\ldots m_q$,
 \begin{gather*}
     \prob{}
     {

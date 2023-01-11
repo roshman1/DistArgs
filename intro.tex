@@ -47,7 +47,7 @@ While many useful properties can be certified using short certificates, some pro
 %Moreover, there is no general way to obtain short certificates proving the correctness of an efficient distributed algorithm,
 
 The area of distributed certification has so far stood apart from the rich theory of  centralized decision problems (e.g., $\PP$ vs.\ $\NP$) and delegated computation. In the centralized setting, under cryptographic assumptions, a computationally-bounded prover can present a weak verifier with a short proof that convinces the verifier of a statement of the form ``$x \in \calL$'', where $\calL$ is any language in $\PP$~\cite{choudhuri2021snargs, cryptoeprint:2022/1320}, or, under stronger assumptions, in $\NP$~\cite{micali2000computationally, bitansky2013recursive, groth2016size}. This is called a \emph{computationally-sound proof}, or a \emph{succinct argument} for $\calL$. 
-The key is that rather than requiring perfect soundness against any prover, we require only that the verifier not be fooled by any computationally-bounded prover, except with negligible probability. In return, we get much shorter proofs. If the argument is non-interactive, it is called a \emph{succinct non-interactive argument} (SNARG), and if it also has the property that whenever the prover convinces the verifier, one can extract an $\NP$-witness from the prover, then the argument is a \emph{succinct non-interactive argument of knowledge} (SNARK).
+The key is that rather than requiring perfect soundness against any prover, we require only that the verifier not be fooled by any computationally-bounded prover, except with negligible probability. In return, we get much shorter proofs. If the argument is non-interactive, it is called a \emph{succinct non-interactive argument} (SNARG). If it also has the property that whenever the prover convinces the verifier, one can extract an $\NP$-witness from the prover, then the argument is a \emph{succinct non-interactive argument of knowledge} (SNARK).
 
 We ask whether the same can be done in the distributed setting,	and show that the answer is \emph{yes}, under standard cryptographic assumptions in the case of language in $\PP$, or under somewhat strong assumptions for languages in $\NP$. We define \emph{succinct distributed arguments}, which are computationally-sound (non-interactive) proofs in the distributed network setting, and show:
  \begin{theorem}\label{thm:centralized}
@@ -80,7 +80,8 @@ We ask whether the same can be done in the distributed setting,	and show that th
 	by storing the entire history of messages sent at each node.
 	Unfortunately, these certificates can be very long when the algorithm uses many rounds or messages.
 
-	With this motivation in mind, we show that a distributed algorithm that runs in polynomial number of rounds, message size
+	We show that using a computationally-sound proof,
+	a distributed algorithm that runs in polynomial number of rounds, message size
 	and local computation time can \emph{certify its own execution}, using certificates of polylogarithmic length
 	at each node, and incurring an additive overhead to the running time that 
 	is linear in the diameter of the graph.
@@ -113,7 +114,7 @@ we consider both options.)
 What is the power of algorithms in $\PLD(t)$?
 Clearly, such algorithms cannot decide languages that are not in $\PP$, nor can they decide languages 
 that are not in $\LD(t)$ (i.e., decidable in $t(n)$ rounds with no computational restrictions).
-But can they decide every language in $\LD(t) \cap \PP$?
+But can they decide every language that is both in $\LD(t)$ and in $\PP$?
 It turns out that the answer is ``probably not'', 
 but whether or not we can prove it unconditionally depends on whether the nodes know the size of the network,
 and thus know \emph{how long} they are allowed to run.
