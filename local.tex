@@ -1,6 +1,6 @@
 \section{On Polynomial-Time Local Distributed Algorithms}
 \label{sec:local}
-\TODO{refer to appendix: is this the right version??}
+%\TODO{refer to appendix: is this the right version??}
 In this section we investigate the power of computationally-bounded local decision algorithms:
 we define complexity classes for languages decidable by 
 such algorithms, and study their relationship to the class of languages
@@ -137,10 +137,11 @@ The language $\ITERIN$ consists of all configuration $C^{n_L,n_R}(M,a,b,s)$ such
 	and $M$ accepts $a$ or $b$ (or both).
 
 	As we explained above, it is not difficult to see that $\ITERIN$ can be decided by a local algorithm,
-and is also in $\PP$:
-\begin{claim}\label{claimITINalgos}
-	$\ITERIN \in \LD \cap \PP$.
-\end{claim}
+and is also in $\PP$.
+Next we show that $\ITERIN$ is not decidable by a polynomial-time local algorithm:
+%%\begin{claim}\label{claimITINalgos}
+	%$\ITERIN \in \LD \cap \PP$.
+%\end{claim}
 %\begin{proof}[Proof sketch]
 %The key is that $\ITERIN$ contains a "trap door" for each type of algorithm:
 %the sequential poly-time algorithm checks that $s \geq \max(n_L, n_R)$,
@@ -186,7 +187,6 @@ and is also in $\PP$:
 	%we make sure that at least one of them has an accepting configuration of the TM.
 %\end{proof}
 
-Next we show that $\ITERIN$ is not decidable by a polynomial-time local algorithm:
 
 \begin{claim}\label{claimITINLDP}
 	$\ITERIN \not \in \LDP$.
@@ -310,19 +310,20 @@ computable in poly-time
  is called a \emph{hard-core} of a
 	family of functions $\set{ f_n : \set{0,1}^n \rightarrow \set{0,1}^{m(n)}}$ (where $m(n) \geq n$)
 	if for every probabilistic, polynomial-time (PPT) algorithm $\Adv$, there is a negligible function $\eps(\cdot)$ such that
-	for all sufficiently large $n$,
-	\begin{equation*}
-		\prb{
-			\Adv( f(z) ) = b(z)
-		}
-		{
-			z \leftarrow U_n
-		}
-		<
-		\frac{1}{2} + \eps(n).
-	\end{equation*}
-\end{definition}
+	for all sufficiently large $n$ we have
+	%\begin{equation*}
+	%	\prb{
+	%		\Adv( f(z) ) = b(z)
+	%	}
+	%	{
+	%		z \leftarrow U_n
+	%	}
+	%	<
+	%	\frac{1}{2} + \eps(n).
+	%\end{equation*}
+	$\Pr\left[ \Adv( f(z) ) = b(z) \medspace | \medspace z \leftarrow U_n \right]$,
 where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
+\end{definition}
 
 \begin{proof}[Proof of Theorem~\ref{thm:local}, part (3)]
 	Fix a family $\calF = \set{ f_n }_{n \in \nat}$ of injective one-way functions,

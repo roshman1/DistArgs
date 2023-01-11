@@ -67,11 +67,12 @@ in its subtree,
 	S_{\var{in}}(u) = \sum_{v \in \text{$u$'s subtree}} s_{\var{in}}(v).
 \end{equation*}
 In particular, at the root $r$ of the tree, we store the full sums:
-\begin{equation*}
-	S_{\var{out}}(r) = \sum_{v \in V(G)} s_{\var{out}}(v),
-	\qquad
-	S_{\var{in}}(r) = \sum_{v \in V(G)} s_{\var{in}}(v).
-\end{equation*}
+%\begin{equation*}
+	$S_{\var{out}}(r) = \sum_{v \in V(G)} s_{\var{out}}(v)$
+	and
+	%\qquad
+	$S_{\var{in}}(r) = \sum_{v \in V(G)} s_{\var{in}}(v)$.
+%\end{equation*}
 The root then compares the two sums, and verifies that they are equal,
 which means that every message sent was indeed received, and vice-versa.
 
@@ -80,7 +81,8 @@ Since we compare \emph{sums} of hashed values rather than
 directly comparing hashed values to one another,
 our construction requires the following property,
 which we call \emph{Sum-Collision-Resistance};
-it is a plausible strengthening of standard collision-resistance (see discussion in Appendix~\ref{app:crypto}). \TODO{add + subsection of appendix}
+it is a plausible strengthening of standard collision-resistance (see discussion in Appendix~\ref{app:crypto}).
+%\TODO{add + subsection of appendix}
 
 \begin{definition} [Sum-Collision-Resistant Hash (SCRH)]
     A hash family $(\Gen, \Hash)$ is considered \emph{sum-collision-resistant} if for any probabilistic poly-time adversary $\mathcal{A}$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\secpar\in \mathbb{N}$,  
