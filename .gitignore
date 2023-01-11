@@ -1,4 +1,3 @@
-
 *.tex~
 *.bib~
 *.ini
@@ -20,5 +19,13 @@ main.log
 main.out
 main.pdf
 *.aux
+*.log
+*.pdf
+main.pdf
+main.log
+*.log
+*.pdf
+main.log
+main.pdf
 *.log
 *.pdf
