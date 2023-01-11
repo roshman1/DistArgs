@@ -53,19 +53,20 @@ we require an additional property from the vector commitment,
 which essentially asserts that for any given vector $m = (m_1,\ldots,m_q)$,
 there is only one commitment $c$ that opens to $m_i$ at every position $i$:
 \begin{definition}[Inverse Collision-Resistance]
-A VC $(\Gen, \Com, \Open, \Ver)$ is \emph{Inverse Collision-Resistant} if for any efficient adversary $\calA$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\lambda\in \mathbb{N}$,
+A VC $(\Gen, \Com, \Open, \Verify)$ is \emph{Inverse Collision-Resistant} if for any efficient algorithm $\calA$, there
+is a negligible $\epsilon(\cdot)$ such that for all $\lambda\in \mathbb{N}$,
 \begin{gather*}
     \prob{}
     {
     \begin{array}{ll}
-         \forall i: \Ver(crs, C^*, m, i) = 1 \\
+         \forall i: \Verify(\crs, C^*, m, i) = 1 \\
          \wedge C^* \neq C
     \end{array}
     \middle\vert
     \begin{array}{ll}
-         crs \leftarrow Gen(1^\lambda, q) \\
-         C^*, \{(m_i, \lambda_i)\}_{i\in [q]} = \calA(crs) \\
-         C \leftarrow \Com(crs, m_1,\ldots,m_q)
+         \crs \leftarrow \Gen(1^\lambda, q) \\
+         C^*, \{(m_i, \lambda_i)\}_{i\in [q]} = \calA(\crs) \\
+         C \leftarrow \Com(\crs, m_1,\ldots,m_q)
     \end{array}
     } \leq \epsilon(\lambda).
 \end{gather*}

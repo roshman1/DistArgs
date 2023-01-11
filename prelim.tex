@@ -72,12 +72,11 @@ which is then disseminated to all the nodes. As long as a single node generates 
 will be uniformly random.
 
 \paragraph{Hash functions.}
-A hash function is accessed using two procedures, $\Gen$ and $\Hash$:
+A hash family is accessed using two procedures, $\Gen$ and $\Hash$:
 $\Gen(1^\secpar, \ell)\rightarrow \hk$ is a setup procedure that takes the security parameter $\lambda$
 (in unary) and the length $\ell$ of the values to be hashed, and returns a \emph{hash key} $\hk$;
 $\Hash(\hk, x)$ takes a hash key and a value $x$, and returns a hashed value.
 
-s
 \paragraph{Vector commitment schemes}
 A vector commitment consists of the following algorithms.
 
@@ -88,7 +87,6 @@ A vector commitment consists of the following algorithms.
 \paragraph{$\Verify(\crs, C, m, i, \Lambda)\to b$:} the verification algorithm takes the \crs, a message $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
 %
 
-\TODO{def:VC is used more than once. So is def:snarg}
 \begin{definition} [Vector Commitments]\label{def:VC}
 A VC $(\Gen, \Com, \Open, \Verify)$ is required to satisfy the following properties.
 \paragraph{Completeness}
