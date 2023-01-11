@@ -13,8 +13,10 @@ The definition and the constructions easily extend to the case where there are i
 %\label{sec:def}
 A succinct distributed argument consists of the following algorithms.
 
+\vspace{-1ex}
 \paragraph{$\Gen(1^\secpar, n)\to \var{\crs}$:} a randomized algorithm that takes as input a security parameter $1^\secpar$ and a graph size $n$, and outputs a common reference string $\var{\crs}$.
 
+\vspace{-1ex}
 \paragraph{$\Pro(\var{\crs}, G, w)\to \{\pi_v\}_{v\in V(G)}$:}
 %, c, L_i, \Lambda_i)$.}
 takes a $\var{\crs}$ obtained from $\Gen(1^{\secpar}, n)$,
@@ -23,6 +25,7 @@ a graph $G$ on $n$ nodes, and possibly a witness $w$ of length $\poly(n)$ (which
 and outputs a list of proofs $\{\pi(v)\}_{v\in V(G)}$,
 one for each node $v \in G$.
 
+\vspace{-1ex}
 \paragraph{$\Ver(\var{\crs}, v, N(v), \pi(v), \pi(N(v)) )\to \{0,1\}$:}
 takes a common reference string $\crs$ obtained from $\Gen(1^{\secpar}, n)$,
 a UID $v$, a list of neighbors $N(v)$, a proof $\pi(v)$,
@@ -39,6 +42,7 @@ and outputs an acceptance bit.
 Let $\Lan$ and $\calR$ be an $\NP$ language and a compatible relation on graphs,
 such that $G \in \calL$ iff there exists a witness $w$ such that $(G,w) \in \calR$.
 A \emph{succinct distributed argument} for $\Lan$ and $\calR$, denoted $(\Gen, \Pro, \Ver)$, satisfies the following properties:
+\vspace{-1ex}
 \paragraph{Completeness}  For $(G,w)\in \calR$,
 \begin{gather*}
     \prb
@@ -53,6 +57,7 @@ A \emph{succinct distributed argument} for $\Lan$ and $\calR$, denoted $(\Gen, \
     = 1
     .
 \end{gather*}
+\vspace{-1ex}
 \paragraph{Soundness}
 For any efficient algorithm $\Pro^*$ %, and $G\notin \Lan$,
 there exists a negligible function $\epsilon(\cdot)$ such that
@@ -75,7 +80,9 @@ there exists a negligible function $\epsilon(\cdot)$ such that
 Note that, as in the definition of SNARKs, the prover gets
 to choose the false statement it would like to prove after seeing the $\crs$.
 
+\vspace{-1ex}
 \paragraph{Succinctness} The $\var{\crs}$ and the proof $\pi$ are of length at most $\poly(\secpar, \log n)$.
+\vspace{-1ex}
 \paragraph{Efficiency.} $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$,
 and $\Pro$ runs in time $\poly(\lambda, n)$.
 \end{definition}

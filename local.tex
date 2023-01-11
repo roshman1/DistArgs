@@ -273,7 +273,8 @@ thus, $u$ also accepts in $C_z$, a contradiction.
 %\subsection{If $\LDn \cap \PP \not \subseteq \LDnP$, Then $\PP \neq \NP$}
 
 
-\subsection{Separation of $\LDnP$ From $\LDn \cap \PP$ Assuming Injective One-Way Functions}
+%\subsection{Separation of $\LDnP$ From $\LDn \cap \PP$ Assuming Injective One-Way Functions}
+\subsection{Efficient Local Algorithms with Known Network Size}
 \label{sec:owf}
 In the previous section we showed that $\LD \cap \PP \not \subseteq \LDP$,
 but our proof used the fact that the nodes do not know the size of the graph,
@@ -291,7 +292,7 @@ we prove that
 $\LDn \cap \PP \not \subseteq \LDnP$ implies $\PP \neq \NP$,
 and conversely, under the plausible assumption that injective one-way functions exist,%
 \footnote{This is stronger than assuming that $\PP \neq \NP$,
-because if $\PP = \NP$ then every function is easy to invert.}
+because if $\PP = \NP$ then every easily-computable function is easy to invert.}
 we can still show that 
 $\LDn \cap \PP \not \subseteq \LDnP$.
 
@@ -389,14 +390,17 @@ where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
 	if the first $t$ nodes in the first version accept, it outputs ``0'';
 	otherwise it outputs ``1''.
 
-	We claim that our adversary correctly computes $b_n(z)$ for all $z \in \set{0,1}^n$,
+	We claim that our adversary correctly computes $b_n(z)$ for all $z \in \set{0,1}^n$
+	given only $f_n(z)$,
 	breaking Definition~\ref{def:HCP}.
-	Given $w \in \set{0,1}^{m(n)}$, there is a unique $z \in \set{0,1}^n$ such that $w = f_n(z)$, because $f$ is injective.
+	Given $w$
+	in the image of $f_n$, there is a unique $z \in \set{0,1}^n$ such that $w = f_n(z)$, because $f$ is injective.
 	If $b_n(z) = 0$,
 	then the $t$-neighborhood
 	of each of the first $t$ nodes in the configuration $C'$ constructed by the adversary is identical
 	to their view in the ``true'' configuration $C_z = (G, x_z)$.
-	Since $C_z \in \calL$, all nodes must accept, and in particular the first $t$ nodes do;
+	Since $C_z \in \calL$, all nodes must accept,
+	%and in particular the first $t$ nodes do;
 	therefore the first $t$ nodes also accept in $C'$.
 	Now suppose that $b_n(z) = 1$.
 	Then the configuration $C'$,

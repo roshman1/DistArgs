@@ -18,7 +18,7 @@ provides all the nodes with the same proof, which consists of
         \item A SNARK proof $\pisnark$ proving that there exists an adjacency list $\var{AdjL}'$ whose vector commitment is $c$, such that the graph represented by $\var{AdjL}'$ is in $\calL$.
 \end{itemize}
 Additionally, to convince the nodes that $\var{AdjL}' = \var{AdjL}$,
-the prover gives each node $i$ an opening to the $i$-th coordinate of the vector commitment, allowing $i$ to verify that the $i$-th coordinate of $c$ opens to its true neighborhood $N(i)$.
+the prover gives each node $i$ an opening to the $i$-th position of the vector commitment, allowing $i$ to verify that the $i$-th position of $c$ opens to its true neighborhood $N(i)$.
 If all nodes succeed in their verification, and they all received the same commitment $c$, then $c$ is indeed a commitment to the true graph $G$; the nodes then verify the SNARK proof $\pisnark$, which convinces them that $G \in \calL$.
 
 To handle general UIDs, the prover orders the nodes $V(G)$ by UID, $v_1 < \ldots < v_n$,
@@ -33,8 +33,8 @@ To forestall this we modify the construction slightly:
 \begin{itemize}
 	\item Instead of committing to the adjacency list $\var{AdjL} = (N(v_1),\ldots,N(v_n))$,
 the prover adds the UIDs to the list, and commits to $L = ( (v_1, N(v_1)), \ldots, (v_n, N(v_n)))$.
-This prevents the prover from giving the same index to two nodes, as one of the nodes will open 
-its entry and see the UID of the other node there.
+This prevents the prover from giving the same index $i$ to two nodes, as one of the nodes will open 
+position $i$ and see the UID of the other node there.
 \item 
 We strengthen the property proved by the SNARK,
 and ask the prover to prove that there exists a \emph{symmetric} adjacency list $\var{AdjL}'$
@@ -48,7 +48,7 @@ such that the graph represented by $\var{AdjL'}$ \emph{is connected} and in $\ca
     %\item Instead of committing to the adjacency list $\var{AdjL} = (N(v_1),\ldots,N(v_n))$, the prover commits to a list $L = ( (v_1, N(v_1) ), \ldots, (v_n, N(v_n)) )$ that also includes the UIDs of the nodes, so that when a node opens a given coordinate, it can verify that its own UID appears there.
     %\item To prevent the prover from committing to a graph that is larger than $G$, we ask the prover to prove a stronger property in the SNARK proof: it proves that there exists an adjacency list $\var{AdjL}'$ whose vector commitment is $c$, such that $\var{AdjL'}$ \emph{is symmetric}, and the graph represented by $\var{AdjL}'$ \emph{is connected} and satisfies $\calL$.
 %\end{itemize}
-If the prover now tries to commit to a list $\var{AdjL'}$ that is longer than the size of the real graph, then since the graph $G'$, represented by $\var{AdjL}'$, is connected, the cut between the ``fake nodes'' $V(G') \setminus V(G)$ and the ``real nodes'' $V(G)$ includes some edge, $\set{u,v}$, where $u \in V(G)$ and $v \not \in V(G)$. Since $G'$ is symmetric, $v \in N_{G'}(u)$. Thus, when node $u$ opens its coordinate in the vector commitment, it will see that its purported neighborhood there includes the ``fake node'' $v$, and it will reject.
+If the prover now tries to commit to a list $\var{AdjL'}$ that is longer than the size of the real graph, then since the graph $G'$, represented by $\var{AdjL}'$, is connected, the cut between the ``fake nodes'' $V(G') \setminus V(G)$ and the ``real nodes'' $V(G)$ includes some edge, $\set{u,v}$, where $u \in V(G)$ and $v \not \in V(G)$. Since $G'$ is symmetric, $v \in N_{G'}(u)$. Thus, when node $u$ opens its position in the vector commitment, it will see that its purported neighborhood there includes the ``fake node'' $v$, and it will reject.
 
 	We remark that in the construction as presented above, the prover sends the same SNARK proof to every node,
 	and all nodes verify it. This is not needed;
@@ -74,8 +74,8 @@ On the other hand, if $\var{AdjL}'$ is a proper witness,
 then since $G \not \in \calL$, we know that $\var{AdjL} \neq \var{AdjL}'$ (where $\var{AdjL}$
 is the adjacency list of $G$).
 We show that this means we have broken the position-binding property of the vector commitment,
-by proving that every coordinate of $\var{AdjL}'$ is opened by some node of $G$,
+by proving that every position of $\var{AdjL}'$ is opened by some node of $G$,
 which verifies that its UID and its neighborhood are correctly represented.
 The prover is thus able to fool at least one node $v$ into accepting a commitment to
 a value that differs from $(v, N(v))$,
-violating the position-binding property of the vector commitment.
+violating the position-binding property.
