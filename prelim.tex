@@ -212,7 +212,10 @@ The length of the commitment $c$ output by $\Com$ and the length of the opening 
 %(except with negligible probability).
 
 \paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
-A SNARK consists of the procedures:
+
+
+\paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
+A SNARK consists of the following procedures:
 \vspace{-1ex}
 \paragraph{$\Gen(1^\secpar, \ell)\to \crs$:} a setup procedure that takes a security parameter $\lambda$
 		and an instance length $\ell$, and generates a $\crs$.
@@ -244,16 +247,27 @@ if it satisfies the following properties.
 	.
     \end{gather*}
 \vspace{-1ex}
-\paragraph{Soundness.} For any efficient prover $\Pro^*$, there exists a negligible function $\epsilon(\cdot)$, such that \begin{gather*}
+\paragraph{Argument of Knowledge.} For any efficient prover $\Pro^*$, there exists an efficient extraction algorithm, $\Ext_{\Pro^*}$,
+%which produces a witness $w$ for an instance $x$,
+%which intuitively produces a witness for any instance that $\Pro^*$ can convince the verifier to accept.
+%, such that if $\Pro^*$ generates a statement $x$ and a proof $\pi$ that is accepted by $\Ver$ with some probability $p$,
+%then $\Ext^*$ generates a witness $w$ such that $M(x,w) = 1$ with probability close to $p$.
+%More formally,
+and a negligible function $\epsilon(\cdot)$, such that,
+%the probability that the prover ${\Pro^*}$ can convince the verifier to accept $x$ when $\Ext_{\Pro^*}$
+%produces an \emph{invalid} witness for $x$ is negligible:
+    \begin{gather*}
         \prob{}
         {
         \begin{array}{ll}
-        \Ver(\var{\crs}, x, \pi^*) = 1
+        \Ver(\var{\crs}, x, \pi^*) = 1 \\
+        \wedge\ M(x,w)\neq 1
         \end{array}
         \middle\vert
         \begin{array}{ll}
         \var{\crs} \leftarrow \Gen(1^\secpar, \ell) \\
         (x, \pi^*) \leftarrow \Pro^*(\var{\crs}) \\
+        w\leftarrow \Ext_{\Pro^*}(\var{\crs}, x)
         \end{array}
         } \leq \epsilon(\secpar)
 	.
