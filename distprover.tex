@@ -1,181 +1,81 @@
-\section{Certifying Executions of Computationally-Efficient Distributed Algorithms}
-\label{sec:distprover}
-In this section we construct a succinct distributed argument
-for certifying the execution of polynomial-time distributed algorithm,
-where the prover is itself distributed;
-essentially, the distributed algorithm certifies its own execution,
-using an additional $O(\diam(G))$ rounds.
+\section{Succinct Distributed Arguments}\label{sec:dargs}
+In this section we define \emph{succinct distributed arguments} and show how to construct them for graph languages in
+$\PP$ and in $\NP$.
+%In Section~\ref{sec:dargsForP} we give a construction for graph languages in $\PP$, which is similar in spirit
+%but uses different cryptographic primitives and has a different soundness proof. In particular, it can be instantiated under \emph{standard} cryptographic assumptions.
+For simplicity, in this section and the next,
+we restrict attentiont to \emph{graph languages},
+where the nodes have no input.
+The definition and the constructions easily extend to the case where there are inputs
+(see e.g, Appendix~\ref{app:distprover}).
 
+%\subsection{Defining Succinct Distributed Arguments}
+%\label{sec:def}
+A succinct distributed argument consists of the following algorithms.
 
-Fix a distributed algorithm, represented by a deterministic Turing machine $D$ that
-executes at every node.
-%takes as input a node's input and neighborhood,
-%writes outgoing messages on an output tape, reads incoming messages from an input tape, and eventually
-%produces some output.
-The distributed language we would like to certify is the language
-$\calL_D$
-consisting of all configurations $(G, x, y)$,
-where $G$ is the network graph, $x : V(G) \rightarrow \calX$ is an input assignment to the nodes,
-and $y : V(G) \rightarrow \calY$ is the output stored at the nodes,
-such that when $D$ is executed at every node of $G$ with input assignment $x$,
-each node $v \in V(G)$ produces the output $y(v)$.
-We construct a distributed prover for the statement ``$(G,x,y) \in \calL_D$''.
+\paragraph{$\Gen(1^\secpar, n)\to \var{\crs}$:} a randomized algorithm that takes as input a security parameter $1^\secpar$ and a graph size $n$, and outputs a common reference string $\var{\crs}$.
 
-To simplify the presentation, we assume here that there is no input $x$,
-and that $D$ is a \emph{decision} algorithm,
-so that the output we want to certify is $y(v) = 1$ at all nodes.
-(See Appendix~\ref{app:distprover} for the general case.)
+\paragraph{$\Pro(\var{\crs}, G, w)\to \{\pi_v\}_{v\in V(G)}$:}
+%, c, L_i, \Lambda_i)$.}
+takes a $\var{\crs}$ obtained from $\Gen(1^{\secpar}, n)$,
+, %a node $v$, an index $i$, an adjacency list $L$, where the \ith row is $N(v)$
+a graph $G$ on $n$ nodes, and possibly a witness $w$ of length $\poly(n)$ (which may be empty, e.g., for languages in $\PP$),
+and outputs a list of proofs $\{\pi(v)\}_{v\in V(G)}$,
+one for each node $v \in G$.
 
-\paragraph{Overview of the construction.}
-Certifying the execution of the distributed algorithm $D$
-essentially amounts to certifying a collection of ``local'' statements,
-each asserting that at a specific node $v \in V(G)$,
-the algorithm $D$ indeed produces the output $y(v) = 1$.
-The prover at node $v$ can record the local computation at node $v$
-as $D$ executes,
-and use a SNARG or a SNARK
-to certify that it is correct: for example, it can certify that incoming messages
-are handled correctly (according to $D$),
-outgoing messages are produced correctly, and eventually, the output of $v$ is indeed $y(v) = 1$.
-The main obstacle is verifying consistency across the nodes:
-how can we be sure that incoming messages recorded at node $v$ were indeed sent by $v$'s neighbors,
-and that $v$'s outgoing messages are indeed received by $v$'s neighbors?
+\paragraph{$\Ver(\var{\crs}, v, N(v), \pi(v), \pi(N(v)) )\to \{0,1\}$:}
+takes a common reference string $\crs$ obtained from $\Gen(1^{\secpar}, n)$,
+a UID $v$, a list of neighbors $N(v)$, a proof $\pi(v)$,
+and the proofs of the neighbors, $\pi(N(v)) = \set{ \pi(u) : u \in N(v) }$,%
+\footnote{For simplicity, we follow the original design of proof labeling schemes~\cite{korman2005proof},
+where neighbors only exchange their certificates with their immediate neighbors.
+The model can be generalized to allow for more general verification procedures.}
+and outputs an acceptance bit.
 
-A na\"ive solution would be for node $v$ to record, for each neighbor $u \in N(v)$,
-a hash $H_{(v,u)}$ of all the messages that $v$ sends and receives on the edge $\set{v,u}$;
-on the other side of the edge, node $u$ would do the same, producing a hash $H_{(u,v)}$.
-At verification time, nodes $u$ and $v$ could compare their hashes, and reject if $H_{(v,u)} \neq H_{(u,v)}$.
-Unfortunately, this solution would require too much space,
-as node $v$ can have up to $n - 1$ neighbors;
-we cannot afford to store a separate hash for each edge.
+%\rc{this should be in a definition environment}
+%\Enote{I'm not sure... }
 
-Our solution is instead to compute a hash $h(m)$
-for every message $m$ sent or received by node $v$,
-but store only a \emph{sum} of the hashes:
-we separate outgoing messages from incoming messages,
-and store two sums,
-$s_{\var{out}}(v) = \sum_{\text{outgoing $m$}} h(m)$
-and
-$s_{\var{in}}(v) = \sum_{\text{incoming $m$}} h(m)$.
-To certify consistency across all the nodes,
-we compute a spanning tree of the network,
-and store at every tree node $u$ the partial sums
-in its subtree,
-\begin{equation*}
-	S_{\var{out}}(u) = \sum_{v \in \text{$u$'s subtree}} s_{\var{out}}(v),
-	\qquad
-	S_{\var{in}}(u) = \sum_{v \in \text{$u$'s subtree}} s_{\var{in}}(v).
-\end{equation*}
-In particular, at the root $r$ of the tree, we store the full sums:
-%\begin{equation*}
-	$S_{\var{out}}(r) = \sum_{v \in V(G)} s_{\var{out}}(v)$
-	and
-	%\qquad
-	$S_{\var{in}}(r) = \sum_{v \in V(G)} s_{\var{in}}(v)$.
-%\end{equation*}
-The root then compares the two sums, and verifies that they are equal,
-which means that every message sent was indeed received, and vice-versa.
+\begin{definition}\label{defSDarg}
+Let $\Lan$ and $\calR$ be an $\NP$ language and a compatible relation on graphs,
+such that $G \in \calL$ iff there exists a witness $w$ such that $(G,w) \in \calR$.
+A \emph{succinct distributed argument} for $\Lan$ and $\calR$, denoted $(\Gen, \Pro, \Ver)$, satisfies the following properties:
+\paragraph{Completeness}  For $(G,w)\in \calR$,
+\begin{gather*}
+    \prb
+    {
+    	\forall v \in V(G):\\
+	    \Ver(\crs, v, N(v), \pi(v), \pi(N(v))) = 1
+	}
+	{
+    \crs \leftarrow \Gen(1^\secpar, n) \\
+    \set{ \pi(v) }_{v\in V(G)} \leftarrow \Pro(\var{\crs}, G, w)
+    }
+    = 1
+    .
+\end{gather*}
+\paragraph{Soundness}
+For any efficient algorithm $\Pro^*$ %, and $G\notin \Lan$,
+there exists a negligible function $\epsilon(\cdot)$ such that
+\begin{gather*}
+    \prob{}
+    {
+    \begin{array}{ll}
+    G\notin \Lan \\
+    \wedge\ \forall v\in V(G) :\\
+    \quad \Ver(\var{\crs}, v, N(v), \pi_{v}, \pi(N(v))) = 1
+    \end{array}
+    \middle\vert
+    \begin{array}{ll}
+    \var{\crs} \leftarrow \Gen(1^\secpar, n) \\
+    ( G, \{\pi_{v}\}_{v\in V(G)}) \leftarrow \Pro^*(\var{\crs}, 1^\secpar, 1^n) \\
+    \end{array}
+    } \leq \epsilon(\secpar)
+    .
+\end{gather*}
+Note that, as in the definition of SNARKs, the prover gets
+to choose the false statement it would like to prove after seeing the $\crs$.
 
-
-Since we compare \emph{sums} of hashed values rather than
-directly comparing hashed values to one another,
-our construction requires the following property,
-which we call \emph{sum-collision-resistance};
-it is a plausible strengthening of standard collision-resistance (see discussion in Appendix~\ref{app:crypto:hashes}).
-%\TODO{add + subsection of appendix}
-
-\begin{definition} [Sum-Collision-Resistant Hash (SCRH)]
-    A hash family $(\Gen, \Hash)$ is considered \emph{sum-collision-resistant} if for any probabilistic poly-time adversary $\mathcal{A}$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\secpar\in \mathbb{N}$,
-    \begin{gather*}
-        \prob{}
-        {
-        \begin{array}{cc}
-        M \neq M' \\
-        \sum_{ m \in M }\Hash(\hk, m) = \sum_{ m' \in M'}\Hash(\hk, m')
-        \end{array}
-        \middle\vert
-        \begin{array}{ll}
-             hk \leftarrow Gen(1^n, 1^\secpar) \\
-             (M, M') \leftarrow\calA(\hk, 1^\secpar, n)
-        \end{array}
-        } \leq \epsilon(\secpar)
-    \end{gather*}
+\paragraph{Succinctness} The $\var{\crs}$ and the proof $\pi$ are of length at most $\poly(\secpar, \log n)$.
+\paragraph{Efficiency.} $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$,
+and $\Pro$ runs in time $\poly(\lambda, n)$.
 \end{definition}
-
-%\begin{theorem}[Informal]
-    %Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds
-    %and sends messages of length $\poly(n)$.
-    %Assuming SNARKs for $\NP$ exist,
-    %and assuming a SCRH exist,
-    %there is a distributed argument of length $\polylog(n)$
-    %certifying $D$'s execution, where the prover is a distributed algorithm
-    %running in $O(T + \diam(G))$ rounds and sending messages of $\polylog(n)$ bits.
-%\end{theorem}
-
-\paragraph{Detailed description of the construction.}
-In the sequel, fix an SCRH, $(\SCRHGen, \SCRHHash)$.
-
-We represent a message by $\var{msg} = (r, \set{u, v}, m)$,
-where $r \in \nat$ is the round number in which the message was sent,
-$\set{u,v} \in E$ is the edge on which the message was sent,
-and $m \in \set{0,1}^*$ is the contents of the message.
-It is important that this representation of a message does not indicate whether the message was sent by $u$ and received by $v$ or vice-versa,
-as our construction relies on hashing messages and verifying that every (hashed) incoming message has a corresponding (hashed) outgoing message.
-
-The consistency of the local computation at a specific node is captured
-by a
-language $\calD$,
-which consists of all triplets $(\hk, I(v), W(v))$ such that:
-\begin{itemize}
-	\item $\hk$ is a hash key obtained by calling $\SCRHGen$,
-	\item $I(v) = (v, N(v), s_{\var{in}}(v), s_{\var{out}}(v))$,
-		where
-		$v \in \calU$ is the UID of a node,
-		$N(v) \in \calU^{\ast}$ is the neighborhood of the node,
-		and $s_{\var{in}}(v), s_{\var{out}}(v)$ are hash sums;
-	\item $W(v) = (\var{msgout}(v), \var{msgin}(v))$ consists of two sets of messages;
-	\item $(\hk, I(v), W(v)) \in \calD$ iff when the distributed algorithm $D$ is executed 
-at a node with UID $v$ and neighbors $N(v)$,
-and the incoming messages at node $v$ are $\var{msgin}(v)$,
-then node $v$ sends the messages $\var{msgout}(v)$
-and accepts (i.e., outputs 1),
-and furthermore,
-\begin{equation}
-	s_{\var{in}} = \sum_{\var{msg} \in \var{msgin}} \SCRHHash(\hk, \var{msg}),
-	\qquad
-	s_{\var{out}} = \sum_{\var{msg} \in \var{msgout}} \SCRHHash(\hk, \var{msg}).
-\end{equation}
-\end{itemize}
-We think of $W(v) = (\var{msgout}(v), \var{msgin}(v))$ as a \emph{witness}
-to the correct computation at node $v$.
-%We refer to $s_{\var{in}}$ as the \emph{hash-sum of incoming messages}, and to $s_{\var{out}}$ as the \emph{hash-sum of outgoing messages}
-%at $v$.
-
-Since the algorithm $D$ is itself a polynomial-time Turing machine,
-and the SCRH can be computed in polynomial time,
-there is a polynomial-time Turing machine $M$ that decides the language $\calD$.
-Fix a SNARK $(\SNARKGen, \SNARKPro, \SNARKVer, \SNARKExt)$
-for the language
-of pairs $(\hk, I)$ satisfying
-$\exists W = (\var{msgout}, \var{msgin}) : \text{$M$ accepts $(\hk, I, W)$}$.
-
-The distributed prover at each node $v$ computes the following certificate $\pi(v)$:
-\begin{itemize}
-	\item The hash-sums $s_{\var{out}}(v), s_{\var{in}}(v)$.
-	\item A SNARK proof $\pisnark(v)$, certifying that there exists a witness $W(v) = (\var{msgout}(v), \var{msgin}(v))$
-		such that $(\hk, I(v), W(v)) \in \calD$.
-\end{itemize}
-In addition, the distributed prover computes a spanning tree of the network in $O(\diam(G))$
-rounds, and stores at each node $v$ the parent $p(v)$ of $v$ (or $\bot$, if $v$ is the root),
-and a spanning-tree certificate~\cite{korman2005proof} consisting
-of the UID of the root and the distance of $v$ from the root.
-Finally, by convergecast up the tree,
-the distributed prover computes and stores at $v$
-the partial sums 
-\begin{equation*}
-	S_{\var{out}}(v) = s_{\var{out}}(v) + \sum_{u \in \mathrm{children}(v)} S_{\var{out}}(u),
-	\qquad
-	S_{\var{in}}(v) \leftarrow s_{\var{in}}(v) + \sum_{u \in \mathrm{children}(v)} S_{\var{in}}(u).
-\end{equation*}
-
-
