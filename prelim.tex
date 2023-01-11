@@ -86,25 +86,18 @@ The commitment
 consists of the following algorithms.
 
 \vspace{-1ex}
-\paragraph{$\Gen(1^\secpar, q)\to \crs$:} a randomized algorithm that takes as input the security parameter $\secpar$ and the length $q$ of the committed vector, and outputs a common reference string $\crs$.
-%\rc{this is slightly different than in \cite{catalano2013vector} who consider public parameters (that define $\mathcal{M}$) -- is there a reason to change?}
-\vspace{-1ex}
-\paragraph{$\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$:} a deterministic algorithm that takes $q$ 
-a vector $m_1,\ldots, m_q$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$
-(which may just be $m_1,\ldots,m_1$ itself, but can also be more general).
-\vspace{-1ex}
-\paragraph{$\Open(\crs, m, i, \aux)\to \Lambda_i$:} a deterministic algorithm that takes the \crs, a value $m$, an index $i$, and auxiliary information \aux,
-and produces a proof $\Lambda_i$ that $m$ is the \ith committed value.
-\vspace{-1ex}
-\paragraph{$\Verify(\crs, C, m, i, \Lambda)\to b$:} the verification algorithm takes the \crs, a value $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
-%
+\begin{itemize}
+    \item $\Gen(1^\secpar, q)\to \crs$: a randomized algorithm that takes as input the security parameter $\secpar$ and the length $q$ of the committed vector, and outputs a common reference string $\crs$.
+    \item $\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$: a deterministic algorithm that takes $q$ a vector $m_1,\ldots, m_q$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$ (which may just be $m_1,\ldots,m_1$ itself, but can also be more general).
+    \item $\Open(\crs, m, i, \aux)\to \Lambda_i$: a deterministic algorithm that takes the \crs, a value $m$, an index $i$, and auxiliary information \aux, and produces a proof $\Lambda_i$ that $m$ is the \ith committed value.
+    \item $\Verify(\crs, C, m, i, \Lambda)\to b$: a verification algorithm that takes the \crs, a value $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
+\end{itemize}
 
 \begin{definition} [Vector Commitments]\label{def:VC}
 A VC $(\Gen, \Com, \Open, \Verify)$ is required to satisfy:
 \vspace{-1ex}
-\paragraph{Completeness}
-
-For every value sequence, $m_1,\ldots m_q$,
+\begin{itemize}
+    \item \emph{Completeness. } For every value sequence, $m_1,\ldots m_q$,
 \begin{gather*}
     \prob{}
     {
@@ -120,8 +113,7 @@ For every value sequence, $m_1,\ldots m_q$,
     \end{array}
     } = 1
 \end{gather*}
-\vspace{-3ex}
-\paragraph{Position-Binding} For every $i\in [q]$, for any efficient adversary $\Adv$, there exists a negligible function $\epsilon(\cdot)$ such that for every $\secpar$, % the following probability (which is taken over all honestly generated parameters) is at most negligible in $k$:
+    \item \emph{Position-Binding.} For every $i\in [q]$, for any efficient adversary $\Adv$, there exists a negligible function $\epsilon(\cdot)$ such that for every $\secpar$, % the following probability (which is taken over all honestly generated parameters) is at most negligible in $k$:
 \begin{gather*}
     \prob{}
     {
@@ -136,13 +128,8 @@ For every value sequence, $m_1,\ldots m_q$,
     \end{array}
     } \leq \epsilon(\secpar)
 \end{gather*}
-
-\vspace{-1ex}
-\paragraph{Succinctness}
-%\footnote{
-%In \cite{catalano2013vector}, the succinctness property is even stronger and promises that the length of $c$ and $\Lambda_i$ are independent of $q$. We do not require it.
-%}
-The length of the commitment $c$ output by $\Com$ and the length of the opening $\Lambda_i$ output by $\Open$ are both bounded by $\poly(\lambda, \log q)$.
+    \item \emph{Succinctness.} The length of the commitment $c$ output by $\Com$ and the length of the opening $\Lambda_i$ output by $\Open$ are both bounded by $\poly(\lambda, \log q)$.
+\end{itemize}
 \end{definition}
 
 
@@ -212,26 +199,25 @@ The length of the commitment $c$ output by $\Com$ and the length of the opening 
 %(except with negligible probability).
 
 \paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
-
-
-\paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
 A SNARK consists of the following procedures:
-\vspace{-1ex}
-\paragraph{$\Gen(1^\secpar, \ell)\to \crs$:} a setup procedure that takes a security parameter $\lambda$
+\begin{itemize}
+    \item $\Gen(1^\secpar, \ell)\to \crs$: a setup procedure that takes a security parameter $\lambda$
 		and an instance length $\ell$, and generates a $\crs$.
-\vspace{-1ex}
-\paragraph{$\Pro(\crs, x, w)\to \pi$:} a proof generation algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
+    \item $\Pro(\crs, x, w)\to \pi$: a proof generation algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
 		and a witness $w$ of length $\poly(\ell)$,
 		and produces a proof $\pi$.
-\vspace{-1ex}
-\paragraph{$\Ver(\crs, x, \pi)\to \set{0,1}$:} a verification algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
+    \item $\Ver(\crs, x, \pi)\to \set{0,1}$: a verification algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
 		and a proof $\pi$, and returns 1 or 0 (accept or reject).
-\begin{definition} [Succinct Non-Interactive Argument for $\NP$]\label{def:snarg}
+\end{itemize}
+\vspace{-1ex}
+\vspace{-1ex}
+\begin{definition} [Succinct Non-Interactive Argument of Knowledge for $\NP$]\label{def:snarg}
 Let $\Lan$ be an $\NP$ language, with a verifying machine $M$
-such that $x \in \Lan$ iff $\exists w: M(x,w)=1$, and let $\secpar$ be a security parameter. $(\Gen, \Ver, \Pro)$ is a \emph{Succinct Non-Interactive Argument for $\Lan$}
+such that $x \in \Lan$ iff $\exists w: M(x,w)=1$, and let $\secpar$ be a security parameter. $(\Gen, \Ver, \Pro)$ is a \emph{Succinct Non-Interactive Argument of Knowledge for $\Lan$}
 if it satisfies the following properties.
 \vspace{-1ex}
-\paragraph{Completeness.} For every $x$ and $w$ such that $M(x,w)=1$,
+\begin{itemize}
+    \item For every $x$ and $w$ such that $M(x,w)=1$,
     \begin{gather*}
         \prob{}
         { 
@@ -246,8 +232,7 @@ if it satisfies the following properties.
         } = 1
 	.
     \end{gather*}
-\vspace{-1ex}
-\paragraph{Argument of Knowledge.} For any efficient prover $\Pro^*$, there exists an efficient extraction algorithm, $\Ext_{\Pro^*}$,
+    \item \emph{Argument of Knowledge.} For any efficient prover $\Pro^*$, there exists an efficient extraction algorithm, $\Ext_{\Pro^*}$,
 %which produces a witness $w$ for an instance $x$,
 %which intuitively produces a witness for any instance that $\Pro^*$ can convince the verifier to accept.
 %, such that if $\Pro^*$ generates a statement $x$ and a proof $\pi$ that is accepted by $\Ver$ with some probability $p$,
@@ -272,14 +257,10 @@ and a negligible function $\epsilon(\cdot)$, such that,
         } \leq \epsilon(\secpar)
 	.
     \end{gather*}
-\vspace{-1ex}
-    \paragraph{Efficiency and succinctness.} $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$
-    and $\Pro$ runs in time $\poly(\lambda, n)$.
-	The length of the proof $\pi$ produced by $\Pro$ is $\poly(\lambda, \log \ell)$.
-%and the $\Ver$ procedure should run in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log \ell)$.
-%\paragraph{Verifier Efficiency.} 
-%\paragraph{Prover Efficiency.} 
-
+    \item \emph{Succinctness and Efficiency} The length of the proof $\pi$ produced by $\Pro$ is $\poly(\lambda, \log \ell)$.
+    $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$
+    and $\Pro$ runs in time $\poly(\lambda, n)$. 
+\end{itemize}
 \end{definition}
 Note that the prover $\Pro^*$ \emph{chooses} the statement $x$ that
 it would like to prove, and it does so after seeing the $\crs$.
