@@ -310,19 +310,20 @@ computable in poly-time
  is called a \emph{hard-core} of a
 	family of functions $\set{ f_n : \set{0,1}^n \rightarrow \set{0,1}^{m(n)}}$ (where $m(n) \geq n$)
 	if for every probabilistic, polynomial-time (PPT) algorithm $\Adv$, there is a negligible function $\eps(\cdot)$ such that
-	for all sufficiently large $n$,
-	\begin{equation*}
-		\prb{
-			\Adv( f(z) ) = b(z)
-		}
-		{
-			z \leftarrow U_n
-		}
-		<
-		\frac{1}{2} + \eps(n).
-	\end{equation*}
-\end{definition}
+	for all sufficiently large $n$ we have
+	%\begin{equation*}
+	%	\prb{
+	%		\Adv( f(z) ) = b(z)
+	%	}
+	%	{
+	%		z \leftarrow U_n
+	%	}
+	%	<
+	%	\frac{1}{2} + \eps(n).
+	%\end{equation*}
+	$\Pr\left[ \Adv( f(z) ) = b(z) \medspace | \medspace z \leftarrow U_n \right]$,
 where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
+\end{definition}
 
 \begin{proof}[Proof of Theorem~\ref{thm:local}, part (3)]
 	Fix a family $\calF = \set{ f_n }_{n \in \nat}$ of injective one-way functions,

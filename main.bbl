@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{47}
+\begin{thebibliography}{54}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -94,6 +94,42 @@
 \newblock
 
 
+\bibitem[Arora et~al\mbox{.}(1998)]%
+        {arora1998proof}
+\bibfield{author}{\bibinfo{person}{Sanjeev Arora}, \bibinfo{person}{Carsten
+  Lund}, \bibinfo{person}{Rajeev Motwani}, \bibinfo{person}{Madhu Sudan}, {and}
+  \bibinfo{person}{Mario Szegedy}.} \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{Proof verification and the hardness of
+  approximation problems}.
+\newblock \bibinfo{journal}{\emph{Journal of the ACM (JACM)}}
+  \bibinfo{volume}{45}, \bibinfo{number}{3} (\bibinfo{year}{1998}),
+  \bibinfo{pages}{501--555}.
+\newblock
+
+
+\bibitem[Arora and Safra(1998)]%
+        {arora1998probabilistic}
+\bibfield{author}{\bibinfo{person}{Sanjeev Arora} {and} \bibinfo{person}{Shmuel
+  Safra}.} \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{Probabilistic checking of proofs: A new
+  characterization of NP}.
+\newblock \bibinfo{journal}{\emph{Journal of the ACM (JACM)}}
+  \bibinfo{volume}{45}, \bibinfo{number}{1} (\bibinfo{year}{1998}),
+  \bibinfo{pages}{70--122}.
+\newblock
+
+
+\bibitem[Babai et~al\mbox{.}(1991)]%
+        {babai1991checking}
+\bibfield{author}{\bibinfo{person}{L{\'a}szl{\'o} Babai},
+  \bibinfo{person}{Lance Fortnow}, \bibinfo{person}{Leonid~A Levin}, {and}
+  \bibinfo{person}{Mario Szegedy}.} \bibinfo{year}{1991}\natexlab{}.
+\newblock \showarticletitle{Checking computations in polylogarithmic time}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the twenty-third annual ACM
+  symposium on Theory of computing}}. \bibinfo{pages}{21--32}.
+\newblock
+
+
 \bibitem[Balliu et~al\mbox{.}(2018)]%
         {balliu2018can}
 \bibfield{author}{\bibinfo{person}{Alkida Balliu}, \bibinfo{person}{Gianlorenzo
@@ -116,6 +152,17 @@
 \newblock
 
 
+\bibitem[Bellare and Rogaway(1993)]%
+        {ROM93BMR}
+\bibfield{author}{\bibinfo{person}{Mihir Bellare} {and}
+  \bibinfo{person}{Phillip Rogaway}.} \bibinfo{year}{1993}\natexlab{}.
+\newblock \showarticletitle{Random oracles are practical: A paradigm for
+  designing efficient protocols}. In \bibinfo{booktitle}{\emph{Proceedings of
+  the 1st ACM Conference on Computer and Communications Security}}.
+  \bibinfo{pages}{62--73}.
+\newblock
+
+
 \bibitem[Bitansky et~al\mbox{.}(2012)]%
         {bitansky2012extractable}
 \bibfield{author}{\bibinfo{person}{Nir Bitansky}, \bibinfo{person}{Ran
@@ -128,16 +175,43 @@
 \newblock
 
 
-\bibitem[Bitansky et~al\mbox{.}(2013)]%
+\bibitem[Bitansky et~al\mbox{.}(2013a)]%
         {bitansky2013recursive}
 \bibfield{author}{\bibinfo{person}{Nir Bitansky}, \bibinfo{person}{Ran
   Canetti}, \bibinfo{person}{Alessandro Chiesa}, {and} \bibinfo{person}{Eran
-  Tromer}.} \bibinfo{year}{2013}\natexlab{}.
+  Tromer}.} \bibinfo{year}{2013}\natexlab{a}.
 \newblock \showarticletitle{Recursive composition and bootstrapping for SNARKs
   and proof-carrying data}. In \bibinfo{booktitle}{\emph{Proceedings of the
   forty-fifth annual ACM symposium on Theory of computing}}.
   \bibinfo{pages}{111--120}.
 \newblock
+
+
+\bibitem[Bitansky et~al\mbox{.}(2013b)]%
+        {bitansky2013SNARKsLIPs}
+\bibfield{author}{\bibinfo{person}{Nir Bitansky}, \bibinfo{person}{Alessandro
+  Chiesa}, \bibinfo{person}{Yuval Ishai}, \bibinfo{person}{Omer Paneth}, {and}
+  \bibinfo{person}{Rafail Ostrovsky}.} \bibinfo{year}{2013}\natexlab{b}.
+\newblock \showarticletitle{Succinct non-interactive arguments via linear
+  interactive proofs}. In \bibinfo{booktitle}{\emph{Theory of Cryptography
+  Conference}}. Springer, \bibinfo{pages}{315--333}.
+\newblock
+
+
+\bibitem[Bowe et~al\mbox{.}(2017)]%
+        {crsZkSnark}
+\bibfield{author}{\bibinfo{person}{Sean Bowe}, \bibinfo{person}{Ariel Gabizon},
+  {and} \bibinfo{person}{Matthew~D. Green}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{A multi-party protocol for constructing the public
+  parameters of the Pinocchio zk-SNARK}.
+\newblock \bibinfo{howpublished}{Cryptology ePrint Archive, Paper 2017/602}.
+\newblock
+\urldef\tempurl%
+\url{https://eprint.iacr.org/2017/602}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{\url{https://eprint.iacr.org/2017/602}}.
 
 
 \bibitem[Canetti and Fischlin(2001)]%
@@ -237,6 +311,19 @@
 \newblock
 
 
+\bibitem[Feige et~al\mbox{.}(1991)]%
+        {feige1991approximating}
+\bibfield{author}{\bibinfo{person}{Uriel Feige}, \bibinfo{person}{Shafi
+  Goldwasser}, \bibinfo{person}{L{\'a}szl{\'o} Lov{\'a}sz},
+  \bibinfo{person}{Shmuel Safra}, {and} \bibinfo{person}{Mario Szegedy}.}
+  \bibinfo{year}{1991}\natexlab{}.
+\newblock \showarticletitle{Approximating clique is almost NP-complete}. In
+  \bibinfo{booktitle}{\emph{[1991] Proceedings 32nd Annual Symposium of
+  Foundations of Computer Science}}. IEEE Computer Society,
+  \bibinfo{pages}{2--12}.
+\newblock
+
+
 \bibitem[Feuilloley(2021)]%
         {CertSurvey}
 \bibfield{author}{\bibinfo{person}{Laurent Feuilloley}.}
@@ -272,6 +359,17 @@
 \newblock \showarticletitle{Redundancy in distributed proofs}.
 \newblock \bibinfo{journal}{\emph{Distributed Comput.}} \bibinfo{volume}{34},
   \bibinfo{number}{2} (\bibinfo{year}{2021}), \bibinfo{pages}{113--132}.
+\newblock
+
+
+\bibitem[Fiat and Shamir(1986)]%
+        {fiat1986prove}
+\bibfield{author}{\bibinfo{person}{Amos Fiat} {and} \bibinfo{person}{Adi
+  Shamir}.} \bibinfo{year}{1986}\natexlab{}.
+\newblock \showarticletitle{How to prove yourself: Practical solutions to
+  identification and signature problems}. In
+  \bibinfo{booktitle}{\emph{Conference on the theory and application of
+  cryptographic techniques}}. Springer, \bibinfo{pages}{186--194}.
 \newblock
 
 
@@ -399,6 +497,16 @@
 \newblock
 
 
+\bibitem[Kalai and Paneth(2016)]%
+        {KP16}
+\bibfield{author}{\bibinfo{person}{Yael Kalai} {and} \bibinfo{person}{Omer
+  Paneth}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Delegating RAM computations}. In
+  \bibinfo{booktitle}{\emph{Theory of Cryptography Conference}}. Springer,
+  \bibinfo{pages}{91--118}.
+\newblock
+
+
 \bibitem[Kalai et~al\mbox{.}(2022)]%
         {cryptoeprint:2022/1320}
 \bibfield{author}{\bibinfo{person}{Yael~Tauman Kalai}, \bibinfo{person}{Alex
@@ -413,17 +521,6 @@
 \tempurl}
 \newblock
 \shownote{\url{https://eprint.iacr.org/2022/1320}}.
-
-
-\bibitem[Kalai and Paneth(2016)]%
-        {KP16}
-\bibfield{author}{\bibinfo{person}{Yael~Tauman Kalai} {and}
-  \bibinfo{person}{Omer Paneth}.} \bibinfo{year}{2016}\natexlab{}.
-\newblock \showarticletitle{Delegating {RAM} Computations}. In
-  \bibinfo{booktitle}{\emph{{TCC} {(B2)}}} \emph{(\bibinfo{series}{Lecture
-  Notes in Computer Science}, Vol.~\bibinfo{volume}{9986})}.
-  \bibinfo{pages}{91--118}.
-\newblock
 
 
 \bibitem[Kalai et~al\mbox{.}(2019)]%
@@ -539,16 +636,6 @@
   between}. In \bibinfo{booktitle}{\emph{International Symposium on
   Stabilization, Safety, and Security of Distributed Systems}}. Springer,
   \bibinfo{pages}{1--17}.
-\newblock
-
-
-\bibitem[Valiant(2008)]%
-        {valiant2008incrementally}
-\bibfield{author}{\bibinfo{person}{Paul Valiant}.}
-  \bibinfo{year}{2008}\natexlab{}.
-\newblock \showarticletitle{Incrementally verifiable computation or proofs of
-  knowledge imply time/space efficiency}. In \bibinfo{booktitle}{\emph{Theory
-  of Cryptography Conference}}. Springer, \bibinfo{pages}{1--18}.
 \newblock
 
 

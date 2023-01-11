@@ -48,12 +48,18 @@ Warning--empty year in filecoin
 Warning--empty publisher in aiello2000fast
 Warning--empty address in aiello2000fast
 Warning--empty address in BA
+Warning--empty publisher in babai1991checking
+Warning--empty address in babai1991checking
 Warning--empty publisher in baruch2015randomized
 Warning--empty address in baruch2015randomized
+Warning--empty publisher in ROM93BMR
+Warning--empty address in ROM93BMR
 Warning--empty publisher in bitansky2012extractable
 Warning--empty address in bitansky2012extractable
 Warning--empty publisher in bitansky2013recursive
 Warning--empty address in bitansky2013recursive
+Warning--empty publisher in bitansky2013SNARKsLIPs
+Warning--empty address in bitansky2013SNARKsLIPs
 Warning--empty publisher in canetti2001universally
 Warning--empty address in canetti2001universally
 Warning--empty publisher in catalano2013vector
@@ -70,7 +76,11 @@ Warning--no number and no volume in dwork2004succinct
 Warning--page numbers missing in both pages and numpages fields in dwork2004succinct
 Warning--empty publisher in EGK22
 Warning--empty address in EGK22
+Warning--empty publisher in feige1991approximating
+Warning--empty address in feige1991approximating
 Warning--page numbers missing in both pages and numpages fields in CertSurvey
+Warning--empty publisher in fiat1986prove
+Warning--empty address in fiat1986prove
 Warning--empty publisher in gentry2011separating
 Warning--empty address in gentry2011separating
 Warning--empty address in OdedBook
@@ -104,47 +114,45 @@ Warning--empty publisher in paneth2022incrementally
 Warning--empty address in paneth2022incrementally
 Warning--empty publisher in patt2017proof
 Warning--empty address in patt2017proof
-Warning--empty publisher in valiant2008incrementally
-Warning--empty address in valiant2008incrementally
-You've used 47 entries,
+You've used 54 entries,
             5981 wiz_defined-function locations,
-            1749 strings with 25602 characters,
-and the built_in function-call counts, 52615 in all, are:
-= -- 6203
-> -- 1313
+            1789 strings with 27098 characters,
+and the built_in function-call counts, 61053 in all, are:
+= -- 7234
+> -- 1599
 < -- 0
-+ -- 445
-- -- 474
-* -- 3374
-:= -- 4777
-add.period$ -- 234
-call.type$ -- 47
-change.case$ -- 299
-chr.to.int$ -- 45
-cite$ -- 156
-duplicate$ -- 5190
-empty$ -- 3641
-format.name$ -- 608
-if$ -- 12912
-int.to.chr$ -- 4
++ -- 548
+- -- 575
+* -- 3969
+:= -- 5589
+add.period$ -- 270
+call.type$ -- 54
+change.case$ -- 354
+chr.to.int$ -- 51
+cite$ -- 171
+duplicate$ -- 5951
+empty$ -- 4174
+format.name$ -- 740
+if$ -- 14967
+int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 192
-newline$ -- 399
-num.names$ -- 301
-pop$ -- 2263
+missing$ -- 220
+newline$ -- 457
+num.names$ -- 349
+pop$ -- 2584
 preamble$ -- 1
-purify$ -- 651
+purify$ -- 760
 quote$ -- 0
-skip$ -- 1912
+skip$ -- 2194
 stack$ -- 0
-substring$ -- 4068
-swap$ -- 504
+substring$ -- 4689
+swap$ -- 578
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1249
-warning$ -- 93
-while$ -- 329
+type$ -- 1425
+warning$ -- 101
+while$ -- 376
 width$ -- 0
-write$ -- 930
-(There were 93 warnings)
+write$ -- 1067
+(There were 101 warnings)

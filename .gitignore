@@ -5,3 +5,17 @@
 main.tex.latexmain
 main.tex.latexmain~
 main.xcp
+main.aux
+main.bbl
+main.blg
+main.log
+main.out
+main.pdf
+*.swp
+*.un~
+main.aux
+main.bbl
+main.blg
+main.log
+main.out
+main.pdf

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.10)  11 JAN 2023 00:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.10)  11 JAN 2023 09:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1235,25 +1235,10 @@ Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 133
  Excluding comment 'screenonly' Include comment 'printonly'
 Excluding comment 'anonsuppress' Excluding comment 'acks' (main.aux
 
-LaTeX Warning: Label `def:VC' multiply defined.
+LaTeX Warning: Label `thm:concDargs' multiply defined.
 
 
-LaTeX Warning: Label `def:VC@cref' multiply defined.
-
-
-LaTeX Warning: Label `def:snarg' multiply defined.
-
-
-LaTeX Warning: Label `def:snarg@cref' multiply defined.
-
-
-LaTeX Warning: Label `sec:dargsForP' multiply defined.
-
-
-LaTeX Warning: Label `sec:dargsForP@cref' multiply defined.
-
-
-LaTeX Warning: Label `subfloat@@figure1' multiply defined.
+LaTeX Warning: Label `thm:concDargs@cref' multiply defined.
 
 )
 \openout1 = `main.aux'.
@@ -1547,7 +1532,9 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 79.
  [2.2]) (related.tex [3.3]) (relatedCrypto.tex) (prelim.tex
-[4.4]
+Underfull \vbox (badness 2401) has occurred while \output is active []
+
+ [4.4]
 Overfull \hbox (4.89853pt too wide) in paragraph at lines 30--33
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) When we need to en-code a graph $\OML/nx
 lmi/m/it/10 G$\T1/LinuxLibertineT-TLF/m/n/10 (-20) , we rep-re-sent it as an ad
@@ -1560,15 +1547,15 @@ ertineT-TLF/m/n/10 (-20) ,
 
 [5.5]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 92.
+(Font)              scaled to size 10.0pt on input line 91.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 113.
+(Font)              scaled to size 5.5pt on input line 110.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 230.
+(Font)              scaled to size 10.0pt on input line 227.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 230.
+(Font)              scaled to size 7.3pt on input line 227.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 230.
+(Font)              scaled to size 5.5pt on input line 227.
  [6.6]) (DargsDef.tex
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 32.
@@ -1596,190 +1583,90 @@ t/10 ; []\LMS/ntxsy/m/n/10 น\OML/nxlmi/m/it/10 v\LMS/ntxsy/m/n/10 บบ$
 ) (local.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
+(hyperref)                removing `math shift' on input line 57.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
+(hyperref)                removing `math shift' on input line 57.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
+(hyperref)                removing `math shift' on input line 57.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\cap' on input line 56.
+(hyperref)                removing `\cap' on input line 57.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
+(hyperref)                removing `math shift' on input line 57.
 
 [12.12]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 141.
+(Font)              scaled to size 7.3pt on input line 142.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 141.
+(Font)              scaled to size 5.5pt on input line 142.
  [13.13]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `math shift' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 275.
+(hyperref)                removing `superscript' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `math shift' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `math shift' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 275.
+(hyperref)                removing `superscript' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\cap' on input line 275.
+(hyperref)                removing `\cap' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `math shift' on input line 276.
 
-[14.14] [15.15]) (main.bbl
-LaTeX Info: Redefining \tempurl on input line 262.
+[14.14] [15.15]) (main.bbl [16.16]
+LaTeX Info: Redefining \tempurl on input line 337.
+LaTeX Info: Redefining \tempurl on input line 349.
+LaTeX Info: Redefining \tempurl on input line 519.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16.16]
-LaTeX Info: Redefining \tempurl on input line 411.
-)
+ [17.17])
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 17.28pt on input line 222.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 (Font)              scaled to size 17.28pt on input line 222.
 
-(app_crypto.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
+(app_crypto.tex [18.18] [19.19]
 
- [17.17]
-[18.18] [19.19] [20.20] [21.21]) (dargsForP.tex [22.22]
-Package mdframed Info: mdframed works in twoside mode on input line 36.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 36.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 42.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 42.
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 42.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 42.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 58.
 
 
-Class acmart Warning: A possible image without description on input line 42.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 58.
 
-Package mdframed Info: mdframed works in twoside mode on input line 44.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 44.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 57.
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 57.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 57.
-
-Class acmart Warning: A possible image without description on input line 57.
-
-Package mdframed Info: mdframed works in twoside mode on input line 59.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 59.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 70.
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 70.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 70.
-
-Class acmart Warning: A possible image without description on input line 70.
-
-[23.23
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.95     \end{gather}
-                     ]) (app_code.tex [24.24]
+[20.20]) (app_code.tex
 Package mdframed Info: mdframed works in twoside mode on input line 38.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 38.
-
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.40             \State
-                        $\crsvc \leftarrow \VCGen(1^\secpar, n)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.41             \State
-                        $\crssnark \leftarrow \SNARKGen(1^\secpar, 1^n)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.42             \State
-                        Output: $\crs = (\crsvc, \crssnark)$
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 44.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 44.
 Package mdframed Info: mdframed inside float 
  mdframed uses option nobreak mdframed on input line 44.
 Package mdframed Info: mdframed inside a box 
@@ -1788,55 +1675,13 @@ Package mdframed Info: mdframed inside a box
 
 Class acmart Warning: A possible image without description on input line 44.
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 Package mdframed Info: mdframed works in twoside mode on input line 46.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 46.
-
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.48             \State
-                        Parse $\crs=(\crsvc, \crssnark)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.49 	    \State
-                 Let $v_1,\ldots,v_n$ be the nodes of $G$, sorted by UID
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.50 	    \State
-                 Let $L \leftarrow (L_1,\ldots,L_n)$,
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.52             \State
-                        $(c,\aux) \leftarrow \VCCom(\crsvc, L_1,\ldots, L_n)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.53             \State
-                        Compute for every $i$: $\Lambda_i \leftarrow \VCOpen...
-
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.54             \State
-                        Compute $\pisnark \leftarrow \SNARKPro(\crssnark, c,...
-
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.55             \State
-                        Output $\{\pi(v_i)\}_{v_i\in V(G)}$, where for every...
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 57.
@@ -1847,35 +1692,13 @@ Package mdframed Info: mdframed inside a box
 
 Class acmart Warning: A possible image without description on input line 57.
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 Package mdframed Info: mdframed works in twoside mode on input line 59.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 59.
-
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.61             \State
-                        Parse $\crs=(\crsvc, \crssnark)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.62             \State
-                        Parse $\pi = (c, i, \Lambda_i, \pisnark)$
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.63             \State
-                        Verify that for every neighbor $u \in N(v)$:
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
-has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.65             \State
-                        Output 1 if the following holds:
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 71.
@@ -1884,219 +1707,402 @@ Package mdframed Info: mdframed inside float
 Package mdframed Info: mdframed inside a box 
  mdframed uses option nobreak mdframed on input line 71.
 
-
 Class acmart Warning: A possible image without description on input line 71.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[25.25]
-Underfull \vbox (badness 3579) has occurred while \output is active []
-
- [26.26]
-Package mdframed Info: mdframed works in twoside mode on input line 252.
+[21.21] [22.22
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.128 
+      ]
+Package mdframed Info: mdframed works in twoside mode on input line 242.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 252.
+(mdframed)              on input line 242.
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.254 	\State
+l.244             \State
+                         Compute: $\crsvc = \VCGen(1^\secpar, n)$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.245             \State
+                         Compute: $\crssnarg = \SNARGGen(1^\secpar, 1^n)$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.246             \State
+                         Output: $\crs = (\crsvc, \crssnarg)$
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 248.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 248.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 248.
+
+
+Class acmart Warning: A possible image without description on input line 248.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package mdframed Info: mdframed works in twoside mode on input line 250.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 250.
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.252             \State
+                         Parse $\crs=(\crsvc, \crssnarg)$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.253             \State
+                         Represent $G$ as an adjacency list $L = L_1,\ldots,...
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.254             \ForEach
+                          {$i\in [n]$}
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.255                 \State
+                             Set $v\in V(G)$ to be the node with the $i$ sma...
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.256                 \State
+                             Set $i_v = i$, $L_{i_v} = (v, N_G(v_i))$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.257             \EndFor
+                         
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.258             \State
+                         Compute $(d,\aux) = \VCCom(\crsvc, L_1,\ldots, L_n)$
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 263.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 263.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 263.
+
+
+Class acmart Warning: A possible image without description on input line 263.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package mdframed Info: mdframed works in twoside mode on input line 265.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 265.
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.267             \State
+                         Parse $\crs=(\crsvc, \crssnarg)$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.268             \State
+                         Parse $\pi = (c, i, \Lambda_i, \pisnarg)$
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.269             \State
+                         Verify that $\forall u\in \var{N}$, $d(u) = d$ and ...
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.270             \State
+                         Output 1 if the following holds:
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 276.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 276.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 276.
+
+
+Class acmart Warning: A possible image without description on input line 276.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[23.23] [24.24]
+Package mdframed Info: mdframed works in twoside mode on input line 371.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 371.
+
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.373 	\State
               $\hk \leftarrow \SCRHGen(1^\secpar, \ell(n))$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.255 	\State
+l.374 	\State
               $\crssnark \leftarrow \SNARKGen(1^\secpar, n')$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.257 	\State
+l.376 	\State
               output $(\hk, \crssnark)$
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 259.
+(mdframed)              on input line 378.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 259.
+ mdframed uses option nobreak mdframed on input line 378.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 259.
+ mdframed uses option nobreak mdframed on input line 378.
 
 
-Class acmart Warning: A possible image without description on input line 259.
+Class acmart Warning: A possible image without description on input line 378.
 
-Package mdframed Info: mdframed works in twoside mode on input line 261.
+Package mdframed Info: mdframed works in twoside mode on input line 380.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 261.
+(mdframed)              on input line 380.
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.264 	\State
+l.383 	\State
               Parse $\crs = (\hk, \crssnark)$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.266 	\State
+l.385 	\State
               Compute the messages $\set{ \var{msgout}(v), \var{msgin}(v) }_...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.269 	\ForEach
+l.388 	\ForEach
                {$v \in V(G)$} \Comment{In parallel}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.270 		\State
+l.389 		\State
                $s_{\var{out}}(v) \leftarrow \sum_{\var{msg} \in \var{msgout}...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.271 		\State
+l.390 		\State
                $s_{\var{in}}(v) \leftarrow \sum_{\var{msg} \in \var{msgin}(v...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.272 		\State
+l.391 		\State
                $I(v) \leftarrow (v, x(v), N_G(v), y(v), s_{\var{in}}(v), s_{...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.273 		\State
+l.392 		\State
                $W(v) \leftarrow ( \var{msgout}(v), \var{msgin}(v) )$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.8}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.274 		\State
+l.393 		\State
                $\pisnark(v) \leftarrow \Pro(\var{crs}, (\hk, I(v)), W(v))$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.9}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.275 	\EndFor
+l.394 	\EndFor
               
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.10})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.276 	\State
+l.395 	\State
               Compute a spanning tree $T$ of $G$, of height $\leq 2 \mathrm{...
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 287.
+(mdframed)              on input line 406.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 287.
+ mdframed uses option nobreak mdframed on input line 406.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 287.
+ mdframed uses option nobreak mdframed on input line 406.
 
-Class acmart Warning: A possible image without description on input line 287.
+Class acmart Warning: A possible image without description on input line 406.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package mdframed Info: mdframed works in twoside mode on input line 289.
+Package mdframed Info: mdframed works in twoside mode on input line 408.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 289.
+(mdframed)              on input line 408.
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.298 	\State
+l.417 	\State
               $r(v) = r(u)$ for every $u \in N(v)$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.299 	\If
+l.418 	\If
           {$r(v) = v$}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.300 		\State
+l.419 		\State
                $d(v) = 0$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.301 		\State
+l.420 		\State
                $S_{\var{out}}(v) = S_{\var{in}}(v)$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.302 	\Else
+l.421 	\Else
             
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.303 		\State
+l.422 		\State
                $p(v) \in N(v)$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.304 		\State
+l.423 		\State
                $d(v) = d(p(v)) + 1$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.8}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.305 	\EndIf
+l.424 	\EndIf
              
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.9}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.306 	\State
+l.425 	\State
               $S_{\var{out}}(v) = s_{\var{out}}(v) + \sum_{u \in N(v) : p(u)...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.10})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.307 	\State
+l.426 	\State
               $S_{\var{in}}(v) = s_{\var{in}}(v) + \sum_{u \in N(v) : p(u) =...
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 310.
+(mdframed)              on input line 429.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 310.
+ mdframed uses option nobreak mdframed on input line 429.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 310.
+ mdframed uses option nobreak mdframed on input line 429.
 
-Class acmart Warning: A possible image without description on input line 310.
+Class acmart Warning: A possible image without description on input line 429.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[27.27] [28.28
+[25.25] [26.26
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.11})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.384 		\end{equation}
+l.465 	\begin{itemize}
                       ]
-Overfull \hbox (6.80948pt too wide) in paragraph at lines 435--441
+Overfull \hbox (6.80948pt too wide) in paragraph at lines 554--560
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) All mes-sages in $\OML/nxlmi/m/it/10 W\L
 MS/ntxsy/m/n/10 น\OML/nxlmi/m/it/10 v\LMS/ntxsy/m/n/10 บ \U/ntxmia/m/it/10 = \L
 MS/ntxsy/m/n/10 น[]น\OML/nxlmi/m/it/10 v\LMS/ntxsy/m/n/10 บ\OML/nxlmi/m/it/10 ;
@@ -2107,7 +2113,86 @@ ntxsy/m/n/10 บ\OML/nxlmi/m/it/10 ; W\LMS/ntxsy/m/n/10 น\OML/nxlmi/m/it/10 v\LMS
 /ntxsy/m/n/10 บบ$
  []
 
-)
+[27.27]) (app_concrete.tex
+
+LaTeX Warning: Reference `cor:RAMSNARGs' on page 28 undefined on input line 21.
+
+
+) (app_local.tex
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\cap' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\begingroup' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\escapechar' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\m@ne' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\<def>-command' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@gtempa' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\endgroup' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\nsubseteq' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\neq' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+[28.28]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 62.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\cap' on input line 62.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 62.
+
+[29.29])
 (C:\Users\rotem\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
@@ -2118,21 +2203,24 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 
 Class acmart Warning: Some images may lack descriptions.
 
-[29.29] (main.aux)
+[30.30] (main.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 243D2FFDDD5BA41BD8A09A0C2F44108D;6895.
+(rerunfilecheck)             Checksum: A8DFC58E4C5E2451326719F86AC96981;7620.
  ) 
 Here is how much of TeX's memory you used:
- 37519 strings out of 478582
- 696877 string characters out of 2844344
- 1004549 words of memory out of 3000000
- 53611 multiletter control sequences out of 15000+600000
- 802002 words of font info for 774 fonts, out of 8000000 for 9000
+ 37531 strings out of 478582
+ 697267 string characters out of 2844344
+ 1004535 words of memory out of 3000000
+ 53633 multiletter control sequences out of 15000+600000
+ 800824 words of font info for 767 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 99i,19n,131p,1170b,1392s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 99i,19n,131p,1397b,1391s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/rotem/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_
 kijugd.enc}{C:/Users/rotem/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libert
 ine/lbtn_ncsllp.enc}{C:/Users/rotem/AppData/Local/Programs/MiKTeX/fonts/enc/dvi
@@ -2159,9 +2247,9 @@ ms/MiKTeX/fonts/type1/public/newtx/txmiaX.pfb><C:/Users/rotem/AppData/Local/Pro
 grams/MiKTeX/fonts/type1/public/txfonts/txsya.pfb><C:/Users/rotem/AppData/Local
 /Programs/MiKTeX/fonts/type1/public/txfonts/txsyb.pfb><C:/Users/rotem/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on main.pdf (29 pages, 737808 bytes).
+Output written on main.pdf (30 pages, 747797 bytes).
 PDF statistics:
- 808 PDF objects out of 1000 (max. 8388607)
- 261 named destinations out of 1000 (max. 500000)
- 174309 words of extra memory for PDF output out of 184870 (max. 10000000)
+ 823 PDF objects out of 1000 (max. 8388607)
+ 259 named destinations out of 1000 (max. 500000)
+ 174325 words of extra memory for PDF output out of 184870 (max. 10000000)
 
