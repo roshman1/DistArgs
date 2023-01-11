@@ -1,5 +1,5 @@
 \section{Concrete Instantiations for the Constructions }\label{app:concrete}
-We discuss several possibilities for instantiating the primitives used in our constructions. Throughout the first part of this work (Section~\ref{sec:dargs} and Section~\ref{sec:distprover}), we use several cryptographic primitives, some of them quite strong. Here we refine them and show from which concrete assumptions each of them can be constructed. \TODO{CRH is not so concrete}
+We discuss several possibilities for instantiating the primitives used in our constructions. Throughout the first part of this work (Section~\ref{sec:dargs} and Section~\ref{sec:distprover}), we use several cryptographic primitives, some of them quite strong. Here we refine them and show from which concrete assumptions each of them can be constructed.
 
 \begin{theorem}\label{thm:concDargs}
     Let $\Lan$ be a graph language, such that $\Lan\in \NP$. Assuming collision-resistant hash families,
@@ -20,6 +20,15 @@ From Theorem~\ref{thm:centralized} and ~\cite{merkle1989certified}, we get that 
 \end{theorem}
 As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies Theorem \ref{thm:RAMSNARGs}.
 
+Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds
+    and sends messages of length $\poly(n)$.
+    Assuming SNARKs for $\NP$ %exist,
+    and %assuming
+    a certain type of collision-resistant hash functions exist,%
+    \footnote{We require a new property called \emph{sum collision resistance}, see Section~\ref{sec:distprover}.}
+    there is a distributed argument of length $\polylog(n)$
+    certifying $\calD$'s execution, where the prover is an efficient distributed algorithm
+    running in $O(T + \diam(G))$ rounds and sending messages of $\polylog(n)$ bits.
 \begin{theorem}
     Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds and sends messages of length $\poly(n)$. Assuming sum-collision-resistant hash families,
     \begin{enumerate}
@@ -27,5 +36,6 @@ As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any 
         \item In the random oracle model, there is a succinct non-interactive distributed argument for $\Lan$.
         \item In the common reference string model, assuming \emph{Knowledge-of-Exponent in Bilinear Groups}, there is a succinct non-interactive distributed argument for $\Lan$. 
     \end{enumerate}
-    Where in all of the cases above, the prover of the distributed argument has a distributed implementation.
+    Where in all of the cases above, the prover is an efficient distributed algorithm
+    running in $O(T + \diam(G))$ rounds and sending messages of $\polylog(n)$ bits.
 \end{theorem}

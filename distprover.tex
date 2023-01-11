@@ -80,24 +80,25 @@ which means that every message sent was indeed received, and vice-versa.
 Since we compare \emph{sums} of hashed values rather than
 directly comparing hashed values to one another,
 our construction requires the following property,
-which we call \emph{Sum-Collision-Resistance};
-it is a plausible strengthening of standard collision-resistance (see discussion in Appendix~\ref{app:crypto}).
+which we call \emph{sum-collision-resistance};
+it is a plausible strengthening of standard collision-resistance (see discussion in Appendix~\ref{app:crypto:hashes}).
 %\TODO{add + subsection of appendix}
 
 \begin{definition} [Sum-Collision-Resistant Hash (SCRH)]
-    A hash family $(\Gen, \Hash)$ is considered \emph{sum-collision-resistant} if for any probabilistic poly-time adversary $\mathcal{A}$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\secpar\in \mathbb{N}$,  
+    A hash family $(\Gen, \Hash)$ is considered \emph{sum-collision-resistant} if for any probabilistic poly-time adversary $\mathcal{A}$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\secpar\in \mathbb{N}$,
     \begin{gather*}
-        \prb
+        \prob{}
         {
-		\sum_{ m \in M }\Hash(\hk, m) = \sum_{ m' \in M'}\Hash(\hk, m')\\
-		M \neq M'
-	}
-	{
-		\hk \leftarrow \Gen(1^\secpar, n) \\
-		(M, M') \leftarrow\calA(\hk, 1^\secpar, n)
-        }
-	\leq \epsilon(\secpar)
-	.
+        \begin{array}{cc}
+        M \neq M' \\
+        \sum_{ m \in M }\Hash(\hk, m) = \sum_{ m' \in M'}\Hash(\hk, m')
+        \end{array}
+        \middle\vert
+        \begin{array}{ll}
+             hk \leftarrow Gen(1^n, 1^\secpar) \\
+             (M, M') \leftarrow\calA(\hk, 1^\secpar, n)
+        \end{array}
+        } \leq \epsilon(\secpar)
     \end{gather*}
 \end{definition}
 
