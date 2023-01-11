@@ -11,14 +11,14 @@ We discuss several possibilities for instantiating the primitives used in our co
 \end{theorem}
 From Theorem~\ref{thm:centralized} and ~\cite{merkle1989certified}, we get that part (1) follows from \cite{kilian1992note}, part (2) follows from \cite{micali2000computationally} and part (3) follows from~\cite{bitansky2013SNARKsLIPs}.
 
-\begin{theorem}\label{thm:concDargs}
+\begin{theorem}\label{thm:RAMSNARGs}
     Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Collision Resistant Hash Families, there is a succinct distributed argument for $\Lan$, assuming either
     \begin{enumerate}
         \item The $O(1)-\LIN$ assumption on a pair of cryptographic groups with efficient bilinear map, or
         \item A combination of the sub-exponential $\DDH$ assumption and the $\QR$ assumption.
     \end{enumerate}
 \end{theorem}
-As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies corollary \ref{cor:RAMSNARGs}.
+As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies Theorem \ref{thm:RAMSNARGs}.
 
 \begin{theorem}
     Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds and sends messages of length $\poly(n)$. Assuming Sum-Collision-Resistant Hash Families,
