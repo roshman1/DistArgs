@@ -237,7 +237,7 @@ Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Flexible RAM S
 
 Let $\Lan$ be a language on graphs that is decidable in polynomial time, given the entire graph as input, and let $M_\Lan$ be the Turing machine that decides it:
 $$G\in \Lan \Leftrightarrow M_\Lan(L(G)) = 1$$
-Fix a vector commitment $(\VCGen, \VCCom, \VCOpen, \VCVer)$ that is inverse collision-resistant and a RAM SNARG $(\SNARGGen, \SNARGPro, \SNARGVer)$ for $M_\Lan$, corresponding to the vector commitment as the hash with local opening. The succinct distributed argument for $\Lan$, $(\Gen, \Pro, \Ver)$, is defined as follows \TODO{move to the appendix eventually}
+Fix a vector commitment $(\VCGen, \VCCom, \VCOpen, \VCVer)$ that is inverse collision-resistant and a RAM SNARG $(\SNARGGen, \SNARGPro, \SNARGVer)$ for $M_\Lan$, corresponding to the vector commitment as the hash with local opening. The succinct distributed argument for $\Lan$, $(\Gen, \Pro, \Ver)$, is defined as follows.
 \begin{subfigures}\label{fig:dargsForP}
     \begin{nicefig}[h]{The Setup Procedure of Section~\ref{sec:dargsForP}: $\Gen(1^\secpar, n)$ }{fig:dargsForP_Setup}
         \begin{algorithmic}[1]
@@ -283,7 +283,7 @@ $\Gen, \Pro, \Ver$ is a succinct distributed argument.
 \end{claim}
 
 \begin{proof}%\label{step:soundnessBreakP}
-    Completeness and succinctness follow immediately from the completeness and the succinctness of the VC and the SNARG. We proceed to the proof of soundness. \TODO{Is this a good opening?}
+    Completeness and succinctness follow immediately from the completeness and the succinctness of the VC and the SNARG. We proceed to the proof of soundness.
     Assume towards contradiction that there exists an efficient prover $\Pro^*$ and a non-negligible function $\alpha(\cdot)$ such that:
     \begin{gather}\label{eq:soundnessBreakP}
         \prob{}
@@ -325,21 +325,6 @@ $\Gen, \Pro, \Ver$ is a succinct distributed argument.
     Since the event in \ref{eq:soundnessBreakP} happens with probability at least $\alpha(\lambda)$, one of the events $\VCCompBreak$, $\ICRBreak$, $\SNARGSoundBreak$, $\SNARGCompBreak$ happens with probability at least $\alpha(\lambda)/4$, which is also a non-negligible function of $\lambda$, and so, $\Adv$ breaks at least one of the following: the VC's completeness property, the VC's position-binding property, the SNARG's completeness property, the SNARG's soundness property.
 Completeness, succinctness, and verifier efficiency follow naturally from the primitives' properties.
 \end{proof}
-
-\begin{corollary}\label{cor:MerkleICRVC}
-    Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Flexible RAM SNARGs and CRH exist, there is a succinct distributed argument for $\Lan$.  
-\end{corollary}
-Merkle Trees (\cite{merkle1989certified}) induced by a CRH in fact instantiate an Inverse Collision-Resistant VC. Together with theorem~\ref{theo:P}, this implies corollary~\ref{cor:MerkleICRVC}
-\TODO{The first corollary should stay in the section and the rest should move to the appendix, and possibly be united into one corollary / theorem with bullets}
-
-\begin{corollary}\label{cor:RAMSNARGs}
-    If $\Lan\in\PP$, there exists a distributed argument for $\Lan$ of length $\polylog(n)$, assuming either
-    \begin{enumerate}
-        \item The $O(1)-\LIN$ assumption on a pair of cryptographic groups with efficient bilinear map, or
-        \item A combination of the sub-exponential $\DDH$ assumption and the $\QR$ assumption.
-    \end{enumerate}
-\end{corollary}
-As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies corollary \ref{cor:RAMSNARGs}.
 
 \subsection{Certifying Executions of Computationally-Efficient Distributed Algorithms}
 \label{app:distprover}

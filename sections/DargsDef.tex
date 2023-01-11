@@ -1,0 +1,51 @@
+\section{Succinct Distributed Arguments}
+A succinct distributed argument consists of the following algorithms.
+
+\paragraph{$\Gen(1^\secpar, n)\to \var{\crs}$.} This is a randomized algorithm that takes as input a security parameter $1^\secpar$ and a graph size $n$ and outputs a common reference string $\var{\crs}$.
+
+\paragraph{$\Pro(\var{\crs}, G (w))\to \{\pi_v\}_{v\in V(G)}$}
+%, c, L_i, \Lambda_i)$.}
+This algorithm takes as input a common reference string $\var{\crs}$, %a node $v$, an index $i$, an adjacency list $L$, where the \ith row is $N(v)$
+a graph $G$, and, in the case of $\NP$ arguments, a witness $w$, and outputs a list of proofs $\{\pi_v\}_{v\in V(G)}$.
+
+\paragraph{$\Ver(\var{\crs}, N, v, \pi)\to \{0,1\}$.} This algorithm that takes as input a common reference string $\var{\crs}$, a neighborhood $N$, a node $v$, and a proof $\pi$, and outputs an acceptance bit.
+
+%\rc{this should be in a definition environment}
+%\Enote{I'm not sure... }
+
+\begin{definition}\label{defSDarg}
+Let $\Lan$ and $\calR$ be an $\NP$ language and the compatible relation on graphs. A \emph{succinct distributed argument} for $\Lan$ and $\calR$, denoted $(\Gen, \Pro, \Ver)$, satisfies the following properties:
+\paragraph{Completeness}  For $(G,w)\in \calR$%, for every ordering on the nodes of $G$: $V(G)\to [n]$ for every $v\in V(G)$ %such that $\var{id}$ is the $i$ smallest $\var{id}$ in $G$, %, if $L(G)$ is the some ordering of the identifiers of the nodes of G, and $Adj(G)L$ is an adjacency list of the nodes where the \ith row is $N_G(v_{id})$ where $id = L(G)[i]$, then
+\begin{gather*}
+    \prob{}
+    {
+    \begin{array}{ll}
+    \Ver(\var{\crs}, N, v, \pi) = 1
+    \end{array}
+    \middle\vert
+    \begin{array}{ll}
+    \var{\crs} \leftarrow \Gen(1^\secpar, n) \\
+    N = N_G(v) \\
+    \{\pi_v\}_{v\in V(G)} \leftarrow \Pro(\var{\crs}, G, w) \\
+    \end{array}
+    } = 1
+\end{gather*}
+\paragraph{Soundness} For any eficient adversarial prover $\Pro^*$ %, and $G\notin \Lan$,
+there exists a negligible function $\epsilon(\cdot)$ such that
+\begin{gather*}
+    \prob{}
+    {
+    \begin{array}{ll}
+    G\notin \Lan \\
+    \wedge\ \forall v\in V(G) : \Ver(\var{\crs}, N_G(v), v, \pi_{v}) = 1
+    \end{array}
+    \middle\vert
+    \begin{array}{ll}
+    \var{\crs} \leftarrow \Gen(1^\secpar, n) \\
+    (G, \{\pi_{v}\}_{v\in V(G)}) \leftarrow \Pro^*(\var{\crs}, 1^\secpar, 1^n) \\
+    \end{array}
+    } \leq \epsilon(\secpar)
+\end{gather*}
+\paragraph{Succinctness} The $\var{\crs}$ and the proof $\pi$ are of length at most $\poly(\secpar, \log n)$, and the running time of $\Gen$ is at most $\poly(n)$.
+\paragraph{Verifier Efficiency} \TODO{fill this}
+\end{definition}

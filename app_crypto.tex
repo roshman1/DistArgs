@@ -31,7 +31,7 @@ or focused on refining the knowledge assumptions used and generalizing them~\cit
 Vector Commitments are defined formally in~\cite{catalano2013vector}, where they are constructed in a way that makes them more succinct than what we required in this work: they show VCs \TODO{initials for VCs, SNARGs, etc} with commitment and opening length that depends only on the security parameter, and is completely \emph{independent} of the input size.
 
 For our use, a more classic form of VCs suffices; a Merkle Tree~\cite{merkle1989certified} induced by a CRH satisfies our completeness, position-binding \TODO{capitalize?}, and succinctness requirements.
-\TODO{Change hash definition to family}
+\TODO{Change hash definition to family?}
 \begin{definition} [Collision-Resistant Hash (CRH)]
     A hash family $(\Gen, \Hash)$ is considered \emph{collision-resistant}, if for any efficient adversary $\mathcal{A}$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\secpar\in \mathbb{N}$,
     \begin{gather*}
@@ -53,18 +53,7 @@ For our use, a more classic form of VCs suffices; a Merkle Tree~\cite{merkle1989
 
 If $h$ is taken from a CRH family, then this scheme is a position-binding VC, since in order to open the same position in two different ways, one must find a collision.
 
-Moreover, for our use in Section~\ref{sec:dargsForP} \TODO{verify section label and all labels and references and capitalized Sections}, where we also require the VC be \emph{inverse collision-resistant}, it is essential we use Merkle Trees. This is because Merkle Trees are based on a \emph{deterministic} function, and the process of verifying an opening is based on evaluating the same function that is used for the commitment. In order to obtain two different commitments and full openings of them (that is, opening for every position to each commitment), one needs to find two different \emph{outputs} for the same \emph{input} of a deterministic function, which is impossible. Note that in the definition of the inverse collision-resistance property, we allowed this to happen with a negligible probability, because nothing more is necessary for our proof, but in fact, when instantiating the VC by a Merkle Tree, we can promise that such "inverse collisions" are never found.
-
-
-
-
-
-\TODO{Put the various assumptions here --- what's currently in the form of the various corollaries}
-
-
-
-\
-
+Moreover, for our use in Section~\ref{sec:dargsForP} \TODO{verify all labels and references and capitalized Sections}, where we also require the VC be \emph{inverse collision-resistant}, it is essential we use Merkle Trees. This is because Merkle Trees are based on a \emph{deterministic} function, and the process of verifying an opening is based on evaluating the same function that is used for the commitment. In order to obtain two different commitments and full openings of them (that is, opening for every position to each commitment), one needs to find two different \emph{outputs} for the same \emph{input} of a deterministic function, which is impossible. Note that in the definition of the inverse collision-resistance property, we allowed this to happen with a negligible probability, because nothing more is necessary for our proof, but in fact, when instantiating the VC by a Merkle Tree, we can promise that such "inverse collisions" are never found.
 
 \subsection{SNARKs for $\NP$}
 There is an abundance of constructions of SNARKs. In this work, we refer to the construction in \cite{bitansky2013SNARKsLIPs}, but it could be replaced by any \emph{publically verifiable} SNARK construction, with or without preprocessing. We refer to~\cite{bitansky2013SNARKsLIPs, bitansky2013recursive} for more details on public vs. private verifiability and preprocessing in SNARKs.
