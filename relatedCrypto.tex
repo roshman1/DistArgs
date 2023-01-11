@@ -48,3 +48,7 @@ nevertheless used on some blockchains, including Ethereum~\cite{ZKSnarks} and ot
 
 %In \cite{gentry2011separating}, a substential barrier to proving the soundness of a SNARG for $\NP$ under falsifiable assumptions alone. Since, many works were either focused on what can be done without these knowledge assumptions, which include SNARGs for deterministic computation (\cite{kalai2019delegate}, \cite{jawale2021snargs}, \cite{choudhuri2021snargs}) and batch arguments for $\NP$ (\cite{choudhuri2021non}, \cite{hulett2022snargs},  \cite{devadas2022rate}, \cite{cryptoeprint:2022/1320}), incrementally verifiable computation (\cite{paneth2022incrementally}) and the relationship between these primitives.
 %In this work, we use SNARKs (SNARGs of Knowledge) for $\NP$ and SNARGs for $\PP$.
+
+An alternative scheme for certifying distributed algorithms is \emph{proof-carrying code}~\cite{Necula11,bitansky2013recursive},
+where each node recursively proves that it has executed every step correctly,
+but this requires stronger assumptions and can generally not handle long computations.

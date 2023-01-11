@@ -178,4 +178,8 @@ the partial sums
 	S_{\var{in}}(v) \leftarrow s_{\var{in}}(v) + \sum_{u \in \mathrm{children}(v)} S_{\var{in}}(u).
 \end{equation*}
 
-
+The nodes then verify the spanning tree
+and the SNARK proof,
+and
+make sure the partial sums agree with their children's partial sums.
+The root $r$ verifies that $S_{\var{out}}(r) = S_{\var{in}}(r)$.

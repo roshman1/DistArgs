@@ -11,8 +11,8 @@ in one algorithm is more restrictive than requiring that the language
 be decidable by one algorithm that is local,
 and also by another algorithm that is computationally efficient.
 
-\subsection{Definitions}
-\label{sec:local_def}
+%\subsection{Definitions}
+%\label{sec:local_def}
 
 Fix an input domain $\calX$, and a UID space $\calU$,
 and let $\calC = \calC(\calX, \calU)$ be the set of all configurations
@@ -136,7 +136,7 @@ The language $\ITERIN$ consists of all configuration $C^{n_L,n_R}(M,a,b,s)$ such
 	$s \geq \max(n_L, n_R)$,
 	and $M$ accepts $a$ or $b$ (or both).
 
-	As we explained above, it is not difficult to see that $\ITERIN$ can be decided by a local algorithm,
+	It is not difficult to see that $\ITERIN$ can be decided by a local algorithm,
 and is also in $\PP$.
 Next we show that $\ITERIN$ is not decidable by a polynomial-time local algorithm:
 %%\begin{claim}\label{claimITINalgos}
@@ -345,7 +345,7 @@ where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
 	its input. In addition, the other path nodes
 	need to verify that their input is locally consistent with $\calL$
 	(e.g., they are indexed properly).
-
+%
 	To decide membership in $\calL$ using a polynomial-time centralized algorithm,
 	we can simply read $z$ off of the last node on the path, compute both $f_n(z)$ and $b_n(z)$,
 	and verify that the input is consistent with $f_n(z)$ and $b_n(z)$.
