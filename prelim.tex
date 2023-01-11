@@ -85,7 +85,7 @@ in any position $i$.
 The commitment
 consists of the following algorithms.
 
-\vspace{-1ex}
+%\vspace{-1ex}
 \begin{itemize}
     \item $\Gen(1^\secpar, q)\to \crs$: a randomized algorithm that takes as input the security parameter $\secpar$ and the length $q$ of the committed vector, and outputs a common reference string $\crs$.
     \item $\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$: a deterministic algorithm that takes $q$ a vector $m_1,\ldots, m_q$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$ (which may just be $m_1,\ldots,m_1$ itself, but can also be more general).
@@ -199,7 +199,7 @@ A VC $(\Gen, \Com, \Open, \Verify)$ is required to satisfy:
 %(except with negligible probability).
 
 \paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
-A SNARK consists of the following procedures:
+A SNARK consists of the procedures:
 \begin{itemize}
     \item $\Gen(1^\secpar, \ell)\to \crs$: a setup procedure that takes a security parameter $\lambda$
 		and an instance length $\ell$, and generates a $\crs$.

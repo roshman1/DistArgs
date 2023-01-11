@@ -21,9 +21,14 @@ cryptography.
 
 Finally, our characterization of the power of $\LDP$ algorithms
 is at present incomplete.
-One-way functions are an \emph{average-case} hardness assumption
-(the function is hard to invert on random inputs),
+One-way functions are a specific hardness assumption,
+and an average-case one (the function is hard to invert on random inputs).
+One can define a worst-case version of one-way functions,
+but still, it would amount to assuming
+that one \emph{specific} problem (inverting a function) is hard to solve,
 and it is not clear that separating $\LDnP$ from $\LDn \cap \PP$
 requires such an assumption.
-It is interesting to investigate whether and which worst-case
-assumptions suffice to separate $\LDnP$ from $\LDn \cap \PP$.
+It is interesting to investigate whether 
+we can separate $\LDnP$ from $\LDn \cap \PP$
+under a more general assumption, e.g., $\PP \neq \NP$, or $\PP \neq \NP \cap \coNP$.
+
