@@ -86,12 +86,13 @@ We ask whether the same can be done in the distributed setting,	and show that th
 	is linear in the diameter of the graph.
 	
 
-\begin{theorem}[Informal]
+\begin{theorem}
     Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds
     and sends messages of length $\poly(n)$.
     Assuming SNARKs for $\NP$ %exist,
     and %assuming
-    a certain type of collision-resistant hash functions exist,
+    a certain type of collision-resistant hash functions exist,%
+    \footnote{We require a new property called \emph{sum collision resistance}, see Section~\ref{sec:distprover}.}
     there is a distributed argument of length $\polylog(n)$
     certifying $\calD$'s execution, where the prover is an efficient distributed algorithm
     running in $O(T + \diam(G))$ rounds and sending messages of $\polylog(n)$ bits.

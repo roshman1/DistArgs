@@ -13,26 +13,27 @@ allowing randomization or interaction with the prover (e.g.,~\cite{baruch2015ran
 and studying other settings;
 we refer to the excellent survey~\cite{CertSurvey} for a comprehensive overview.
 To our knowledge, in all prior work, the prover and the verifier have unbounded local computational power.
-
+%
 In~\cite{EGK22}, the authors consider {locally-restricted proof labeling schemes},
 where the prover itself is a (computationally-unbounded) local algorithm;
 however, the proof is required to be sound against any prover, not just a local one.
 
 \paragraph{Local distributed decision.}
-Local distributed algorithms have received an enormous amount of attention from the community,
-and local distributed decision in particular.
+Local algorithms have received an enormous amount of attention from the community,
+and local decision in particular.
 Over the past decade there has been a significant effort towards building
 a complexity theory for the area: for example, in~\cite{fraigniaud2013towards},
 the authors study the classes $\mathsf{LD}, \mathsf{BPLD}$ and $\mathsf{NLD}$ of languages decidable
 by deterministic, randomized, or nondeterministic local algorithms,%
-\footnote{In~\cite{fraigniaud2013towards} and much of the follow-up work, the outputs
-of the nodes are not allowed to depend on the identifiers in the network,
-and there is particular emphasis on the role of identifiers
-and their effect on expressive power.
-In this work we do not restrict the way that identifiers may be used;
+\footnote{In~\cite{fraigniaud2013towards} and follow-up, the output
+of the algorithm may depend on the nodes' identifiers.
+%and there is particular emphasis on the role of identifiers
+%and their effect on expressive power.
+%In this work
+Here we do not restrict the way that identifiers may be used;
 for this reason we use the notation $\LD, \NLD$
-instead of $\mathsf{LD}, \mathsf{NLD}$ to denote
-the languages decidable by local deterministic and nondeterministic algorithms, respectively.}
+instead of $\mathsf{LD}, \mathsf{NLD}$.}
+% to denote the languages decidable by local deterministic and nondeterministic algorithms, respectively.}
 relate them to one another, and prove (among other results) that combining randomization
 and nondeterminism allows a constant-round local algorithm to decide any language.
 We refer to the survey~\cite{LDSurvey} for an overview of the area of local decision.
