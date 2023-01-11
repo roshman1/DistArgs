@@ -7,11 +7,12 @@ based on an earlier interactive protocol by Kilian~\cite{kilian1992note}.
 %an idealized model for hash functions, and showed that Kilian's protocol 
 %can be made non-interactive in the random oracle model
 %using the Fiat-Shamir paradigm~\cite{fiat1986prove}.
-Since Micali's work extensive research has been made on obtaining succinct, non-interactive arguments (SNARGs) in more realistic models, such as the \emph{Common Reference String} (CRS) model (see Section~\ref{sec:prelim} and Appendix~\ref{app:crypto}).
-Very recently SNARGs for all languages in $\PP$ have been constructed from standard cryptographic assumptions~\cite{kalai2019delegate, jawale2021snargs, choudhuri2021snargs, cryptoeprint:2022/1320}. In the case of $\NP$, \cite{gentry2011separating} presented a substantial barrier to constructing SNARGs from standard hardness assumptions, and indeed, all known constructions of SNARGs use \emph{knowledge assumptions}, which are considered nonstandard.
-
+Since Micali's work
+there has been extensive effort to obtain succinct, non-interactive arguments (SNARGs) in more realistic models, such as the \emph{Common Reference String} (CRS) model (see Section~\ref{sec:prelim} and Appendix~\ref{app:crypto}).
+Very recently SNARGs for all languages in $\PP$ were constructed from standard cryptographic assumptions~\cite{kalai2019delegate, jawale2021snargs, choudhuri2021snargs, cryptoeprint:2022/1320}. For languages in $\NP$, \cite{gentry2011separating} presented a substantial barrier to constructing SNARGs from standard hardness assumptions, and indeed, all known constructions of SNARGs use \emph{knowledge assumptions}, which are considered nonstandard.
+%
 Knowledge assumptions capture the intuition that an algorithm whose output implicitly relates to some
-hard-to-compute value must \emph{obtain} that value along the computation.%
+hard-to-compute value must \emph{obtain} that value during its computation.%
 \footnote{For example, 
 the knowledge-of-exponent assumption~\cite{KOE}
 essentially asserts that given a cyclic group $G$ of prime order,
@@ -24,7 +25,7 @@ under the knowledge assumption, whenever the prover manages to convince the veri
 we can extract from the prover a \emph{witness}.%
 \footnote{E.g., in the knowledge-of-exponent example, we can extract the exponent $a$.}
 The ability to extract a witness is useful for composing SNARKs with other primitives,
-and we use it for this purpose in Sections~\ref{sec:dargsForNP},~\ref{sec:distprover}.
+as we do in Sections~\ref{sec:dargsForNP},~\ref{sec:distprover}.
 Despite the barrier of~\cite{gentry2011separating} on constructing
 SNARKs from standard cryptographic assumptions, they are 
 nevertheless used on some blockchains, including Ethereum~\cite{ZKSnarks} and others~\cite{filecoin,Zcash,Starkware}.

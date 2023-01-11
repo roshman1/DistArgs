@@ -15,13 +15,13 @@ the prover and the verifier
 are actually not given the instance $x$,
 but only a \emph{hash} of $x$, called a \emph{digest},
 which is much shorter than the input $x$ itself.
-Roughly speaking, the prover then proves the statement ``the input whose digest is $d$
-is accepted/rejected by $M$''.
+Roughly speaking, the prover then proves the statement ``$M$ outputs $b \in \set{0,1}$
+on the input whose digest is $d$''.
 
 Of course, this is not well-defined: since the digest $x$ is much shorter than $x$,
 there may be \emph{many} inputs that have the same digest as $x$---%
 some of them may be accepted by $M$, and some may be rejected.
-What does it mean to prove that ``the input whose digest is $d$ is accepted/rejected by $M$'',
+What does it mean to prove that ``$M$ outputs $b$ on the input whose digest is $d$'',
 when this input is not unique?
 This is resolved in~\cite{KP16} by re-defining
 the soundness of the SNARG:
@@ -30,7 +30,7 @@ an
 efficient adversary should not be able to find a digest $d$ and two proofs $\pi_0, \pi_1$,
 such that $\pi_0$ convinces the verifier that $M$ rejects,
 and $\pi_1$ convinces the verifier that $M$ accepts (both with respect to ``some input'' whose digest is $d$).
-This soundness definition suffices for our purposes here.
+This suffices for our purposes here.
 
 The digest we use is a vector commitment $c$ to the network graph, which the prover
 computes and gives to all the nodes, as in the previous section.
@@ -47,10 +47,10 @@ a concrete graph $G' \neq G$ that has the same vector commitment as $G$,
 and argue that $\Pro^*$ breaks the position-binding property of the vector commitment.
 A SNARG does not have the proof-of-knowledge property,
 so even if the prover $\Pro$* has successfully convinced all nodes to accept a graph $G \not \in \calL$,
-this does not mean we can use $\Pro^*$ to find a graph $G' \neq G$ that has the same vector commitment as $G$.
+this does not mean we can use $\Pro^*$ to \emph{find} a graph $G' \neq G$ that has the same vector commitment as $G$.
 To get around this issue,
 we require an additional property from the vector commitment,
-which essentially asserts that for any given vector $m = (m_1,\ldots,m_q)$,
+which essentially asserts that for any given vector $(m_1,\ldots,m_q)$,
 there is only one commitment $c$ that opens to $m_i$ at every position $i$:
 \begin{definition}[Inverse Collision-Resistance]
 A VC $(\Gen, \Com, \Open, \Verify)$ is \emph{Inverse Collision-Resistant} if for any efficient algorithm $\calA$, there
