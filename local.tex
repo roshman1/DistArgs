@@ -1,0 +1,413 @@
+\section{On Polynomial-Time Local Distributed Algorithms}
+\label{sec:local}
+\TODO{refer to appendix: is this the right version}
+In this section we investigate the power of computationally-bounded local decision algorithms:
+we define complexity classes for languages decidable by 
+such algorithms, and study their relationship to the class of languages
+that can be decided by local algorithms with unbounded local computational power,
+and to the complexity class $\PP$.
+On a high level, our main result is that combining the requirements for locality and computational efficiency
+in one algorithm is more restrictive than requiring that the language
+be decidable by one algorithm that is local,
+and also by another algorithm that is computationally efficient.
+
+\subsection{Definitions}
+\label{sec:local_def}
+
+Fix an input domain $\calX$, and a UID space $\calU$,
+and let $\calC = \calC(\calX, \calU)$ be the set of all configurations
+$(G, x)$
+with inputs $x : V(G) \rightarrow \calX$ drawn from $\calX$,
+and UIDs drawn from $\calU$.
+We let $\calB^t$ be the set of all $t$-neighborhoods that appear in $\calC$:
+	$\calB^t = \set{ N_{G,x}^t(v) : (G,x) \in \calC, v \in V(G) }$,
+where $N_{G,x}^t(v)$ denotes the $t$-neighborhood of $v$,
+including the UIDs and the inputs of the nodes in the $t$-neighborhood.
+
+We model a \emph{$t$-local decision algorithm} as a mapping $\A : \calB^t \rightarrow \set{0,1}$,
+which outputs a Boolean value (accept / reject).
+We require that $\A$ be a computable function.
+As usual, a configuration is accepted by $\A$ iff when $\A$ is executed at every node,
+it outputs 1 everywhere.
+
+\begin{definition}[The classes $\LD$, $\LDP$]
+	A distributed language $\calL$ is in the class $\LD(t(\cdot))$ 
+	if it can be decided in graphs of size $n$ by a $t(n)$-local decision algorithm $\A$.
+	If in addition the algorithm $\A$ can be computed by a Turing machine
+	that runs in time $\poly(n)$ in graphs of size $n$,
+	then $\calL$ is in the class $\LDP(t(\cdot))$.
+    %Let $\Lan$ be a distributed language.
+    %\paragraph{$t$-Local Decidability} $\Lan$ is in the class $\LD(t)$ if there exists a distributed algorithm $A$, that runs in $t$ rounds, and decides $\Lan$.
+    %\paragraph{$t$-Local Polynomial Time Decidability} $\Lan$ is in the class $\LDP(t)$ if there exists a distributed algorithm $A$ and a polynomial $p$, such that $A$ runs in $t$ rounds, and performs up to $p(n)$ steps of local computation, and decides $\Lan$.
+\end{definition}
+
+We are interested in algorithms that run in a sublinear number of rounds:
+let $\LD = \bigcup_{t(\cdot) \in o(n)} \LD(t(\cdot))$,
+and let $\LDP = \bigcup_{t(\cdot) \in o(n)} \LDP(t(\cdot))$.
+Note that, as usual in the area of local decision, the local algorithm may not know the size $n$
+of the network;
+nevertheless, as external observers,
+we can study the dependence of the algorithm's locality radius and its local running time on $n$.
+
+%Since we only refer here to \emph{sub-linear} number of rounds, let $\LD$ denote $\bigcup_{t\in o(n)}\LD(t)$, and let $\LDP$ denote $\bigcup_{t\in o(n)}\LDP(t)$.
+
+
+%, we attend to the matter of computationally-bounded local decision. We define complexity classes for polynomial-time sub-linear-rounds decision and show in Section~\ref{sec:uncond} that it is separated from the intersection between the class of sub-linear rounds distributed decision and centralized polynomial-time decision ($\PP$). When nodes are given the size of the graph, this separation becomes much harder to prove, as demonstrated in Appendix~\ref{app:local}\TODO{where}, proving it unconditionally would be proving that $\PP\neq\NP$. In Section~\ref{sec:owf}, we prove the  separation in the case where nodes know the size of the graph conditioned on the existence of injective one-way functions. In Appendix~\ref{app:NLD}\TODO{where}, we show that the distinction disappears when non-determinism is introduced, and non-deterministic polynomial-time local decision in fact equals in power to the intersection of non-deterministic local decision and $\NP$.
+
+\subsection{Unconditional Separation of $\LDP$ from $\LD \cap \PP$}\label{sec:uncond}
+By definition we have $\LDP \subseteq \LD$,
+as every $\LDP$-algorithm is also an $\LD$-algorithm.
+It is also easy to see that $\LDP \subseteq \PP$:
+if every node of the network computes its decision in $\poly(n)$ time,
+then a poly-time centralized Turing machine can simulate the local algorithm
+at every node, and accept iff all nodes accept.
+Together we have that $\LDP \subseteq \LD \cap \PP$.
+Our first result shows that the containment is strict.
+
+\paragraph{High-level overview.}
+To separate $\LDP$ from $\LD \cap \PP$,
+we use a variation on the language $\ITER$, which was used in \cite{balliu2018can} to separate $\Pioloc$ from $\LD$.
+We call our variation $\ITERIN$.
+
+The idea is to construct a language of paths,
+where the center node is given a Turing machine $M$, two inputs $a,b \in \set{0,1}^*$,
+and a bound $s$;
+the goal is to decide whether $M$ halts on both $a$ and $b$ within at most $s$
+computation steps, and accepts either $a$ or $b$ (or both).
+The bound $s$ may be much larger than the length of the input (it is encoded in binary),
+so an efficient algorithm cannot afford to run $M$ for $s$ steps and check
+whether it accepts $a$ or $b$,
+but a local algorithm with unbounded computation time can do so,
+and therefore $\ITERIN \in \LD$.
+To make the task solvable for a polynomial-time centralized Turing machine,
+we add additional annotations (in the form of inputs to the nodes):
+on the left side of the path, from the center outwards, we write 
+the sequence of configurations that $M$ goes through in its computation on $a$,
+until it halts;
+on the right side of the path we do the same for $b$.
+This makes it possible for a poly-time Turing machine to simply examine
+the computation sequence of $M$, make sure it is legal (i.e., it matches the transition function of $M$),
+and verify that at either the left or the right side of the path (or both)
+we have
+an accepting configuration of $M$.
+Thus, $\ITERIN \in \PP$.
+
+Finally, we prove that an algorithm that is both local and efficient cannot
+decide the language $\ITERIN$: intuitively, this is because 
+it can neither afford to run $M$ for $s$ steps, nor can it ``see''
+the endpoints of the path to verify that at least one of them has an accepting configuration.
+The formal proof shows that if there existed a $\PLD$-algorithm for $\ITERIN$
+then we could use it to decide in polynomial time a language
+that is not in $\PP$.
+
+
+\paragraph{Detailed construction.}
+Let $M$ be a Turing machine,
+and let $a,b \in \set{0,1}^*$ be strings such that $M$ halts on input $a$ and on input $b$.
+We define a configuration $C^{n_L, n_R}({M,a,b, s}) = (G, x)$, as follows:
+\begin{itemize}
+	\item $G$ is a path of the form $u_{n_L},\ldots,u_1,v,w_1,\ldots,w_{n_R}$,
+		consisting of a \emph{pivot node} $v \in V(G)$,
+		a left sub-path $L = u_{n_L},\ldots,u_{1}$,
+		and a right sub-path $R = u_1,\ldots,u_{n_R}$.
+	\item The input of the pivot node $v$ is $x(v) = (0, \langle M \rangle, a, b, s )$,
+		where $\langle M \rangle$ is the encoding of the Turing machine $M$.
+	\item For each node $u_i \in L$ on the left sub-path, the input of $u_i$
+		is given by $u_i = (i, \langle M \rangle, M_{a,i} )$,
+		where $M_{a,i}$ is the configuration of $M$ after $i$ steps
+		executing with input $a$
+		(recall that the configuration of a Turing machine
+		consists of the contents of the tape, the location of the tape head,
+		and the current state).
+		To avoid the clash in terminology, we refer to configurations of Turing machines
+		as \emph{TM-configurations}.
+	\item Similarly, for each node $w_i \in R$ on the right sub-path,
+		we have $x(w_i) = (i, \langle M \rangle, M_{b,i} )$.
+\end{itemize}
+
+We simplify the notation somewhat by writing $C^n(M,a,b,s) = C^{n,n}(M,a,b,s)$,
+and $C(M,a,b,s) = C^s(M,a,b,s)$.
+Given a configuration $C^{n_L, n_R}({M,a,b,s}) = (G, x)$ as defined above,
+we say that a node $u \in V(G)$ is \emph{$r$-central} if the distance of $u$
+from the pivot is at most $r$.
+
+The language $\ITERIN$ consists of all configuration $C^{n_L,n_R}(M,a,b,s)$ such that
+	the TM-configurations written at the end of both sub-paths are both halting,
+	$s \geq \max(n_L, n_R)$,
+	and $M$ accepts $a$ or $b$ (or both).
+
+	As we explained above, it is not difficult to see that $\ITERIN$ can be decided by a local algorithm,
+and is also in $\PP$:
+\begin{claim}\label{claimITINalgos}
+	$\ITERIN \in \LD \cap \PP$.
+\end{claim}
+%\begin{proof}[Proof sketch]
+%The key is that $\ITERIN$ contains a "trap door" for each type of algorithm:
+%the sequential poly-time algorithm checks that $s \geq \max(n_L, n_R)$,
+%but does not run $M$ for $s$ steps (as $s$ may not be polynomial in the input length),
+%instead verifying that the TM-configurations evolve according to the transition function of $M$,
+%that the TM-configurations at the ends of the sub-paths are halting, and that at least one accepts.
+%On the other hand, the $\LD$-algorithm cannot directly check that at least one of the endpoints of the sub-paths
+%contains an accepting TM-configuration,
+%but the pivot,
+%which is not polynomially-bounded,
+%can afford to run $M$ for $s$ steps and verify that it accepts one of the inputs.
+%\end{proof}
+
+%\begin{proof}[Proof of Claim~\ref{claimITINalgos}]
+	%To decide membership in $\ITERIN$ using a $1$-local algorithm:
+	%\begin{itemize}
+		%\item Each node verifies that its index is consecutive with its neighbors' indices,
+			%and that the TM-configuration in its input is indeed the successor
+			%to the TM-configuration in the input of its neighbor with a preceding index
+			%(unless its index is 0).
+		%\item The endpoints of the path verify that they have a halting TM-configuration,
+			%and that $s$ is no smaller than their index.
+		%\item The pivot runs the TM $M$ on $a$ and on $b$ for $s$ steps each,
+			%and verifies that at least one of $a$ and $b$ is accepted.
+			%Note that since $s \geq \max(n_L, n_R)$,
+			%if both endpoints accept,
+			%then $M$ halts in at most $s$ steps on $a$ and on $b$,
+			%as both endpoints check that they have a halting TM-configuration,
+			%and because the nodes along the way
+			%verify the transitions of the TM,
+			%the TM-configurations at the endpoints evolve from the initial configuration
+			%in at most $n_L$ or $n_R$ steps, respectively.
+	%\end{itemize}
+	%To decide membership in $\ITERIN$ using a poly-time centralized algorithm:
+	%we verify that the input is structured correctly (that the graph is a path,
+	%the nodes' indices
+	%are correct, the pivot is given correctly-formatted input,
+	%and $s$ is at least the length of both sub-paths),
+	%and in particular, 
+	%that the configurations of the TM on each sub-path evolve according to the transition
+	%function of $M$.
+	%Examining the endpoints of the sub-paths,
+	%we make sure that at least one of them has an accepting configuration of the TM.
+%\end{proof}
+
+Next we show that $\ITERIN$ is not decidable by a polynomial-time local algorithm:
+
+\begin{claim}\label{claimITINLDP}
+	$\ITERIN \not \in \LDP$.
+\end{claim}
+\begin{proof}
+Suppose for the sake of contradiction that there is a $\LDP$-algorithm $\A$ that decides $\ITERIN$,
+and let $t > 0 $ be its locality radius.
+Let $\calL \in \DTIME(2^{n}) \setminus \PP$ be some language that is Turing-decidable
+in time $O(2^{n})$ but not in polynomial time,
+and such that $\eps \not \in \calL$ (here and in the sequel, $\eps$ denotes the empty word).
+Such a language exists by the Time Hierarchy Theorem~\cite{hartmanis1965computational}.
+We claim that using the $\LDP$-algorithm $\A$ that decides $\ITERIN$, we can construct a polynomial-time Turing machine
+that decides $\calL$, a contradiction.
+
+Let $M$ be a $\DTIME(2^{n})$-time Turing machine that decides $\calL$,
+and let $f \in O(2^n)$ be a function bounding the running time of $M$ on inputs of length $n$.
+Given input $z \in \set{0,1}^*$,
+let $C_z = C(M,\eps,z,f(|z|))$
+be the configuration that encodes the runs of $M$ on $\eps$ (on the left sub-path) and on $z$
+(on the right sub-path)
+until $M$ halts, using sub-paths of length $f(|z|)$.
+Since we assume that $\eps \not \in \calL$,
+we have $C_z \in \ITERIN$ iff $z \in \calL$.
+
+We define a poly-time Turing machine $M'$ for $\calL$ as follows:
+on input $z \in \set{0,1}^*$,
+$M'$ constructs the configuration $C_z' \coloneq C^{2t}(M, \eps, z, f(|z|))$,
+which is essentially the central portion of $C_z$, including only $2t$ 
+nodes to the left and to the right of the pivot (a total of $4t+1$ nodes).
+Next, $M'$ simulates the local algorithm $\A$
+on all the nodes of $C_z'$.
+Finally, $M'$ accepts iff $\A$ outputs 1 at all $t$-central nodes of $C_z'$
+(ignoring the outputs of the other nodes).
+
+It is not difficult to verify that the running time of $M'$ is polynomial in $|z|$,
+in the description length of $M$ (which is constant),
+and in $t = o(n)$.
+To show that $M'$ indeed decides $\calL$,
+suppose first that $z \in \calL$.
+Then $C_z \in \ITERIN$ by construction,
+and therefore $\A$ must output 1 at all nodes of $C_z$.
+But this means that all $t$-central nodes in $C_z'$ must also accept:
+for each $t$-central node $u$ in $C_z'$,
+the $t$-local view of $u$ is the same in $C_z$ and in $C_z'$,
+because $C_z'$ is obtained from $C_z$ by removing only nodes at distance greater than $t$ from $u$.
+Since the output of $u$ depends only on its $t$-local view,
+and we know that $u$ accepts in $C_z$, it must also accept in $C_z'$
+Thus, $M'$ accepts $z$.
+
+Now suppose that $z \not \in \calL$.
+In this case, $C_z \not \in \ITERIN$,
+because in $C_z$ the two inputs encoded in $x$ are both rejected by $M$ (as $\eps, z \not \in \calL$).
+We claim that at least one $t$-central node of $C_z$ must reject;
+as above, this means that the same node also rejects in $C_z'$,
+causing $M'$ to reject $z$.
+
+Suppose for the sake of contradiction that all $t$-central nodes of $C_z$ accept.
+However, since $C_z \not \in \ITERIN$, we know that some node of $C_z$ rejects;
+let $u$ be such a node.
+The distance of $u$ from the pivot $v$ must be greater than $t$, since we assumed that no $t$-central node rejects.
+Now fix some string $a \in \calL$ (which must exist, as $\emptyset \in \PP$ and we assumed $\calL \not \in \PP$),
+and let $C_{a,z} = C(M,a,z,f(\max(|a|,|z|)))$
+be the configuration encoding the runs of $M$ on $a$ (on the left sub-path)
+and on $z$ (on the right sub-path), using paths of length $f(\max(|a|,|z|)$,
+so that $M$ halts on both.
+Since $a \in \calL$,
+we have $C_{a,z} \in \ITERIN$,
+and thus all nodes must accept $C_{a,z}$.
+This includes node $u$.
+However, since $u$ is at distance greater than $t$ from the pivot,
+the $t$-local view of $u$ is the same in $C_{a,z}$ and in $C_z$;
+thus, $u$ also accepts in $C_z$, a contradiction.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+%\subsection{If $\LDn \cap \PP \not \subseteq \LDnP$, Then $\PP \neq \NP$}
+
+
+\subsection{Separation of $\LDnP$ From $\LDn \cap \PP$ Assuming Injective One-Way Functions}
+\label{sec:owf}
+In the previous section we showed that $\LD \cap \PP \not \subseteq \LDP$,
+but our proof used the fact that the nodes do not know the size of the graph,
+and therefore their output when the graph is a short path is the same as their output on a long path,
+provided their local neighborhood stays the same.
+We now ask whether the separation continues to hold if nodes do know the size of the network:
+let $\LDn, \LDnP$ be variants of $\LD, \LDP$ (resp.),
+where nodes receive the size $n$ of the graph as part of their input.
+Is it still true that $\LDn \cap \PP \not \subseteq \LDnP$?
+
+Perhaps surprisingly,
+even though we are considering deterministic computation models,
+the answer turns out to be related to whether or not $\PP = \NP$:
+we prove that
+$\LDn \cap \PP \not \subseteq \LDnP$ implies $\PP \neq \NP$,
+and conversely, under the plausible assumption that injective one-way functions exist,%
+\footnote{This is stronger than assuming that $\PP \neq \NP$,
+because if $\PP = \NP$ then every function is easy to invert.}
+we can still show that 
+$\LDn \cap \PP \not \subseteq \LDnP$.
+
+A \emph{one-way function family} is a family $\set{ f_n }_{n \in \nat}$,
+where $f_n : \set{0,1}^n \rightarrow \set{0,1}^{m(n)}$ for some $m(n) \geq n$,
+such that given an image $y \in \set{0,1}^{m(n)}$,
+it is difficult to find a pre-image $x$ such that $f_n(x) = y$ (we refer to~\cite{OdedBook} for the formal definition,
+as it is not needed here).
+It is known that every one-way function has a \emph{hard-core predicate}~\cite{GL89},
+a Boolean predicate that can be computed in poly-time from $x \in \set{0,1}^n$,
+but is hard to compute given only $f_n(x)$:
+\begin{definition}[Hard-core predicate]\label{def:HCP}
+	A family of predicates %\\to handle the margins
+ $ \set{ b_n : \set{0,1}^n \rightarrow \set{0,1}}_{n \in \nat}$
+computable in poly-time
+ is called a \emph{hard-core} of a
+	family of functions $\set{ f_n : \set{0,1}^n \rightarrow \set{0,1}^{m(n)}}$ (where $m(n) \geq n$)
+	if for every probabilistic, polynomial-time (PPT) algorithm $\Adv$, there is a negligible function $\eps(\cdot)$ such that
+	for all sufficiently large $n$,
+	\begin{equation*}
+		\prb{
+			\Adv( f(z) ) = b(z)
+		}
+		{
+			z \leftarrow U_n
+		}
+		<
+		\frac{1}{2} + \eps(n).
+	\end{equation*}
+\end{definition}
+where $U_n$ denotes the uniform distribution on $\{0,1\}^n$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:local}, part (3)]
+	Fix a family $\calF = \set{ f_n }_{n \in \nat}$ of injective one-way functions,
+	where $f_n : \set{0,1}^n \rightarrow \set{0,1}^{m(n)}$ for $m(n) \geq n$,
+	and let $\set{ b_n }_{n \in \nat}$ be a family of hard-core predicates for $\calF$.
+	Consider a distributed language $\calL$, which includes all configurations $C_z = (G, x_z)$ for $z \in \set{0,1}^{\ast}$,
+	where $G$ is a path $v_0,\ldots,v_{n-1}$ of length $n = |z|$,
+	and the input assignment $x_z$ is given by
+	$x_z(v_0) = (0, b_n(z))$,
+	$x_z(v_{n-1}) = (n-1, z)$,
+	and $x_z(v_i) = (i, f_n(z))$ for every $0 < i < n-1$.
+	We claim that $\calL \in \LDn \cap \PP$, but $\calL \not \in \LDnP$.
+
+	To decide membership in $\calL$ using a local algorithm with unbounded computation time,
+	the first node on the path can simply invert $f_n$ to compute $z$ (recall that $f_n$
+	is injective),
+	and then use $z$ to compute $b_n(z)$ and compare it against
+	its input. In addition, the other path nodes
+	need to verify that their input is locally consistent with $\calL$
+	(e.g., they are indexed properly).
+
+	To decide membership in $\calL$ using a polynomial-time centralized algorithm,
+	we can simply read $z$ off of the last node on the path, compute both $f_n(z)$ and $b_n(z)$,
+	and verify that the input is consistent with $f_n(z)$ and $b_n(z)$.
+
+	%We first show that $\calL \in \LDnP \cap \PP$.
+	%To decide $\calL$ using a local algorithm, it suffices for each node to verify:
+	%\begin{itemize}
+		%\item If $x(v) = (0, y)$, then $v$ has degree 1,
+			%its neighbor $u$ has $x(u) = (1, y')$,
+			%and there exists some $z \in \set{0,1}^n$ such that
+			%$y = (b_n(z), f_n(z))$ and $y' = (f_n(z), \bot)$
+			%(we check by brute-force search over all possible $z$).
+		%\item If $x(v) = (i, y)$ where $0 < i < n - 2$,
+			%then the degree of $v$ is 2,
+			%and its neighbors $u, u'$ have $x(u) = (i - 1, y)$ and $x(u') = (i+1, y)$
+			%(or vice-versa).
+		%\item If $x(v) = (n - 2, y)$, then $v$'s degree is 2, and one of its neighbors $u$
+			%has $x(u) = (n-3, y')$
+			%where $y' = (z, \bot), y = (f_n(z), \bot)$ for some $z \in \set{0,1}^n$.
+		%\item If $x(v) = (n-1, y)$, then $v$'s degree is 1.
+	%\end{itemize}
+	%To decide $\calL$ in centralized poly-time,
+	%we first verify that the configuration has the correct structure (it is a path and the input has the correct form).
+	%If so, let $(z, \bot)$ be the payload of the node with index $n - 1$, 
+	%and let $(a, w)$ be the payload of the node with index 0.
+	%We use $z$ to compute $b_n(z)$,
+	%and verify that $a = b_n(z), w = f_n(z)$, and that all the nodes in-between have payload $(f_n(z), \bot)$.
+
+	Now suppose for the sake of contradiction that $\calL \in \LDnP$,
+	and let $A$ be a $t$-local efficient algorithm for $\calL$, for some $t = o(n)$.
+	Then for every sufficiently large $n$, 
+	we can break the hard-core predicate $b_n$ using the following adversary $\calB$:
+	given input $w = f_n(z)$ for some $z \in \set{0,1}^n$,
+	the adversary constructs the first $2t$ nodes of the configuration $C' = (G, x')$,
+	where $G$ is a path of length $n$,
+	and $x'$ is identical to $x_z$,
+	except that the inpu of the first node is $(0, 0)$ (since the adversary does not know $b_n(z)$).
+	Note that the adversary does not need to know $z$ for this, because $z$ is only given to the last node
+	on the path, and $t < n$; the adversary only needs to know $f_n(z)$, which it is given.
+	The adversary simulates the first $2t$ nodes in $C'$,
+	and
+	if the first $t$ nodes in the first version accept, it outputs ``0'';
+	otherwise it outputs ``1''.
+
+	We claim that our adversary correctly computes $b_n(z)$ for all $z \in \set{0,1}^n$.
+	Given $w \in \set{0,1}^{m(n)}$, there is a unique $z \in \set{0,1}^n$ such that $w = f_n(z)$, because $f$ is injective.
+	If $b_n(z) = 0$,
+	then the $t$-neighborhood
+	of each of the first $t$ nodes in the configuration $C'$ constructed by the adversary is identical
+	to their view in the ``true'' configuration $C_z = (G, x_z)$.
+	Since $C_z \in \calL$, all nodes must accept, and in particular the first $t$ nodes do;
+	therefore the first $t$ nodes also accept in $C'$.
+	Now suppose that $b_n(z) = 1$.
+	Then the configuration $C'$,
+	of which the adversary constructed the first $t$ nodes,
+	is not in $\calL$; some node must reject in $C'$.
+	Furthermore, one of the first $t$ nodes must reject in $C'$:
+	suppose they do not, and let $v_j$ be some node that rejects, with $j > t$.
+	In the ``true'' configuration $C_z = (G, x_z)$, the $t$-neighborhood of node $v_j$
+	is the same as in $(G_n, x_z')$, because the only difference between the two configurations is the input
+	of the first node, which is at distance greater than $t$ from $v_j$.
+	But this means that $v_j$ also rejects in $(G_n, x_z) \in \calL$, contradicting the correctness of the local algorithm.
+	We conclude that at least one of the first $t$ nodes must reject, and therefore our adversary outputs ``1''.
+
+	We have now shown that $\calB(f_n(z)) = b_n(z)$ for all sufficiently large $n$ and $z \in \set{0,1}^n$.
+	This implies that $b_n$ is not a hard-core predicate, as it contradicts Definition~\ref{def:HCP}.
+\end{proof}

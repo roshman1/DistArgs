@@ -1,0 +1,168 @@
+\section{Introduction}
+\label{sec:intro}
+
+%\begin{subfigures}\label{fig:global}
+
+%\begin{nicefig}[h]{An Example Figure }{fig:example1}
+%This is a nice figure.
+%\begin{algorithmic}[1]
+    %\State Do something \Comment{Doing something}
+    %\If {$x > 5$}
+        %\State  $x$ is big, Yay!
+    %\Else
+        %\State $x$ still has room to improve.
+    %\EndIf
+%\end{algorithmic}
+%
+%\end{nicefig}
+%\begin{nicefig}[h]{Another Example Figure }{fig:example2}
+%This is another nice figure
+%\end{nicefig}
+%
+%\end{subfigures}
+%
+
+%This is a reference to \cref{fig:example1}, and one to \cref{fig:example2} and one to \cref{fig:example1,fig:example2} together. The top-level fig is \cref{fig:global}.
+
+In distributed graph algorithms, the typical complexity measures that one tries to minimize are related to communication and synchronization: we aim to construct algorithms that use few synchronized communication rounds, and send a small number of messages, each as short as possible. There is a rich body of literature on the power of such algorithms: from the $\mathsf{LOCAL}$ model,
+where communication rounds are the key resource, to $\mathsf{CONGEST}$, where bandwidth is the main bottleneck,
+and many other combinations and variations.
+Distributed algorithms are typically allowed to have unbounded \emph{local} computational power,
+with each network node able to compute any Turing-computable function for free (e.g., ~\cite{fraigniaud2013can,fraigniaud2013towards}), or sometimes even any function at all (e.g.,~\cite{NS95}).
+This puts the theory of local decision on completely different footing from classical centralized notions of efficiency, such as $\PP$ and $\NP$, and makes them impossible to compare.
+
+In this paper, we study \emph{computationally-bounded} distributed local decision, and ask what can be achieved by computationally-efficient local algorithms and provers.
+We show that computational restrictions can be {helpful} for prover-assisted distributed certification, but on the other hand,
+when there is no prover,
+computational restrictions
+do limit the power of local algorithms beyond what one might expect.
+
+\paragraph{Computationally-sound distributed proofs.}
+In distributed certification (also known as \emph{proof labeling schemes}~\cite{korman2005proof} or \emph{locally checkable proofs}~\cite{LCP}), our goal is to certify some property of the network: for example, one might wish to certify that the output of a distributed algorithm is correct, or that the network graph has some desirable property.
+To facilitate this goal, we enlist the help of a \emph{prover}, which provides each node with a short certificate;
+the nodes exchange their certificates with one another (or more generally, carry out some efficient verification procedure)
+and decide whether to accept or reject.
+The proof is considered to be \emph{accepted} if all nodes accept.
+While many useful properties can be certified using short certificates, some problems are known to require very long certificates and a lot of communication between the nodes, up to $\Omega(n^2)$ bits~\cite{LCP}.
+%Moreover, there is no general way to obtain short certificates proving the correctness of an efficient distributed algorithm,
+
+The area of distributed certification has so far stood apart from the rich theory of  centralized decision problems (e.g., $\PP$ vs.\ $\NP$) and delegated computation. In the centralized setting, under cryptographic assumptions, a computationally-bounded prover can present a weak verifier with a short proof that convinces the verifier of a statement of the form ``$x \in \calL$'', where $\calL$ is any language in $\PP$~\cite{choudhuri2021snargs, cryptoeprint:2022/1320}, or, under stronger assumptions, in $\NP$~\cite{micali2000computationally, bitansky2013recursive, groth2016size}. This is called a \emph{computationally-sound proof}, or a \emph{succinct argument} for $\calL$. 
+The key is that rather than requiring perfect soundness against any prover, we require only that the verifier not be fooled by any computationally-bounded prover, except with negligible probability. In return, we get much shorter proofs. If the argument is non-interactive, it is called a \emph{succinct non-interactive argument} (SNARG), and if it also has the property that whenever the prover convinces the verifier, one can extract an $\NP$-witness from the prover, then the argument is a \emph{succinct non-interactive argument of knowledge} (SNARK).
+
+We ask whether the same can be done in the distributed setting,	and show that the answer is \emph{yes}, under standard cryptographic assumptions in the case of language in $\PP$, or under somewhat strong assumptions for languages in $\NP$. We define \emph{succinct distributed arguments}, which are computationally-sound (non-interactive) proofs in the distributed network setting, and show:
+ \begin{theorem}\label{thm:centralized}
+     Let $\Lan$ be a language on graphs.
+     \begin{enumerate}
+         \item If $\Lan\in\PP$, assuming SNARGs for $\PP$ and collision-resistant hash function exist,%
+		\footnote{
+         		We introduce these primitives in Section~\ref{sec:related} and~\ref{sec:prelim}, and discuss concrete hardness assumptions under which they are known to exist  in Appendix~\ref{app:crypto}\TODO{verify}.
+         	}
+		 there is a succinct distributed argument for $\Lan$ with certificates of length $\polylog(n)$.
+         \item If $\Lan\in \NP$, assuming SNARKs for $\NP$ and %Vector Commitments exist,
+         collision-resistant hash functions exist,
+	 there is a distributed argument for $\Lan$ using certificates of length $\polylog(n)$.    
+     \end{enumerate}
+ \end{theorem}
+
+ \paragraph{Certifying executions of efficient distributed algorithms.}
+	One of the main motivations for studying distributed certification is fault-tolerance and self-stabilization:
+	to cope with a dynamic and fault-prone environment, it is useful to be able to identify when 
+	the network is  in an illegal state, so that we can undertake actions to correct the problem.
+	Proof labeling schemes were originally defined at least in part with this motivation in mind~\cite{korman2005proof}.
+	One property that is very interesting to certify is whether output that was
+	previously produced by a distributed algorithm $\calD$
+	is still up-to-date: if executed in the current network, would $\calD$ still produce the same output?
+	It was shown in~\cite{korman2005proof} that if $\calD$ runs in $r$ rounds, and every node sends at most $m$ messages
+	of $b$ bits per round,
+	then the execution of $\calD$ can be certified using certificates of length $O(r m b)$ bits per node%
+	\footnote{In~\cite{korman2005proof} the scheme given is for certifying any property $\calP$ that can be \emph{verified}
+	by a distributed algorithm that accepts or rejects at each node. The property ``the algorithm produces the given output'' can certainly be verified by running the algorithm itself and examining its output.}
+	by storing the entire history of messages sent at each node.
+	Unfortunately, these certificates can be very long when the algorithm uses many rounds or messages.
+
+	With this motivation in mind, we show that a distributed algorithm that runs in polynomial number of rounds, message size
+	and local computation time can \emph{certify its own execution}, using certificates of polylogarithmic length
+	at each node, and incurring an additive overhead to the running time that 
+	is linear in the diameter of the graph.
+	
+
+\begin{theorem}[Informal]
+    Let $\calD$ be a distributed algorithm that runs in $T = \poly(n)$ rounds
+    and sends messages of length $\poly(n)$.
+    Assuming SNARKs for $\NP$ %exist,
+    and %assuming
+    a certain type of collision-resistant hash functions exist,
+    there is a distributed argument of length $\polylog(n)$
+    certifying $\calD$'s execution, where the prover is an efficient distributed algorithm
+    running in $O(T + \diam(G))$ rounds and sending messages of $\polylog(n)$ bits.
+    \label{thm:distprover_informal}
+\end{theorem}
+
+\paragraph{Computationally-bounded local decision.}
+The power of local decision algorithms has been extensively studied, under many variations (e.g.,~\cite{NS95,fraigniaud2013can,fraigniaud2013towards}, and many others),
+perhaps the most famous of which is the $\LD$ model.
+In all cases (to our knowledge), the algorithm is allowed unbounded local computational power, and as a result,
+deterministic local decision is incomparable with the usual notion of computational efficiency, the class $\PP$
+of polynomial-time algorithms.
+To bridge this gap, we define the class $\PLD(t)$ of local distributed algorithms that run in 
+$t(n)$ synchronous rounds, and require local computation time $\poly(n)$ at every node.
+(The size of the network is not necessarily known to the nodes;
+we consider both options.)
+
+What is the power of algorithms in $\PLD(t)$?
+Clearly, such algorithms cannot decide languages that are not in $\PP$, nor can they decide languages 
+that are not in $\LD(t)$ (i.e., decidable in $t(n)$ rounds with no computational restrictions).
+But can they decide every language in $\LD(t) \cap \PP$?
+It turns out that the answer is ``probably not'', 
+but whether or not we can prove it unconditionally depends on whether the nodes know the size of the network,
+and thus know \emph{how long} they are allowed to run.
+Let $\LDn, \LDnP$ be variants of $\LD$ and $\PLD$ (resp.) where nodes know the size of the network.
+Then we can show:
+
+\begin{theorem}\label{theo:local}
+	%For every locality radius $t = o(n)$,
+	We have:
+	\begin{enumerate}
+		\item $\PLD(o(n)) \subsetneq \LD(o(n)) \cap \PP$;%
+			\footnote{
+A preliminary version of part (1) of Theorem~\ref{thm:local} 
+appeared in the brief announcement~\cite{BA}.}
+		\item If $\LDnP(o(n)) \neq \LDn(o(n)) \cap \PP$, then $\PP \neq \NP$; and
+		\item Assuming injective one-way functions exist,%
+			\footnote{A \emph{one-way function}
+			is a function that is easy to compute, but hard to invert.
+			See Section~\ref{sec:local} for the details.}
+			$\LDnP(o(n)) \subsetneq \LDn(o(n)) \cap \PP$.
+	\end{enumerate}
+	\label{thm:local}
+\end{theorem}
+
+When we introduce nondeterminism,
+the distinction disappears:
+\begin{theorem}\label{theo:NLD}
+	Let $\NLD(t)$, $\NPLD(t)$ be the classes of languages decidable by 
+	nondeterministic $t(n)$-round algorithms with unbounded or, resp., polynomially-bounded
+	local computation time.
+	Then $\NPLD(t) = \NLD(t) \cap \NP$.
+	\label{thm:nlocal}
+\end{theorem}
+
+
+
+\paragraph{Organization.}
+The remainder of the paper is organized as follows.
+In Sections~\ref{sec:related} and~\ref{sec:prelim}
+we review the relevant background, discuss some of the cryptographic primitives we use,
+and give formal definitions for some of them;
+some definitions are deferred to Appendix~\ref{app:crypto}. % \TODO{make this this is the right one}.
+In Section~\ref{sec:dargs} we define succinct distributed arguments, and 
+show how to construct them for $\NP$-languages and for languages in $\PP$
+(Theorem~\ref{thm:centralized}).
+In Section~\ref{sec:distprover} we construct the distributed prover of Theorem~\ref{thm:distprover_informal}.
+Finally, in Section~\ref{sec:local},
+we discuss the power of computationally-efficient distributed algorithms,
+and prove Theorem~\ref{thm:local}.
+Many of the proofs, as well as pseudocode for the constructions in Sections~\ref{sec:dargs}
+and~\ref{sec:distprover}, are deferred to the appendix.
+
+

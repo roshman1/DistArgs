@@ -1,0 +1,115 @@
+\section{Missing Proofs from Section~\ref{sec:local}}
+\label{app:local}
+\subsection{If $\LDn \cap \PP \not \subseteq \LDnP$, Then $\PP \neq \NP$}
+In Section~\ref{sec:local}, we showed the separation of $\LDP$ from $\LD\cap \PP$ by extensive use of the fact that the nodes in an $\LDP$ algorithm do not know the size of a graph, and thus do not know how much time they are allowed to run. We would have wanted to prove the same without using this fact, that is, in the case where the nodes do know how much time they are allowed to run. Let $\LDn$ and $\LDnP$, be the variants of $\LD$ and $\LDP$ (resp.) where nodes have the size of the graph as part of their input.
+
+In what follows, we demonstrate that proving this statement unconditionally would be \emph{very} unexpected. However, in Section~\ref{sec:owf}, we prove this statement conditioned on the existence of injective one-way functions.
+
+\begin{theorem}
+	If $\LDn \cap \PP \not \subseteq \LDnP$, then $\PP \neq \NP$.
+	\label{thm:sep_obstacle}
+\end{theorem}
+\begin{proof}
+	Assume that $\PP = \NP$, and let us show that every language $\calL \in \LDn \cap \PP$ is also in $\LDnP$.
+
+	Let $\calL$ be a distributed language that is decided by some $t$-local algorithm $A \in \LDn$, 
+	and also by a poly-time Turing machine $M$.
+	We first modify $A$ by restricting it so that it accepts only $t$-neighborhoods that can be embedded in some instance in $\calL$, by defining a $t$-local algorithm $A'$ where
+	\begin{equation*}
+		A'(B) = 1 \qquad \Leftrightarrow \qquad  A(B) = 1\ \text{ and }\ \exists \tilde{G} \in \calL\ \exists u \in \tilde{G} : B = N_{\tilde{G}}^t(u)
+	\end{equation*}
+	Algorithms $A$ and $A'$ decide the same distributed language, $\calL$:
+	every instance $\tilde{G}$ accepted by $A'$ is also accepted by $A$, since 
+	whenever $A'(B) = 1$ we also have $A(B) = 1$.
+	For the other direction, if an instance $\tilde{G}$ is accepted by $A$, then
+	all nodes accept under $A$; also,
+	$\tilde{G} \in \calL$,
+	and therefore every $t$-neighborhood of $\tilde{G}$ can be embedded in some instance in $\calL$.
+	Therefore all nodes accept $\tilde{G}$ under $A'$.
+	
+	Now let $\calH$ be the following node-language:
+	\begin{equation*}
+		\calH = \set{ B \in \calB^{t,\n} : \text{there is some $\tilde{G} \in \calL$ and a vertex $u \in \tilde{G}$
+		such that $B = N^t_{\tilde{G}}(u)$} }.
+	\end{equation*}
+ 
+	We first show that the node-language decided by $A'$ is exactly $\calH$:
+	first, suppose that $B \in \calH$. Then there is some $\tilde{G} \in \calL$ and a vertex $u \in \tilde{G}$
+	such that $B = N^t_{\tilde{G}}(u)$.
+	Since $A'$ decides the distributed language $\calL$, when we run $A'$ in $\tilde{G}$ all nodes must accept,
+	and therefore $A'(B) = A'(B_{\tilde{G}}^t(u)) = 1$.
+	For the other direction, suppose that $A'$ accepts some $t$-neighborhood $B$.
+	Then in particular, by definition of $A'$,
+	there exists an instance $\tilde{G} \in \calL$ and a node $u \in \tilde{G}$ such that 
+	$B = N_{\tilde{G}}^t(u)$.
+	This implies that $B \in \calH$.
+
+	To conclude the proof, we observe that $\calH \in \NP$:
+	it is decided by a poly-time Turing machine that takes the input $B$ and witness $\tilde{G}$,
+	and accepts iff $M$ accepts $\tilde{G}$ and there is some node $u \in \tilde{G}$ that has 
+	$N_{\tilde{G}}^t(u) = B$.
+	(Recall that every node of $\tilde{G}$ is annotated with $1^n$, where $n$ is the size of $\tilde{G}$;
+	thus, the encoding length of $\tilde{G}$ is polynomial in the encoding length of the annotated $t$-neighborhood $B$.)
+	Since we assumed that $\PP = \NP$, this implies that $\calH \in \PP$ as well.
+	But $\calH$ is the node-language of $A'$, and $A'$ decides $\calL$, so this implies that 
+	$\calL \in \LDnP$, as desired.
+
+
+\end{proof}
+
+
+
+\subsection{$\NPLD = \NLD \cap \NP$}
+In this section, we show that the distinction between the local-polynomial classes and the intersection of the local and polynomial classes vanishes when introducing non-determinism. Let $\NLD$ and $\NPLD$ be the non-deterministic variants of $\LD$ and $\LDP$ (resp.). In the case of non-deterministic decision, it no longer matters whether the nodes know the network size, because one can always provide them with the size through their certificates, along with a proof that the size is correct, using a spanning tree~\cite{korman2005proof}.
+In fact, the certificate can include the \emph{entire graph}.
+For this reason, when we have unique identifiers, nodes can verify that the certificate
+describes the network graph accurately, allowing them to locally decide whatever can be decided by a centralized algorithm;
+therefore in this case
+$\NP \subseteq \NLD$.
+When we do not have unique identifiers, it is not possible to verify that the certificates describe the network graph,
+but only that the network graph is a \emph{lift} of the graph given in the certificates;
+this suffices for our purposes, because every $\NLD$ language is closed under lifts~\cite{fraigniaud2013can}.
+
+\begin{theorem}
+	Either with or without unique identifiers,
+	we have $\NPLD = \NLD \cap \NP$.
+	\label{thm:NPLD}
+\end{theorem}
+\begin{proof}
+	We prove the case without identifiers, since it is the more general case.
+
+	The inclusion $\NPLD \subseteq \NLD \cap \NP$
+	is easy to see, as an $\NPLD$-algorithm is in particular an $\NLD$-algorithm,
+	and it can also be efficiently simulated by a polynomial-time Turing machine that is given all the nodes' certificates.
+
+	To see the other direction of the inclusion, let $\calL \in \NLD \cap \NP$,
+	let $A$ be a $t$-local algorithm for $\calL$, and let $M$ be an $\NP$-verifier for $\calL$.
+	We construct the following $\NPLD$-algorithm, $B$:
+	in a configuration $(G, x)$ on $n$ nodes,
+	we give to each node a certificate $c(v) = ( i, (G', x'), w)$,
+	where
+	\begin{itemize}
+		\item $i \in \set{1,\ldots,n}$ is an index,
+		\item $G'$ and $x'$ represent the configuration $(G,x)$, using $\set{1,\ldots,n}$ as the vertices,
+		\item $w$ is an $\NP$-witness, such that $M$ accepts $( (G', x'), w )$.%
+			\footnote{Technically, $(G', x')$ is a lift of $(G, x)$, and therefore  
+			$(G', x') \in \calL$ iff $(G, x) \in \calL$.}
+	\end{itemize}
+	The nodes locally verify that
+	\begin{itemize}
+		\item Their $t$-neighborhood in $G'$ is isomorphic to their true neighborhood in $G$,
+			using the indices provided in the certificates as the isomorphism;
+			and $x'$ correctly describes their input, again using the index.
+		\item $M$ accepts $( (G', x'), w)$.
+	\end{itemize}
+	As shown in~\cite{fraigniaud2013can},
+	the first part of the verification passes iff $(G', x')$ is a $t$-lift of $(G, x)$,
+	and $\NLD$-languages are closed under lift.
+	The completeness of $B$ follows from this fact.
+	Soundness follows as well:
+	if all nodes accept, then $(G', x')$ is a $t$-lift of $(G, x)$;
+	since $M$ accepts $( (G', x'), w)$, we have $(G', x') \in \calL$,
+	which implies that $(G, x) \in \calL$ as well.
+\end{proof}
+
+

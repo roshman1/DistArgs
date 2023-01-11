@@ -1,0 +1,147 @@
+\subsection{Succinct Distributed Arguments for $\PP$ from RAM SNARGs}\label{sec:dargsForP}
+We give a very high-level sketch of our construction for graph languages in $\PP$,
+which does not rely on knowledge assumptions; the details appear in Appendix~\ref{app:dargsForP}.
+
+The construction uses a primitive called a \emph{flexible RAM SNARG for $\PP$}~\cite{KP16,cryptoeprint:2022/1320},
+whose precise definition we defer to Appendix~\ref{app:ramsnargs}.
+In general, a %RAM
+SNARG is used to prove statements of the form ``$M(x) = b$'',
+where $M$ is a deterministic polynomial-time Turing machine, $x$ is an input,
+and $b \in \set{0,1}$ indicates whether $M$ accepts or rejects the input.%
+\footnote{Since $\PP$ is closed under complement, we can prove both membership in $\calL(M)$
+and non-membership in $\calL(M)$.}
+The key property of the RAM SNARG of~\cite{KP16,cryptoeprint:2022/1320} is that 
+the prover and the verifier
+are actually not given the instance $x$,
+but only a \emph{hash} of $x$, called a \emph{digest},
+which is much shorter than the input $x$ itself.
+Roughly speaking, the prover then proves the statement ``the input whose digest is $d$
+is accepted/rejected by $M$''.
+
+Of course, this is not well-defined: since the digest $x$ is much shorter than $x$,
+there may be \emph{many} inputs that have the same digest as $x$---%
+some of them may be accepted by $M$, and some may be rejected.
+What does it mean to prove that ``the input whose digest is $d$ is accepted/rejected by $M$'',
+when this input is not unique?
+This is resolved in~\cite{KP16} by re-defining
+the soundness of the SNARG:
+we now require only that 
+an
+efficient adversary should not be able to find a digest $d$ and two proofs $\pi_0, \pi_1$,
+such that $\pi_0$ convinces the verifier that $M$ rejects,
+and $\pi_1$ convinces the verifier that $M$ accepts (both with respect to ``some input'' whose digest is $d$).
+This soundness definition suffices for our purposes here.
+
+The digest we use is a vector commitment $c$ to the network graph, which the prover
+computes and gives to all the nodes, as in the previous section.
+In addition, the prover computes a RAM SNARG proof for the statement ``the graph whose vector commitment
+is $c$ is accepted by $M$'', where $M$ is a deterministic Turing machine that decides
+the graph language $\calL = \calL(M)$ that we would like to certify.
+As before, each node opens its entry in the vector commitment and verifies that its neighborhood
+is correctly represented, and then the nodes verify the SNARG proof.
+
+The soundess proof for the new construction is quite different from the previous one:
+before, we relied on the proof-of-knowledge property, which allowed us to \emph{extract}
+from a cheating prover $\Pro^*$
+a concrete graph $G' \neq G$ that has the same vector commitment as $G$,
+and argue that $\Pro^*$ breaks the position-binding property of the vector commitment.
+A SNARG does not have the proof-of-knowledge property,
+so even if the prover $\Pro$* has successfully convinced all nodes to accept a graph $G \not \in \calL$,
+this does not mean we can use $\Pro^*$ to find a graph $G' \neq G$ that has the same vector commitment as $G$.
+To get around this issue,
+we require an additional property from the vector commitment,
+which essentially asserts that for any given vector $m = (m_1,\ldots,m_q)$,
+there is only one commitment $c$ that opens to $m_i$ at every position $i$:
+\begin{definition}[Inverse Collision-Resistance]
+A VC $(\Gen, \Com, \Open, \Ver)$ is \emph{Inverse Collision-Resistant} if for any efficient adversary $\calA$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\lambda\in \mathbb{N}$,
+\begin{gather*}
+    \prob{}
+    {
+    \begin{array}{ll}
+         \forall i: \Ver(crs, C^*, m, i) = 1 \\
+         \wedge C^* \neq C
+    \end{array}
+    \middle\vert
+    \begin{array}{ll}
+         crs \leftarrow Gen(1^\lambda, q) \\
+         C^*, \{(m_i, \lambda_i)\}_{i\in [q]} = \calA(crs) \\
+         C \leftarrow \Com(crs, m_1,\ldots,m_q)
+    \end{array}
+    } \leq \epsilon(\lambda).
+\end{gather*}
+\end{definition}
+In Appendix~\ref{app:crypto} we show that a succinct inverse collision-resistant VC can be implemented from 
+a collision-resistant hash function using a Merkle tree~\cite{merkle1989certified}.
+
+To conclude our sketch of the soundness proof, suppose a cheating prover $\Pro^*$ is able
+to
+find a graph $G \not \in \calL(M)$ that is accepted by all the nodes with non-negligible probability.
+Since $G \not \in \calL(M)$, we know that $M(G) = 0$,
+and we can compute the vector commitment $c$ of $G$,
+and an honest SNARG proof $\pi_0$ for the statement ``the graph whose vector commitment is $c$
+is rejected by $M$''.
+However, since $\Pro^*$ was able to convince all nodes to accept,
+it has found a proof $\pi_1$ that convinces them that ``the graph whose vector commitment is $c'$
+is accepted by $M$'', where $c'$ is \emph{also} a vector commitment to $G$
+(otherwise, some node would open its entry in $c'$, see that its neighborhood is not represented correctly, and reject).
+By the inverse collision-resistance property of the commitment,
+there can only be one commitment that opens correctly at all nodes, and therefore $c = c'$.
+But this violates the soundness of the RAM SNARG, as we have now found a digest ($c$)
+and two proofs $\pi_0, \pi_1$,
+both of which convince the verifiers,
+but they prove opposite statements.
+
+%In this section, we construct a succinct distributed argument for $\PP$. The construction itself is very similar to the one for $\NP$, but they differ in the cryptographic primitives they use. In this construction, we use Flexible RAM SNARGs.%, which are known for $\PP$ from standard cryptographic assumptions (see Appendix \TODO{where} for details). 
+
+%\paragraph{RAM Delegation} For a polynomial-time Turing machine $M$, a \emph{RAM Delegation Scheme} for $M$ allows a verifier that does not have full access to an input $x$ (for instance, because $x$ is too long) and holds an alleged output $y$, to verify that $M$ was executed correctly on $x$, and in particular, the output of that execution is indeed $y$.
+%In general, a RAM Machine is a deterministic Turing machine that has random access to memory that is much longer (mostly, exponentially longer) than its local state, and a RAM SNARG is a SNARG that proves that a RAM machine indeed outputs a certain output, without having the verifier simulate the entire execution (that requires access to a long memory). A RAM SNARG is associated with a \emph{digest} algorithm, that processes the long input into a much shorter string that the verifier can read.
+%The soundness requirement of a RAM SNARG is that no efficient adversary would be able to produce a digest $d$ and two different proofs, $\pi_0$ and $\pi_1$, such that the verifier is convinced by $\pi_0$ that $M$ outputs $0$ and by $\pi_1$ that $M$ outputs $0$.
+%The soundness of the Flexible RAM SNARG is defined as follows.\footnote{
+%In \cite{cryptoeprint:2022/1320}, it is shown that this soundness notion can be replaced by a different one, called \emph{Partial Input Soundness}. We do not require it.
+%}
+%A RAM SNARG $(\Gen, \Ver, \Pro)$ for a machine $M$ that has a binary input is sound if for any efficient adversarial prover $\Pro^*$ and a polynomial $T = T(\lambda)$, there exists a negligible function $\epsilon(\cdot)$, such that
+%\begin{gather*}
+%    \prob{}
+%    {
+%    \begin{array}{ll}
+%    \Ver(\var{\crs}, d, 0, \pi_0) = 1 \\
+%    \wedge \Ver(\crs, d, 1, \pi_1) = 1
+%    \end{array}
+%    \middle\vert
+%    \begin{array}{ll}
+%    \var{\crs} \leftarrow \Gen(1^\secpar, T) \\
+%    (d, x, \pi_0, \pi_1) \leftarrow \Pro^*(\var{\crs}) \\
+%    \end{array}
+%    } \leq \epsilon(\secpar)
+%\end{gather*}
+%That is, a RAM SNARG is sound if for any efficient adversary, it cannot produce a proof that $M$ outputs
+%In \cite{cryptoeprint:2022/1320}, this definition is extended to \emph{Flexible SNARGs for RAM}, which is a RAM SNARG where the digest can be implemented by any hash family, and the SNARG is sound if that hash family has local openings.
+
+%We use Flexible RAM SNARGs to construct a succinct distributed argument for $\PP$. As mentioned, such RAM SNARGs are defined w.r.t some hash family with local opening. For our use, that hash family will be a succinct vector commitment, which already satisfies all of the hash family with local openings requirements. In addition, we require that the vector commitment has %a property we call \emph{inverse collision-resistance}. A VC is Inverse Collision-Resistant (ICR)\TODO{?} any efficient adversary cannot find a false commitment to a vector, cannot open two different commitments to the same vector in \emph{every} index, such that the verifier is convinced by all openings.
+%the following property.\footnote{
+%A succinct, inverse collision-resistant VC can be instantiated by a Merkle Tree \cite{merkle1989certified}. See Appendix~\ref{} \TODO{where} for more details.
+%}
+%\begin{definition}[Inverse Collision-Resistance]
+%A VC $(\Gen, \Com, \Open, \Ver)$ is \emph{Inverse Collision-Resistant} if for any efficient adversary $\calA$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\lambda\in \mathbb{N}$,
+%\begin{gather*}
+    %\prob{}
+    %{
+    %\begin{array}{ll}
+         %\forall i: \Ver(crs, C^*, m, i) = 1 \\
+         %\wedge C^* \neq C
+    %\end{array}
+    %\middle\vert
+    %\begin{array}{ll}
+         %crs \leftarrow Gen(1^\lambda, q) \\
+         %C^*, \{(m_i, \lambda_i)\}_{i\in [q]} = \calA(crs) \\
+         %C \leftarrow \Com(crs, m_1,\ldots,m_q)
+    %\end{array}
+    %} \leq \epsilon(\lambda)
+%\end{gather*}
+%\end{definition}
+
+%Let $\Lan$ be a language on graphs that is decidable in polynomial time, given the entire graph as input, and let $M_\Lan$ be the Turing machine that decides it:
+%$G\in \Lan \Leftrightarrow M_\Lan(L(G)) = 1$. 
+%The idea of our construction is similar to the one in the last section: the prover commits to the graph with the VC, and sends the commitment $c$ with a RAM SNARG proof $\pi$. The main difference is that in the construction for $\NP$, the prover proved that \emph{there exists} a graph $\Tilde{G}$ such that $\Tilde{G}$ is in the language and $c$ is a valid commitment to it, while 
+%here, the prover proves that when $M$ accepts $G$. This alone would not be sound; since the VC is succinct, that is, it compresses the input, it might be very likely that there is a graph $\Tilde{G}$ such that $c$ is a valid commitment to it and $\Tilde{G}\in \Lan$. In the construction for $\PP$, the argument of knowledge property of the SNARK guaranteed that if a prover $\Pro^*$ produces an accepted commitment $c$, then it must \emph{know} (that is, we can extract from it) a witness, which includes $G$, and since it is not likely that the prover would know a pre-image of $c$ other then $G$, our argument was sound.
+%The RAM SNARG does not have the argument of knowledge property, but instead, the Inverse Collision-Resistance property of the VC guarentees that if $c$ opens to $G$ everywhere, then it is very unlikely that committing to $G$ honestly produces a value $c'\neq c$. If $c$ is indeed the honest commitment to $G$, and $M$ rejects $G$, by the completeness of the SNARG, we can construct a proof $\pi_0$ that is convincing that $M(G)=0$. Since $\Pro^*$ produces $\pi_1$ that convinces the verifier that $M(G)=1$, this breaks the SNARG.

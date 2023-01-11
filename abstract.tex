@@ -1,0 +1,39 @@
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+In local distributed algorithms, nodes are traditionally allowed to have unbounded computational power.
+This makes the model incomparable with centralized notions of efficient 
+%computing 
+computations such as $\PP$ and $\NP$.
+In this paper, we study computationally-bounded distributed local decision and ask what can be achieved by computationally-efficient local algorithms and provers.
+
+The contributions of this work are twofold.
+First, we study distributed certification, where we
+%are interested in
+%certifying
+wish to certify
+that a distributed network satisfies
+some
+%desired
+property, or that a distributed algorithm has produced correct output.
+To that end, a \emph{prover} assigns to each node of the network a certificate, and the nodes then interact amongst themselves to verify the proof.
+%In this work
+%First,
+We introduce the notion of \emph{computationally-sound distributed certification}, where instead of requiring perfect soundness against any prover, we require only that a \emph{computationally-efficient} prover must not be able to convince the network of a false statement, except with negligible probability.
+%Using tools from cryptography, we show that under computational assumptions,
+We show that under certain cryptographic assumptions, any property in $\NP$ can be certified using a polylogarithmic number of bits by a global prover that knows the entire network,
+and any computationally-efficient distributed algorithm can be certified by an efficient distributed prover that produces certificates of polylogarithmic length in the algorithm's local computation time, round complexity, and message size.
+%Furthermore, we show that the execution of any computationally efficient distributed algorithm can be certified by an efficient \emph{distributed prover} that produces certificates of polylogarithmic length in the algorithm's local computation time, round complexity, and message size.
+
+%Next, we study the effect of restricting local distributed algorithms to be computationally efficient.
+Next, we study the effect of restricting the nodes themselves to be computationally efficient.
+We introduce the classes $\PLD$ and $\NPLD$ of polynomial-time local decision and nondeterministic polynomial-time local decision, respectively, and compare them to the centralized complexity classes $\PP$ and $\NP$, and to the distributed classes $\LD$ and $\NLD$, which correspond to local deterministic and nondeterministic decision, respectively.
+We show that when the size of the network is not known to the nodes, $\PLD \subsetneq \LD \cap \PP$; that is, there exists a problem that can be decided by an inefficient local algorithm and also by a poly-time centralized algorithm, but not by a poly-time local algorithm.
+When the size of the network is known, an unconditional separation of $\PLD$ from $\LD \cap \PP$ would imply that $\PP \neq \NP$;
+%but under a computational assumption called Decisional Diffie-Hellman (DDH), we are still able to show that $\PLD \subsetneq \LD \cap \PP$.
+however, we are still able to show that $\PLD \subsetneq \LD \cap \PP$ assuming that injective one-way functions exist.
+When nondeterminism is introduced, the distinction vanishes, and $\NPLD = \NLD \cap \NP$.
+\end{abstract}
+

@@ -1,0 +1,136 @@
+\subsection{Succinct Distributed Arguments for P from RAM SNARGs}\label{app:dargsForP}
+%%%% This label is left here on purpose:
+%\label{sec:dargsForP}
+%%%% To resolve a reference.
+In this section we use Flexible RAM SNARGs to construct a succinct distributed argument for $\PP$. Such RAM SNARGs are defined w.r.t some hash family with local opening. For our use, that hash family will be a succinct vector commitment, which already satisfies all of the hash family with local openings requirements. For our use, we also require that the vector commitment has the following property.\footnote{
+A succinct, inverse collision-resistant VC can be instanciated by a Merkle Tree \cite{merkle1989certified}.
+}
+\begin{definition}[Inverse Collision-Resistance]
+A VC $(\Gen, \Com, \Open, \Ver)$ is \emph{Inverse Collision-Resistant} if for any efficient adversary $\calA$, there exists a negligible function $\epsilon(\cdot)$, such that for every $\lambda\in \mathbb{N}$,
+\begin{gather*}
+    \prob{}
+    {
+    \begin{array}{ll}
+         \forall i: \Ver(crs, C^*, m, i) = 1 \\
+         \wedge C^* \neq C
+    \end{array}
+    \middle\vert
+    \begin{array}{ll}
+         crs \leftarrow Gen(1^\lambda, q) \\
+         C^*, \{(m_i, \lambda_i)\}_{i\in [q]} = \calA(crs) \\
+         C \leftarrow \Com(crs, m_1,\ldots,m_q)
+    \end{array}
+    } \leq \epsilon(\lambda)
+\end{gather*}
+\end{definition}
+
+\begin{theorem}\label{theo:P}
+Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Flexible RAM SNARGs for $\PP$ and Inverse Collision-Resistant VC exist, there is a succinct distributed argument for $\Lan$.  
+\end{theorem}
+
+
+Let $\Lan$ be a language on graphs that is decidable in polynomial time, given the entire graph as input, and let $M_\Lan$ be the Turing machine that decides it:
+$$G\in \Lan \Leftrightarrow M_\Lan(L(G)) = 1$$
+Fix a vector commitment $(\VCGen, \VCCom, \VCOpen, \VCVer)$ that is inverse collision-resistant and a RAM SNARG $(\SNARGGen, \SNARGPro, \SNARGVer)$ for $M_\Lan$, corresponding to the vector commitment as the hash with local opening. The succinct distributed argument for $\Lan$, $(\Gen, \Pro, \Ver)$, is defined as follows \TODO{move to the appendix eventually}
+\begin{subfigures}\label{fig:dargsForP}
+    \begin{nicefig}[h]{The Setup Procedure of Section~\ref{sec:dargsForP}: $\Gen(1^\secpar, n)$ }{fig:dargsForP_Setup}
+        \begin{algorithmic}[1]
+            \State Compute: $\crsvc = \VCGen(1^\secpar, n)$
+            \State Compute: $\crssnarg = \SNARGGen(1^\secpar, 1^n)$
+            \State Output: $\crs = (\crsvc, \crssnarg)$
+        \end{algorithmic}
+    \end{nicefig}
+    
+    \begin{nicefig}[h]{The Prover of Section~\ref{sec:dargsForP} : $\Pro(\crs, G)$ }{fig:dargsForP_Prover}
+        \begin{algorithmic}[1]
+            \State Parse $\crs=(\crsvc, \crssnarg)$
+            \State Represent $G$ as an adjacency list $L = L_1,\ldots, L_n$.
+            \ForEach{$i\in [n]$}
+                \State Set $v\in V(G)$ to be the node with the $i$ smallest identifier.
+                \State Set $i_v = i$, $L_{i_v} = (v, N_G(v_i))$            
+            \EndFor
+            \State Compute $(d,\aux) = \VCCom(\crsvc, L_1,\ldots, L_n)$
+            \State Compute for every $i$: $\Lambda_i = \VCOpen(\crsvc, L_i, i, aux)$
+            \State Compute $\pisnarg, b = \SNARGPro(\crssnarg, L)$
+            \State Output $\{\pi_v\}_{v\in V(G)}$, where for every $v\in V(G)$: $\pi_v = (d, i_v, \Lambda_{i_v}, \pisnarg)$
+        \end{algorithmic}
+    \end{nicefig}
+
+    \begin{nicefig}[h]{The Verifier of Section~\ref{sec:dargsForP} : $\Ver(\crs, \var{N}, v, \pi)$ }{fig:dargsForP_Verifier}
+        \begin{algorithmic}[1]
+            \State Parse $\crs=(\crsvc, \crssnarg)$
+            \State Parse $\pi = (c, i, \Lambda_i, \pisnarg)$
+            \State Verify that $\forall u\in \var{N}$, $d(u) = d$ and $\pisnark(u) = \pisnark$ (otherwise output 0)\label{step:verifyComP}
+            \State Output 1 if the following holds:
+            \begin{itemize}
+                \item $\VCVer(\crsvc, d, (v,\var{N}), i, \Lambda_i) = 1$
+                \item $\SNARGVer(\crssnarg, d, \pi) = 1$
+            \end{itemize}
+        \end{algorithmic}
+    \end{nicefig}
+\end{subfigures}
+
+
+We now prove the following statement, from which Theorem~\ref{theo:P} follows.
+\begin{claim}
+$\Gen, \Pro, \Ver$ is a succinct distributed argument.
+\end{claim}
+
+\begin{proof}%\label{step:soundnessBreakP}
+    Completeness and succinctness follow immediately from the completeness and the succinctness of the VC and the SNARG. We proceed to the proof of soundness. \TODO{Is this a good opening?}
+    Assume towards contradiction that there exists an efficient prover $\Pro^*$ and a non-negligible function $\alpha(\cdot)$ such that:
+    \begin{gather}\label{eq:soundnessBreakP}
+        \prob{}
+        {
+        \begin{array}{ll}
+        G\notin \Lan \\
+        \wedge\ \forall v\in V(G) : \Ver(\var{crs}, \var{N}_G(v), v, \pi_v) = 1
+        \end{array}
+        \middle\vert
+        \begin{array}{ll}
+        \var{crs} \leftarrow \Gen(1^\lambda, n) \\
+        G, \{\pi_{v}\}_{v\in V(G)} \leftarrow \Pro^*(\var{crs}, 1^\lambda, 1^n) \\
+        \end{array}
+        } \geq \alpha(\lambda)
+    \end{gather}
+
+    First, note that since all nodes verify the consistency of $d$ and $\pisnarg$ with their neighbors,(in Step~\ref{step:verifyComP}), if all nodes accept, then the prover gave the same commitment (digest), and the same SNARG proof $\pi_{\SNARG}$ to all of the nodes.
+    
+    We use $\Pro^*$ to construct an efficient adversary $\Adv$ that breaks either one of the properties of the SNARG, or one of the properties of the VC. Let $G, \{\pi_{v}\}_{v\in V(G)}$ be the graph and the proofs outputted from $\Pro^*(\crs, 1^\lambda ,n)$, and let $\crsvc, \crssnarg$ be the parsed reference strings from $\crs$.
+    On input $\crs, 1^\lambda, n$, $\Adv$ outputs $d, d^*, \pi_0, \pi_1$, where:
+    \begin{itemize}
+        \item $d^*$ is the commitment in $\pi_v$ that is consistent across all $v\in V(G)$.
+        \item $d, \aux = \VCCom(\crsvc, L(G))$. ($\Adv$ doesn't output $\aux$ but we refer it later)
+        \item $\pi_0 = \SNARGPro(\crssnarg, L(G))$.
+    \end{itemize}
+    For every $v\in V(G)$, let $\Lambda_{i_v} = \VCOpen(\crsvc, L_{i_v}, i_v, \aux)$.
+    We define the following events.
+    \begin{itemize}
+        \item Let $\VCCompBreak$ be the event that $d\neq d^*$ and there exists some $v\in V(G)$ such that $\VCVer$ rejects $(\crsvc, d, (v,N_G(v)), i \Lambda_{i_v})$.
+        \item Let $\ICRBreak$ be the event that $d\neq d^*$ $\VCVer$ accepts $(\crsvc, d, (v,N_G(v)), i \lambda_{i_v})$.
+        \item Let $\SNARGComBreak$ be the event that $\SNARGVer$ rejects $(\crssnarg, d, 0, \pi_0)$.
+        \item Let $\SNARGSoundBreak$ be the event that $d = d^*$ and $\SNARGVer$ accepts $(\crssnarg, d, 1, \pi_1)$ and $(\crssnarg, d, 0, \pi_0)$.
+    \end{itemize}
+    Whenever the event in \ref{eq:soundnessBreakP} occurs, one of the following must hold:
+    \begin{itemize}
+        \item $d \neq d^*$, so either $\VCCompBreak$ or $\ICRBreak$ occur.
+        \item $d = d^*$, so either $\SNARGComBreak$ or $\SNARGSoundBreak$ occur.
+    \end{itemize}
+    Since the event in \ref{eq:soundnessBreakP} happens with probability at least $\alpha(\lambda)$, one of the events $\VCCompBreak$, $\ICRBreak$, $\SNARGSoundBreak$, $\SNARGCompBreak$ happens with probability at least $\alpha(\lambda)/4$, which is also a non-negligible function of $\lambda$, and so, $\Adv$ breaks at least one of the following: the VC's completeness property, the VC's position-binding property, the SNARG's completeness property, the SNARG's soundness property.
+Completeness, succinctness, and verifier efficiency follow naturally from the primitives' properties.
+\end{proof}
+
+\begin{corollary}\label{cor:MerkleICRVC}
+    Let $\Lan$ be a graph language, such that $\Lan\in \PP$. Assuming Flexible RAM SNARGs and CRH exist, there is a succinct distributed argument for $\Lan$.  
+\end{corollary}
+Merkle Trees (\cite{merkle1989certified}) induced by a CRH in fact instantiate an Inverse Collision-Resistant VC. Together with theorem~\ref{theo:P}, this implies corollary~\ref{cor:MerkleICRVC}
+\TODO{The first corollary should stay in the section and the rest should move to the appendix, and possibly be united into one corollary / theorem with bullets}
+
+\begin{corollary}\label{cor:RAMSNARGs}
+    If $\Lan\in\PP$, there exists a distributed argument for $\Lan$ of length $\polylog(n)$, assuming either
+    \begin{enumerate}
+        \item The $O(1)-\LIN$ assumption on a pair of cryptographic groups with efficient bilinear map, or
+        \item A combination of the sub-exponential $\DDH$ assumption and the $\QR$ assumption.
+    \end{enumerate}
+\end{corollary}
+As shown in  \cite{cryptoeprint:2022/1320}, Flexible RAM SNARGs exist under any of these assumptions. Together with theorem~\ref{theo:P}, this implies corollary \ref{cor:RAMSNARGs}.

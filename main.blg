@@ -1,0 +1,150 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+The style file: ACM-Reference-Format.bst
+Reallocating 'name_of_file' (item size: 1) to 4 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Database file #1: bib.bib
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--no key, author in ZKSnarks
+Warning--no author, editor, organization, or key in ZKSnarks
+Warning--to sort, need author or key in ZKSnarks
+Warning--no key, author in filecoin
+Warning--no author, editor, organization, or key in filecoin
+Warning--to sort, need author or key in filecoin
+Warning--no key, author in Zcash
+Warning--no author, editor, organization, or key in Zcash
+Warning--to sort, need author or key in Zcash
+Warning--no key, author in Starkware
+Warning--no author, editor, organization, or key in Starkware
+Warning--to sort, need author or key in Starkware
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Warning--no key, author in filecoin
+Warning--no key, author in filecoin
+Warning--no key, author in Starkware
+Warning--no key, author in Starkware
+Warning--no key, author in Zcash
+Warning--no key, author in Zcash
+Warning--no key, author in ZKSnarks
+Warning--no key, author in ZKSnarks
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--no key, author in ZKSnarks
+Warning--empty author in ZKSnarks
+Warning--empty year in ZKSnarks
+Warning--no key, author in Zcash
+Warning--empty author in Zcash
+Warning--empty year in Zcash
+Warning--no key, author in Starkware
+Warning--empty author in Starkware
+Warning--empty year in Starkware
+Warning--no key, author in filecoin
+Warning--empty author in filecoin
+Warning--empty year in filecoin
+Warning--empty publisher in aiello2000fast
+Warning--empty address in aiello2000fast
+Warning--empty address in BA
+Warning--empty publisher in baruch2015randomized
+Warning--empty address in baruch2015randomized
+Warning--empty publisher in bitansky2012extractable
+Warning--empty address in bitansky2012extractable
+Warning--empty publisher in bitansky2013recursive
+Warning--empty address in bitansky2013recursive
+Warning--empty publisher in canetti2001universally
+Warning--empty address in canetti2001universally
+Warning--empty publisher in catalano2013vector
+Warning--empty address in catalano2013vector
+Warning--empty publisher in choudhuri2021non
+Warning--empty address in choudhuri2021non
+Warning--empty publisher in KOE
+Warning--empty address in KOE
+Warning--empty publisher in devadas2022rate
+Warning--empty address in devadas2022rate
+Warning--empty publisher in di2008succinct
+Warning--empty address in di2008succinct
+Warning--no number and no volume in dwork2004succinct
+Warning--page numbers missing in both pages and numpages fields in dwork2004succinct
+Warning--empty publisher in EGK22
+Warning--empty address in EGK22
+Warning--page numbers missing in both pages and numpages fields in CertSurvey
+Warning--empty publisher in gentry2011separating
+Warning--empty address in gentry2011separating
+Warning--empty address in OdedBook
+Warning--empty publisher in GL89
+Warning--empty address in GL89
+Warning--empty publisher in groth2010short
+Warning--empty address in groth2010short
+Warning--empty publisher in groth2016size
+Warning--empty address in groth2016size
+Warning--empty publisher in hulett2022snargs
+Warning--empty address in hulett2022snargs
+Warning--empty publisher in jawale2021snargs
+Warning--empty address in jawale2021snargs
+Warning--empty publisher in KP16
+Warning--empty address in KP16
+Warning--empty publisher in kalai2019delegate
+Warning--empty address in kalai2019delegate
+Warning--empty publisher in kilian1992note
+Warning--empty address in kilian1992note
+Warning--empty publisher in KOS18
+Warning--empty address in KOS18
+Warning--empty publisher in korman2005proof
+Warning--empty address in korman2005proof
+Warning--empty publisher in merkle1989certified
+Warning--empty address in merkle1989certified
+Warning--empty publisher in NPY20
+Warning--empty address in NPY20
+Warning--empty publisher in ostrovsky2017space
+Warning--empty address in ostrovsky2017space
+Warning--empty publisher in paneth2022incrementally
+Warning--empty address in paneth2022incrementally
+Warning--empty publisher in patt2017proof
+Warning--empty address in patt2017proof
+Warning--empty publisher in valiant2008incrementally
+Warning--empty address in valiant2008incrementally
+You've used 47 entries,
+            5981 wiz_defined-function locations,
+            1749 strings with 25602 characters,
+and the built_in function-call counts, 52615 in all, are:
+= -- 6203
+> -- 1313
+< -- 0
++ -- 445
+- -- 474
+* -- 3374
+:= -- 4777
+add.period$ -- 234
+call.type$ -- 47
+change.case$ -- 299
+chr.to.int$ -- 45
+cite$ -- 156
+duplicate$ -- 5190
+empty$ -- 3641
+format.name$ -- 608
+if$ -- 12912
+int.to.chr$ -- 4
+int.to.str$ -- 1
+missing$ -- 192
+newline$ -- 399
+num.names$ -- 301
+pop$ -- 2263
+preamble$ -- 1
+purify$ -- 651
+quote$ -- 0
+skip$ -- 1912
+stack$ -- 0
+substring$ -- 4068
+swap$ -- 504
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1249
+warning$ -- 93
+while$ -- 329
+width$ -- 0
+write$ -- 930
+(There were 93 warnings)

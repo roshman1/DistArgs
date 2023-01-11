@@ -1,0 +1,49 @@
+\paragraph{Computationally sound proofs.}
+The idea of a proof system that is only sound against adversaries with bounded computational power
+was introduced by Micali~\cite{micali2000computationally},
+who gave an implementation 
+based on an earlier interactive protocol by Kilian~\cite{kilian1992note}.
+%Micali defined the \emph{random oracle model} (ROM),
+%an idealized model for hash functions, and showed that Kilian's protocol 
+%can be made non-interactive in the random oracle model
+%using the Fiat-Shamir paradigm~\cite{fiat1986prove}.
+Since Micali's work extensive research has been made on obtaining succinct, non-interactive arguments (SNARGs) in more realistic models, such as the \emph{Common Reference String} (CRS) model (see Section~\ref{sec:prelim} and Appendix~\ref{app:crypto}).
+Very recently SNARGs for all languages in $\PP$ have been constructed from standard cryptographic assumptions~\cite{kalai2019delegate, jawale2021snargs, choudhuri2021snargs, cryptoeprint:2022/1320}. In the case of $\NP$, \cite{gentry2011separating} presented a substantial barrier to constructing SNARGs from standard hardness assumptions, and indeed, all known constructions of SNARGs use \emph{knowledge assumptions}, which are considered nonstandard.
+
+Knowledge assumptions capture the intuition that an algorithm whose output implicitly relates to some
+hard-to-compute value must \emph{obtain} that value along the computation.%
+\footnote{For example, 
+the knowledge-of-exponent assumption~\cite{KOE}
+essentially asserts that given a cyclic group $G$ of prime order,
+a generator $g$ of $G$, and an element $h = g^a$ for some $a \in [|G|]$,
+if we want to compute a pair $(c,y)$ such that $c^a = y$,
+we must \emph{compute the exponent $a$}, which is believed to be hard (this is the \emph{discrete log assumption}).}
+Under such assumptions, a SNARG candidate becomes even stronger---it becomes
+a \emph{SNARG of knowledge}, a SNARK:
+under the knowledge assumption, whenever the prover manages to convince the verifier to accept,
+we can extract from the prover a \emph{witness}.%
+\footnote{E.g., in the knowledge-of-exponent example, we can extract the exponent $a$.}
+The ability to extract a witness is useful for composing SNARKs with other primitives,
+and we use it for this purpose in Sections~\ref{sec:dargsForNP},~\ref{sec:distprover}.
+Despite the barrier of~\cite{gentry2011separating} on constructing
+SNARKs from standard cryptographic assumptions, they are 
+nevertheless used on some blockchains, including Ethereum~\cite{ZKSnarks} and others~\cite{filecoin,Zcash,Starkware}.
+%the SNARG candidate becomes stronger (it becomes a SNARG of knowledge --- a SNARK); instead of only being sound, we can promise (under the knowledge assumption), that any prover that manages to convince the verifier, knows a witness. This is useful for composing such arguments with other primitives, and in particular, this is useful for our construction (in \Cref{sec:dargsForNP,sec:distprover}). We discuss in \cref{??} \TODO{where} the different assumptions under which SNARKs can be constructed; they are much stronger than standard cryptographic assumptions, but nevertheless, SNARKs are used on some blockchains, including Ethereum~\cite{ZKSnarks}. 
+
+%SNARGs for deterministic computation (\cite{kalai2019delegate}, \cite{jawale2021snargs}, \cite{choudhuri2021snargs}) and batch arguments for $\NP$ (\cite{choudhuri2021non}, \cite{hulett2022snargs},  \cite{devadas2022rate}, \cite{cryptoeprint:2022/1320}), incrementally verifiable computation (\cite{paneth2022incrementally}) and the relationship between these primitives.
+
+
+%(e.g.,~\cite{aiello2000fast, dwork2004succinct, di2008succinct, groth2010short, bitansky2012extractable, bitansky2013recursive}).
+
+%\paragraph{SNARGs vs.\ SNARKs.}
+%A SNARG is a short non-interactive proof that convinces the verifier of a statement of the form ``$x \in \calL$'' for some language $\calL$. However, for $\NP$-languages, it is sometimes useful to require more: when the prover convinces the verifier of a statement of the form ``$\exists w R(x,w)$'' (e.g., ``there exists a satisfying assignment for the formula $x$''), we would like to be sure that the prover \emph{knows} a witness $w$ such that $R(x,w)$ holds, and further, we would like to be able to extract $w$ from the prover's code or the proof. If a SNARG has this additional \emph{proof of knowledge} property, it is called a \emph{SNARG of knowledge} (SNARK). SNARKs are especially useful for composition, and two of our constructions (in Sections~\ref{sec:dargsForP} and~\ref{sec:distprover}) use them for this purpose. We discuss in Appendix \TODO{where} the different assumptions under which SNARKs can be constructed; they are much stronger than standard cryptographic assumptions, but nevertheless, SNARKs are used on some blockchains, including Ethereum~\cite{ZKSnarks}.
+
+%its soundness only holds for adversaries of bounded computational power (also known as an argument) was introduced by Micali in \cite{micali2000computationally}, and was based on an earlier interactive protocol of Kilian (\cite{kilian1992note}) that in turn is based on Merkle Trees (\cite{merkle1989certified}) and Probabilistically Checkable Proofs (PCPs) (\cite{babai1991checking, arora1998probabilistic, arora1998proof, feige1991approximating} \TODO{Choose citation}).  %Kilian's protocol uses Merkle Trees induced by a collision-resistant hash function, and PCPs to construct an interactive computationally sound proof, where the entire transcript of the interaction is much shorter than the length of the corresponding $\NP$-witness.
+%In Micali's work, he defined the Random Oracle model and then showed that in that model, the interaction in Kilian's protocol can be removed by the Fiat-Shamir paradigm (\cite{fiat1986prove}).
+
+%Since Micali's work, there have been some attempts (\cite{aiello2000fast, dwork2004succinct, di2008succinct, groth2010short, bitansky2012extractable}) to obtain succinct, non-interactive, arguments (SNARGs) in the common reference string (CRS) model (\cite{canetti2001universally} \TODO{verify citation}) \TODO{what crs means for the distributed prover case}, where all parties have access to a common string that was chosen according to some predefined distribution in an earlier stage. Schemes proven secure in the CRS model are secure given that the setup was performed correctly.
+
+%Most of these works use a knowledge assumption. Knowledge assumptions capture the intuition that any algorithm whose output is related to a certain value that is hard to compute (for instance, a convincing proof, that is related to an $\NP$-witness), must obtain that value along the computation. This assumption is non-falsifiable, meaning, one cannot define a game where at the end of the game, it is easy to tell whether the assumption was broken or not. Under such assumptions, the SNARG candidate stronger (it becomes a SNARG of knowledge -- a SNARK); instead of only being sound, we can promise (under the knowledge assumption), that any prover that manages to convince the verifier, knows a witness. This is useful for composing such arguments with other primitives, and in particular, this is useful for our construction.
+
+%In \cite{gentry2011separating}, a substential barrier to proving the soundness of a SNARG for $\NP$ under falsifiable assumptions alone. Since, many works were either focused on what can be done without these knowledge assumptions, which include SNARGs for deterministic computation (\cite{kalai2019delegate}, \cite{jawale2021snargs}, \cite{choudhuri2021snargs}) and batch arguments for $\NP$ (\cite{choudhuri2021non}, \cite{hulett2022snargs},  \cite{devadas2022rate}, \cite{cryptoeprint:2022/1320}), incrementally verifiable computation (\cite{paneth2022incrementally}) and the relationship between these primitives.
+%In this work, we use SNARKs (SNARGs of Knowledge) for $\NP$ and SNARGs for $\PP$.

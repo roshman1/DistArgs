@@ -1,0 +1,7 @@
+
+*.tex~
+*.bib~
+*.ini
+main.tex.latexmain
+main.tex.latexmain~
+main.xcp

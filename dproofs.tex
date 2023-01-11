@@ -1,0 +1,350 @@
+% >%
+\newif\ifLNCS
+
+% Change below to true if draft version should be LNCS
+%<draft>%
+\LNCSfalse
+%<end>%
+
+% Change versions below to true if eprint/final versions should be LNCS
+%<ifflag(EPRINT)>%
+%<>%\LNCSfalse
+%<endif>%
+%<ifflag(FINAL)>%
+%<>%\LNCStrue
+%<endif>%
+
+\ifLNCS
+\documentclass{llncs}
+\else
+\documentclass[11pt]{article}
+\usepackage[a4paper,hmargin=1.0in,vmargin=1.0in]{geometry}
+\usepackage{amsthm}
+%\usepackage{sectsty,txfonts}
+\fi
+\usepackage{amssymb,amsmath}
+
+\usepackage{listings}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\usepackage{xspace}
+\usepackage{enumitem}
+
+\usepackage{graphicx}
+\usepackage[countmax]{subfloat}
+\usepackage{caption}
+\usepackage[framemethod=tikz]{mdframed}
+\setlength{\abovecaptionskip}{0pt} % We use mdframed frametitles
+\usepackage[unicode,pdfstartview=FitH]{hyperref}
+
+% Note: algorithm package must appear after hyperref
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\floatname{algorithm}{Protocol}
+% Define an \INPUT command for the algorithmicx environment
+\algnewcommand\algorithmicinput{\textbf{INPUT:}}
+\algnewcommand\INPUT{\item[\algorithmicinput]}
+\newsubfloat{algorithm}
+
+%%%% Fix bad autorefs
+% Correctly autoref appendix
+\newcommand*{\Appendixautorefname}{Appendix}
+% Correctly autoref protocols
+\newcommand{\algorithmautorefname}{Protocol}
+
+% For nice autorefs
+\usepackage{cleveref}
+
+\crefname{algorithm}{protocol}{protocols}
+\crefname{hybrid}{hybrid}{hybrids}
+\crefname{step}{step}{steps}
+
+%% Added for LLNCS
+\crefname{claim}{claim}{claims}
+
+% For nomeclature table
+\usepackage[refpage]{nomencl}
+\makenomenclature
+
+%<draft>%
+%\newcommand{\nomenclature}[2]{}
+%\newcommand{\printnomenclature}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% For draft version
+% Debugging
+\errorcontextlines=999
+
+% Version info
+
+\newif\ifversion % Mark version in each section header
+\versionfalse
+
+\newcommand{\VersionString}{}
+
+\ifversion
+\let\oldmarkboth\markboth
+\renewcommand{\markboth}[2]{\oldmarkboth{Printed \today~[\VersionString]}{Printed \today~[\VersionString]}}
+\let\oldsection\section
+\renewcommand{\section}[1]{\ifthenelse{\equal{#1}{*}}{\oldsection*}{\oldsection{#1\\
+			\footnotesize{(\VersionString)}}}}
+\fi % version
+
+\newcommand{\Version}[1]{\renewcommand{\VersionString}{Version #1}}
+
+\Version{$ $Id$ $}
+
+%<end>%
+
+%<draft>%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AMSART specific LaTeX commands.
+% amsart doesn't emphasize \paragraph by default
+%\let\oldpara\paragraph
+%\renewcommand{\paragraph}[1]{\oldpara{\emph{#1}}}
+%\theoremstyle{plain}
+%<end>%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LLNCS specific LaTeX commands.
+\newcommand{\mysubsubsection}[1]{\paragraph{\textbf{#1.}}}
+
+% Add "." at the end of paragraph titles
+\newcommand{\dotpara}[1]{\paragraph{#1.}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+
+% ALGORITHMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\algorithmiccomment}[1]{ // {#1}}
+\floatname{algorithm}{Protocol}
+
+\ifLNCS\relax\else
+\newtheorem{theorem}{Theorem}[section]
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\fi
+
+
+%%%%%%%%%%%% Eden's commands %%%%%%%%5
+\newcommand{\Enote}[1]{\textcolor{violet}{Eden: #1}}
+\newcommand{\prob}[2]{\ensuremath{\underset{#1}{\text{Pr}}\left [#2\right ]}}
+\newcommand{\Prob}[1]{\ensuremath{\emph{Pr}\left [#1\right ]}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\negl}{\mathsf{negl}}
+\newcommand{\Lan}{\ensuremath{\mathcal{L}}}
+\newcommand{\NP}{\mathsf{NP}}
+\newcommand{\PP}{{\mathsf{P}}}
+\newcommand{\Adv}{\ensuremath{\mathcal{A}}}
+
+
+\input{defs}
+
+\begin{document}
+\title{Distributed Proofs
+%<draft>%
+\\ {\sf Work In Progress: Do Not Distribute }
+%<end>% %
+}
+
+\author{Author Name}
+
+\maketitle
+
+\begin{abstract}
+Lorem ipsum...
+%<ifflag(EPRINT)>%
+%<>%\textbf{This is the eprint version}
+%<endif>%
+\end{abstract}
+
+
+\input{sections/introduction}
+%\input{sections/discussion}
+
+\section{Preliminaries}
+\subsection{Concise, Position Binding, Vector Commitment Schemes with Succinct Openings}
+Informally, vector commitments (\cite{catalano2013vector}) are binding commitments to vectors that allow the sender to open a certain index of the committed vector without opening the entire commitment. If the commitments have the position binding property (defined below), then the commitment is binding per index, meaning that for each such index, for any PPT adversary, the probability of finding two different valid openings for the same index is negligible in the security parameter. We also require the commitment to be concise, that is, both the commitment length and the opening length are independent of the vector size. Vector Commitments, as defined in \cite{catalano2013vector}, also support updating "bellow the commitment", which we will not use, and it is omitted from the definition.
+
+\begin{definition} [Concise, Position-Binding, Vector Commitments \cite{catalano2013vector}]
+    \emph{Vector Commitments} (VCs) are defined by the following algorithms:
+    \begin{itemize}
+        \item $VC.KeyGen(1^\lambda, q)$: Given the security parameter $\lambda$ and the size $q$ of the committed vector (with $q = \poly(k)$), the key generation outputs some public parameters $pp$. \Enote{What about the required randomness? shouldn't it be part of the input?}
+        \item $VC.Com_{pp}(m_1,\ldots , m_q)$ On input a sequence of $q$ messages $m_1,\ldots, m_q\in M$ and the public parameters $pp$, the committing algorithm outputs a commitment string $C$ and an auxiliary information $aux$.
+        \item $VC.Open_{pp}(m, i, aux)$ This algorithm is run by the committer to produce a proof $\Lambda_i$ that $m$ is the $i$-th committed message.
+        \item $VC.Ver_{pp}(C, m, i, \Lambda_i)$ The verification algorithm accepts (i.e., it outputs 1) only if $\Lambda_i$ is a valid proof that $C$ was created to a sequence $m_1, \ldots , m_q$ such that $m = m_i$.
+    \end{itemize}
+
+    A VC is considered \emph{concise}, if the both size of the commitment $C$ and the size of the opening $\Lambda_i$ for every $i\in [q]$, are independent of the vector size $q$.
+
+    A VC is considered \emph{Position-Binding}, if for every $i\in [q]$, and for every PPT adversary $\Adv$, the following probability (which is taken over all honestly generated parameters) is at most negligible in $k$:
+    \begin{gather*}
+        \prob{pp \leftarrow VC.KeyGen(1^k, q)}
+        {
+        \begin{array}{l}
+        VC.Ver_pp(C, m, i, \Lambda_i) = 1 \ \wedge \\
+        VC.Ver_pp(C, m', i, \Lambda_i') = 1
+        \end{array}
+        \middle\vert
+        (C, m, m', i, \Lambda, \Lambda_i')\leftarrow\Adv(pp)
+        }
+    \end{gather*}
+\end{definition}
+
+An example of a concise, position-binding, VC scheme in the \emph{common random string} model is a Merkle tree \cite{merkle1989certified}, induced by a \emph{collision-resistant hash function} $h$ where the $i$th leaf is obtained by hashing the $i$th row of the matrix ($h(M_i)$).
+
+\begin{definition} [Collision-Resistant Hash (CRH)]
+    A family $\mathcal{H} = \{\mathcal{H}_\lambda: \{0,1\}^*\to\{0,1\}^\lambda\}$ of hash functions is considered \emph{collision-resistant}, if for every $m$, for any PPT adversary $\mathcal{A}$,
+    \begin{gather*}
+        \prob{h\leftarrow\mathcal{H}_\lambda}{h(x_1)=h(x_2)\ |\ x_1,x_2\leftarrow\mathcal{A}}\in \negl(\lambda)
+    \end{gather*}
+\end{definition}
+
+\subsection{Succinct (Interactive and Non-Interactive)Arguments of Knowledge}
+A proof of knowledge is a proof provided by a prover to an efficient verifier, with the additional guarantee that there exists an extraction algorithm, $E$, such that for every proof $\pi$ that the verifier accepts with high enough \Enote{non-negligible? high-high?} probability, given as input the prover's code, $E$ extracts some information.
+
+An argument is a computationally sound proof, that is, a proof that is sound assuming that the prover is computationally bounded, but its soundness may be broken by a more powerful adversary.
+
+An argument is called succinct if it is much shorter than a relevant parameter, mostly, either the statement it claims to prove, or a witness to its correctness (in most cases, where the statement is of the form $x\in \Lan$ where $\Lan$ is some non-deterministic language).
+
+We now define formally succinct arguments of knowledge for $\mathsf{NP}$.
+\begin{definition} [Succinct Argument of Knowledge for $\NP$]
+    Let $\Lan$ be an $\NP$ language, with a verifying machine $M$ ($x\in \Lan \Leftrightarrow \exists w: M(x,w)=1$), and let $\lambda$ be a security parameter. \emph{Succinct Argument for $\Lan$} $(P,V)$ is a two-party game between a prover $P$ and a verifier $V$, who both are PPT, and have access to the same common random string $crs$, and an input $x$. In the case where $x\in \Lan$, $P$ gets a witness $w$ such that $M(x,w)=1$. In the interaction stage, $P$ and $V$ exchange messages to produce a transcript $\pi = (V,P(w))(x,crs)$ (all of the exchanged messages). Then, in the decision stage, $V$ decides according to $x,t,crs$ whether to accept or reject. We denote this decision algorithm $V^D(x,\pi)$. The argument's completeness and soundness properties are as follows:
+    \begin{itemize}
+        \item (\emph{completeness}) For $x,w$, such that $M(x,w)=1$, $$\prob{crs}{V^D(x,t) = 1\ |\ t = (V,P(w))(x,crs)} = 1$$
+        \item (\emph{soundness}) For any PPT adversarial prover $P^*$, and $x\notin L$: $$\prob{crs}{V^D(x,t) = 1\ |\ t = (V,P^*(w))(x,crs)} \in \negl(\lambda)$$
+    \end{itemize}
+    \Enote{Wasn't sure how to notate the $crs$'s distribution}
+    
+    A \emph{succinct argument of knowledge} for $\Lan$ consists of three algorithms: $P, V, E$ where $(P, V)$ is a succinct argument for $\Lan$ and $E$ is a knowledge extraction algorithm, receiving as input the instance $x$, the prover $P^*$ and the transcript of the conversation between $V$ and $P^*$ $\pi$, and extracts the witness $w$ with high probability:
+    \begin{gather*}
+        \Pr[V^D(x,\pi) = 1 \wedge M(x,w)\neq 1\ |\ \pi = (V,P^*(w))(x,crs) \wedge w = E(x, \pi, P^*, crs)] \in \negl(\lambda)
+    \end{gather*}
+
+    \emph{Succinct Non-Interactive Arguments of Knowledge} (SNARKs) are SARKs with one round only: the prover sends a message and the verifier decides. Their soundness, completeness, and extractability requirements match those of SARKs.
+\end{definition}
+\Enote{Here I defined the argument for a specific language, but maybe it can be defined in general, where the prover/verifier chooses the language? Also, maybe it should have been for any non-deterministic language, and not specifically NP.}
+
+\subsection{The Random Oracle Model}
+A random oracle could be seen as a function $f:\{0,1\}^k\to\{0,1\}^l$, chosen uniformly at random from the set of all functions $\mathcal{O} = \{0,1\}^k\to \{0,1\}^l$. In the ROM, we allow all parties to query the oracle, but not have any information on the oracle's identity. For computation complexity analysis, each oracle query is counted as one computational step. \Enote{I'm not sure how deep into details we should b here}
+
+\subsection{Knowledge Extractability Assumptions}
+\Enote{Also not sure which assumption should we present (knowledge of exponent? knowledge of knapsack?}
+
+\section{An Interactive, Computationally Sound, Proof Labelling Scheme in the Common Random String Model, Using Collision Resistant Hash}
+We present the protocol in two parts, each convincing the verifying network in a different statement, where if both of these statements are true, under our assumptions, the graph satisfies the property with high probability. The two parts  of the protocol we describe can run in parallel (the first one, which is the message, can run along with the first message of the second one, which consists of $O(1)$ messages). For clarity, we first describe them separately.
+
+\subsection{Part 1: Graph Commitment} \label{Com}
+For an undirected graph $G$, let $Adj(G)$ denote $G$'s adjacency matrix. Let $G$ be the network's graph, and $V=\{v_1,\ldots,v_n\}$ denote its nodes. Denote by $M_i$ the $i$th row in the matrix $M$.
+
+Let $VC$ be a concise, position-binding, vector commitment scheme, and let $\mathcal{H}_\lambda$ be a collision-resistant hash family. Let $\lambda$ be the security parameter, and let $crs$ be the common random string in use.
+We describe the following prover-verifier protocol $(P^1, v_i)$:
+\begin{itemize}
+    \item Proving Stage:
+    \begin{enumerate}
+        \item The verifier network (each node $v_i$) and the prover, $P$, apply $VC.KeyGen(1^\lambda, 1^{n})$, and obtain public parameters $pp$. They also use the $crs$ to obtain a description for a hash function $h\leftarrow\mathcal{H}_\lambda$.
+        \item $P^1$ then commits to $Vec_h(G) = (h(Adj(G)_1,\ldots,h(Adj(G)_n))$.
+        
+        Denote $C, aux = VC.Com_{pp}(Vec_h(G))$.
+        \item\sloppy Then, for verifier node $v_i$, $P^1$ computes the opening to its index.
+        
+        Denote: $M_i = Adj(G)_i$, $\Lambda_i = VC.Open_{pp}(C, Vec_h(G)_i, i, aux)$.
+    \end{enumerate}
+    $P^1$ sends to node $v_i$ $\alpha_i = (C_i, M_i, \Lambda_i)$ (where for every $i$, $C_i = C$)
+    \item Verification Stage: The verifier node $v_i$ accepts if the following holds:
+    \begin{enumerate}
+        \item For every neighbor of $v_i$, $v_j$, $C_i=C_j$
+        \item $M_i = Adj(G)_i$)
+        \item $VC.Ver_{pp}(C, Vec_h(G), i, \Lambda_i) = 1$
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Part 2: SARK for properties of committed graphs}\label{SARK}
+Let $C$ be the commitment of the $P^1$ from the last part, and let $pp$ be the public parameters derived by both the network and the $P^1$.
+We now use a succinct argument of knowledge (SARK) to prove the following $\NP$ statement:
+\begin{gather*}
+    \exists G\ s.t\ VC_{pp}(Vec_h(G)) = C \wedge G\in P
+\end{gather*}
+That is, we would like to prove that $C\in \mathcal{L}$ for the following $\NP$ language $\Lan$.
+\begin{gather*}
+    \mathcal{L} = \{x\ :\ \exists G\in P\ \ s.t\ \ Com(Vec_h(G), pp) = x\}
+\end{gather*}
+The prover is running the SARK in parallel with all of the nodes, where each node $v_i$ has its own randomness $r_i$, so the messages may differ between nodes. Denote the SARK $(P^2, V, E)$.
+\Enote{A bunch of notations I wasn't sure where to put}
+Denote by $\phi$ the empty transcript, and by $t_i(j)$ the transcript after $j$ messages betweenthe prover and node $v_i$ (if message $m$ was sent after transcript $t_i(j)$ so $t_i(j+1)=t_i(j)||m$. Denote by $P^2(C, Adj(G), t_i(j), crs)$ and $V(C,t_i(j),crs, r_i)$ the next message of the prover and the verifier  node $v_i$ (respectively) in the SARK, after transcript of $t_i(j)$. Denote $\beta_i^1 = P^2(C, Adj(G), \phi, crs)$ the first prover message. Denote by $t_i$ the entire transcript.
+
+%Denote the $j$th message of $P^2$ in the SARK $P^2_j(x, w, V_{(1,\ldots,j-1)}(x), crs)$, where $x$ is the instance, $w$ is the witness the prover has, and $V_{(1,\ldots,j-1)}(x)$ are the messages sent by $V$ thus far in the protocol. Denote the first message of the prover (if there is no preceding verifier message) $P^2_1(x,w,crs)$.
+
+\subsection{The combined protocol}
+We now describe the combined protocol, while assuming the SARK starts with a message of the prover (as it is in the construction used by Killian \cite{kilian1992note}). If the SARK starts with the verifier sending a message, we can add the first verifier message before the protocol begins.
+The combined protocol between the prover $P$ and node $v_i$ is as follows:
+\begin{enumerate}
+    \item $v_i$ and $P$ compute public parameters $pp$ from the $crs$.
+    \item $P$ simulates both $P^1$ and $P^2$ and sends to $v_i$ $\alpha_i = (C_i, M_i, \Lambda_i)$ and $\beta_i^1 = P^2(C, Adj(G), \phi, crs)$.
+    \item $v_i$ sends to each of its neighbors $C_i$
+    \item for each round $j$ of the SARK, $P$ sends $P^2(C, Adj(G), t_i(j-1), crs)$ and node $v_i$ responds (in round $j+1)$ with $V(C, t_i(j), crs, r_i^j)$.
+    \item $v_i$ verifies $\alpha_i$ according to \ref{Com}, and accepts if and only if $\alpha_i$ is accepted and $V_i^D(x,t)=1$
+\end{enumerate}
+
+\begin{claim}
+    Denote by $v_i(G, crs, P)$ the output (accept/reject) of node $v_i$ in the graph network $G$, after performing the combined protocol with the prover $P$, given a common random string $crs$. The combined protocol satisfies the following:
+    \begin{itemize}
+        \item (\emph{Completeness}) If $G\in P$, then $\Pr[\forall i\in [n]: v_i(G, crs, P) = accept] = 1$
+        \item (\emph{Soundness}) If $G\notin P$, then $\Pr[\forall i\in [n]: v_i(G, crs, P) = accept] \in \negl(\lambda)$
+        \item (\emph{Succinctness}) The entire length of the transcript of the conversation between $v_i$ and $P$ is $O(\polylog(n)$
+        \item (\emph{Low Communication Complexity}) Each node only sends one $O(\polylog (n)$ message to each of its neighbors.
+    \end{itemize}
+\end{claim}
+
+Completeness, succinctness, and low communication follow naturally from the primitives' properties. \Enote{Should we fill these?}
+
+\begin{proof} [Proof of Soundness]
+    Assume $G\notin P$, and all of the nodes accept. First, note that since all nodes verify the consistency of $C$ with their neighbors, the prover gave the same commitment to all of the nodes. Let $t_i$ be the transcript of the SARK for node $v_i$, let $E$ be the SARK's extractor, and let $M$ be the polynomial machine such that $x\in \Lan \Leftrightarrow \exists w: M(x,w)=1$. Let $h$ be the CRH description derived from the $crs$. Let $G' = E(x,t,P^*,crs)$. One of the following must hold:
+    \begin{itemize}
+    \item $M(C, G') = 1$. So, $G'\in P$ and $G'\neq G$. More precisely, there exists $i\in [n]$ such that $Adj(G)_i\neq Adj(G')_i$. So, one of the following is true:
+    \begin{itemize}
+        \item $Vec_h(G)_i \neq Vec_h(G)_i$. So, since node $v_i$ accepted $\alpha_i$, $\Lambda_i$ is a valid opening of $C$ in index $i$ to $Vec(G)_i$. Since $G'\in P$, there's also a valid opening $\Lambda'_i$ of $C$ in index $i$ to $Vec(G')_i$. So, since the extractor is a PPT algorithm, from the binding property of the commitment this happens with probability at most negligible in $\lambda$.
+        \item $Vec_h(G)_i = Vec_h(G')_i$. Since $P^*$ is PPT, from the CRH definition, this happens with probability at most negligible in $\lambda$.
+    \end{itemize}
+    \item $M(C, G') = 0$. Since $v_i^D(C,t_i)=1$ for all $v_i$, from the definition of the SARK, this happens with probability negligible in $\lambda$.
+\end{itemize}
+\end{proof}
+
+\section{A Non-Interactive Version}
+In the last section, we used a Vector Commitment and a SARK to construct an interactive protocol for the statement $G\in P$. Since all of the interaction in our protocol came from the SARK, we now aim to eliminate it by replacing the SARK with a Succinct Non-Interactive Argument (SNARK).
+
+SNARKS have been proven to be black-box separated from all falsifiable assumptions (\cite{gentry2011separating})\footnote{This was actually proved for SNARGS which is a weeker notion, and under the definition of adaptive soundness. Either way, there are no construction from falsifiable assumptions even for the non-adaptive case.}. However, they do exist in the Random Oracle Model (as shown by Micali in \cite{micali2000computationally} \footnote{In this work what is actually shown is a SNARG (succinct non-interactive argument, without the knowledge property), but it could be easily modified into a SNARK using \emph{Probabilistically Checkable Proofs of Knowledge} (see \cite{bitansky2012extractable, oded2006foundations, barak2002universal}). \Enote{Is there a concrete citation for SNARKS in the RO model?}}, and under knowledge (or: knowledge extractability) assumptions (\cite{bitansky2012extractable}) \Enote{should we cite here something earlier?}.
+
+\subsection{The New Combined Protocol}
+Since the proof of the interactive protocol was black-box in the SARK construction, we show how to replace the SARK with a SNARK, but we leave the proof to the reader (\Enote{this should probably be stated differently)}.
+
+Denote the SNARK prover message (as it is one message) $P_N^2(C, Adj(G), \phi, crs)$
+\begin{enumerate}
+    \item $v_i$ and $P$ compute public parameters $pp$ from the $crs$.
+    \item $P$ simulates both $P^1$ and $P_N^2$ and sends to $v_i$ $\alpha_i = (C_i, M_i, \Lambda_i)$ and $\beta_i = P^2(C, Adj(G), \phi, crs)$.
+    \item $v_i$ sends to each of its neighbors $C_i$
+    \item $v_i$ verifies $\alpha$ according to \ref{Com}, and accepts if and only if $\alpha$ is accepted and $V_i^D(C, \beta_i)=1$
+\end{enumerate}
+
+\section{Having one node do all the job by spanning tree PLS}
+
+\subsection{With Somewhere Extractable Hash}
+
+\section{Distributed prover and RAM delegation}
+
+\section{PSPACE and IOPs instead of NP and PCPs}
+
+\section{Any non-deterministic class}
+
+\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+\end{document}
+

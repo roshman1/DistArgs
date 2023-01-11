@@ -1,0 +1,57 @@
+\subsection{Succinct Distributed Arguments for NP from SNARKS}\label{sec:dargsForNP}
+In this section, we construct a distributed argument for graph languages in $\NP$ using Vector Commitments and SNARKs,
+proving the second part of Theorem~\ref{thm:centralized}.
+We give an overview of the construction and the details
+can be found in Appendix~\ref{app:dargsForNP}.
+
+%\begin{theorem}\label{theo:NP}
+%Let $\Lan$ be a graph language, such that $\Lan\in \NP$. Assuming SNARKs and VC exist, there is a succinct distributed argument for $\Lan$. 
+%\end{theorem}
+
+The idea is simple:
+given a graph $G$ represented as an adjacency list $\var{AdjL} = (N(v_1),\ldots,N(v_n))$,
+the prover provides all the nodes with the same proof, which consists of
+\begin{itemize}
+	\item A vector commitment $c$ to the adjacency list $\var{AdjL}$, and
+        \item A SNARK proof $\pisnark$ proving that there exists an adjacency list $\var{AdjL}'$ whose vector commitment is $c$, such that the graph represented by $\var{AdjL}'$ is in $\calL$.
+\end{itemize}
+Additionally, to convince the nodes that $\var{AdjL}' = \var{AdjL}$,
+the prover gives each node $v_i$ an opening to the $i$-th coordinate of the vector commitment, allowing $v_i$ to verify that the $i$-th coordinate of $c$ opens to $v_i$'s true neighborhood, $N(v_i)$.
+If all nodes succeed in their verification, and they all received the same commitment $c$, then $c$ is indeed a commitment to the true graph $G$; the nodes then verify the SNARK proof $\pisnark$, which convinces them that $G \in \calL$.
+
+One issue with this scheme is that the nodes do not initially have an ordering $v_1,\ldots,v_n$ of their UIDs, so each node does not know the coordinate of the vector commitment to which it is supposed to receive an opening. %We can ask the prover to provide such an ordering by giving each node an index, but then the prover may cheat by giving multiple nodes the same index, or by committing to a graph $G'$ that is larger than the real graph $G$ (that is, to an adjacency list $\var{AdjL}'$ that is longer than $\var{AdjL}$); in both cases, some coordinates of the vector commitment are never assigned to any node of $G$, and will never be opened.
+We resolve these issues by modifying the approach above slightly:
+\begin{itemize}
+    \item Instead of committing to the adjacency list $\var{AdjL} = (N(v_1),\ldots,N(v_n))$, the prover commits to a list $L = ( (v_1, N(v_1) ), \ldots, (v_n, N(v_n)) )$ that also includes the UIDs of the nodes, so that when a node opens a given coordinate, it can verify that its own UID appears there.
+    \item To prevent the prover from committing to a graph that is larger than $G$, we ask the prover to prove a stronger property in the SNARK proof: it proves that there exists an adjacency list $\var{AdjL}'$ whose vector commitment is $c$, such that $\var{AdjL'}$ \emph{is symmetric}, and the graph represented by $\var{AdjL}'$ \emph{is connected} and satisfies $\calL$.
+\end{itemize}
+If the prover now tries to commit to a list $\var{AdjL'}$ that is longer than the size of the real graph, then since the graph $G'$, represented by $\var{AdjL}'$, is connected, the cut between the ``fake nodes'' $V(G') \setminus V(G)$ and the ``real nodes'' $V(G)$ includes some edge, $\set{u,v}$, where $u \in V(G)$ and $v \not \in V(G)$. Since $G'$ is symmetric, $v \in N_{G'}(u)$. Thus, when node $u$ opens its coordinate in the vector commitment, it will see that its purported neighborhood there includes the ``fake node'' $v$, and it will reject.
+
+	We remark that in the construction as presented above, the prover sends the same SNARK proof to every node,
+	and all nodes verify it. This is not needed;
+	for example, 
+	using an additional $O(\log n)$ bits,
+	we can ask the prover to provide a spanning tree of the network~\cite{korman2005proof},
+	and have only the root receive the SNARK proof and verify it.
+
+We briefly sketch the soundness proof for this construction (see Appendix~\ref{app:dargsForNP} for the full proof).
+Suppose we have an efficient prover $\Pro^*$ that generates ``false statements''
+$G \not \in \calL$,
+together with certificates $\set{\pi(v)}_{v \in V(G)}$
+that are accepted with non-negligible probability.
+The certificates include a commitment $c$ to an adjacency list, and a SNARK proof $\pisnark$.
+By the argument of knowledge property of the SNARK, we can extract a \emph{witness} from $\Ext_{\Pro^*}$ in the form of an adjacency list $\var{AdjL}'$,
+which is supposed to match the commitment $c$ and represent a symmetric and connected graph $G' \in \calL$.
+Now there are two cases:
+if $\var{AdjL}'$ is \emph{not} a proper witness---if it does not match the commitment $c$,
+or it does not represent a graph $G'$ that is symmetric, connected, and in $\calL$---%
+then we have broken the \emph{argument of knowledge} property of the SNARK,
+by extracting an improper witness for a statement that is accepted with non-negligible probability.
+On the other hand, if $\var{AdjL}'$ is a proper witness,
+then since $G \not \in \calL$, we know that $\var{AdjL} \neq \var{AdjL}'$ (where $\var{AdjL}$
+is the adjacency list of $G$).
+We show that this means we have broken the position-binding property of the vector commitment,
+by proving that every coordinate of $\var{AdjL}'$ is opened by some node of $G$,
+which verifies that its UID and its neighborhood are correctly represented.
+The prover is thus able to fool at least one node $v$ into accepting a commitment to
+an incorrect value, which differs from $(v, N(v))$.

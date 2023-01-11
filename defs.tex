@@ -1,0 +1,362 @@
+%<draft>%
+% Tal's macros
+\newcommand{\addcite}{{\bf[Cite]}}
+%\newcommand{\tc}[1]{{\bf Tal's Comment: \emph{#1}}}
+\newcommand{\tc}[1]{ \todo[inline,color=green!40,size=\small]{Tal: #1}}
+\newcommand{\rc}[1]{ \todo[inline,color=blue!30,size=\small]{Ran: #1}}
+\newcommand{\rcm}[1]{ \todo[color=blue!30,size=\small]{Ran: #1}}
+
+\newcommand{\ignore}[1]{}
+%<end>%
+
+%\newcommand{\eps}{\ensuremath{\varepsilon}\xspace}
+\newcommand{\eps}{\epsilon}
+\newcommand{\set}[1]{\left \{{#1} \right \}}
+\newcommand{\abs}[1]{\left \|{#1} \right \|}
+\newcommand{\N}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}\xspace}
+\newcommand{\defeq}{\ensuremath{\stackrel{=}{def}}}
+%\providecommand{\poly}{\mbox{poly}}
+\newcommand{\remove}[1]{}
+\newcommand{\B}{\set{0,1}}
+\newcommand{\ar}{\rightarrow}
+\newcommand{\lar}{\leftarrow}
+\newcommand{\Ar}{\Rightarrow}
+\newcommand{\Lar}{\Leftarrow}
+\newcommand{\Lrar}{\Leftrightarrow}
+
+\newcommand{\secpar}{\lambda}
+\newcommand{\crs}{\ensuremath{\mathsf{crs}}\xspace}
+\newcommand{\aux}{\ensuremath{\mathsf{aux}}\xspace}
+\newcommand{\comm}{\ensuremath{\mathsf{com}}\xspace}
+\newcommand{\crsvc}{\crs_\textsc{vc}}
+\newcommand{\crssnark}{\crs_\textsc{snark}}
+\newcommand{\pisnark}{\pi_\textsc{snark}}
+
+\newcommand{\adv}{\ensuremath{\mathcal{A}}\xspace}
+\providecommand{\half}{\frac{1}{2}}
+\providecommand{\third}{\frac{1}{3}}
+
+\newcommand{\ith}{$i$\textsuperscript{th}\xspace}
+\newcommand{\jth}{$j$\textsuperscript{th}\xspace}
+\newcommand{\kth}{$k$\textsuperscript{th}\xspace}
+\newcommand{\nth}{$n$\textsuperscript{th}\xspace}
+
+
+% Setup frames
+\mdfsetup
+{
+	roundcorner=10pt,
+	leftmargin=2em,
+	frametitleaboveskip=0pt,
+}
+
+
+\newenvironment{nicefig}[3][htp!]{ %
+	\begin{figure}[#1]
+        \captionsetup{skip=0pt}
+		\mdfsetup{frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,line width=1pt,draw,rounded corners=10pt,fill=white]
+				{\strut \parbox{\widthof{Figure: \thefigure}+\widthof{#2}+1em}{\captionof{figure}{#2\label{#3}}}};},%
+			innertopmargin=5pt,%
+			linewidth=1pt,topline=true,
+			frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+		}
+		\begin{mdframed}[]\relax
+		}%
+		{%
+		\end{mdframed}
+	\end{figure}
+}
+
+\newenvironment{mydesc}{
+    \begin{list}{}{
+        \setlength{\itemsep}{0pt}
+        \renewcommand{\makelabel}[1]{\bfseries{##1}}
+}}{\end{list}}
+
+\newenvironment{myenum}[1][]{
+    \begin{enumerate}[#1]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+}{\end{enumerate}}
+
+\newenvironment{caseenum}{
+    \begin{enumerate}[label=Case \arabic*:,ref=\arabic*]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+}{\end{enumerate}}
+
+\newenvironment{caseenumi}{
+    \begin{enumerate}[label=Case \arabic{enumi}.\arabic*:,ref=\arabic{enumi}.\arabic*]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+}{\end{enumerate}}
+
+\newenvironment{caseenumii}{
+    \begin{enumerate}[label=Case \arabic{enumi}.\arabic{enumii}.\arabic*:,ref=\arabic{enumi}.\arabic{enumii}.\arabic*]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+}{\end{enumerate}}
+
+\newenvironment{caseenumiii}{
+    \begin{enumerate}[label=Case \arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic*:,ref=\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic*]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+}{\end{enumerate}}
+
+
+
+% ALGORITHMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\algorithmiccomment}[1]{ // {#1}}
+\floatname{algorithm}{Protocol}
+
+\newif\ifLNCS
+
+% Change below to true if draft version should be LNCS
+%<draft>%
+\LNCSfalse
+\ifLNCS\relax\else
+\newtheorem{theorem}{Theorem}[section]
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\fi
+
+
+
+
+
+
+
+
+% MACROS RELATED TO LOCAL ALGORITHMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\var}[1]{\mathit{ #1 } }
+\newcommand{\Rnote}[1]{ { \color{purple} Rotem: #1 } }
+\newcommand{\Enote}[1]{ { \color{violet} Eden: #1 } }
+\newcommand{\TODO}[1]{ { \color{red} TODO: #1 } }
+
+
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diam}{diam}
+\newcommand{\acc}{\var{accept}}
+\newcommand{\rej}{\var{reject}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\ID}{\var{ID}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\n}{\mathsf{n}}
+
+
+
+\newcommand{\R}{{\mathsf{R}}}
+\newcommand{\RE}{{\mathsf{RE}}}
+\newcommand{\coRE}{{\mathsf{coRE}}}
+\newcommand{\LD}{{\mathsf{LOCAL}}}
+\newcommand{\NLD}{{\mathsf{NLOCAL}}}
+\newcommand{\NP}{{\mathsf{NP}}}
+\newcommand{\coNP}{{\mathsf{coNP}}}
+\newcommand{\E}{{\mathsf{E}}}
+\newcommand{\Exp}{{\mathsf{Exp}}}
+\newcommand{\DTIME}{{\mathsf{DTIME}}}
+\newcommand{\PH}{{\mathsf{PH}}}
+\newcommand{\PP}{{\mathsf{P}}} %\P was taken
+\newcommand{\LDP}{{\mathsf{PolyLOCAL}}}
+%\newcommand{\NLDP}{{\mathsf{NLD}^P}}
+\newcommand{\ALL}{{\mathsf{ALL}}}
+\newcommand{\UP}{\mathsf{UP}}
+\newcommand{\coUP}{\mathsf{coUP}}
+\newcommand{\DDH}{\mathrm{DDH}}
+
+
+
+
+\newcommand{\Piloc}[1]{{\Pi_{#1}^{\var{local}}}}
+\newcommand{\Siloc}[1]{{\Sigma_{#1}^{\var{local}}}}
+\newcommand{\Pip}[1]{{\Pi_{#1}^{P}}}
+\newcommand{\Sip}[1]{{\Sigma_{#1}^{P}}}
+\newcommand{\Piploc}[1]{{\Pi_{#1}^{P\text{-}\var{local}}}}
+\newcommand{\Siploc}[1]{{\Sigma_{#1}^{P\text{-}\var{local}}}}
+
+
+\newcommand{\Pioloc}{\Piloc{1}}
+\newcommand{\Pioploc}{\Piploc{1}}
+\newcommand{\Piop}{\Pip{1}}
+\newcommand{\Pitloc}{\Piloc{2}}
+\newcommand{\Pitploc}{\Piploc{2}}
+\newcommand{\Pitp}{\Pip{2}}
+\newcommand{\Pikloc}{\Piloc{k}}
+\newcommand{\Pikploc}{\Piploc{k}}
+\newcommand{\Pikp}{\Pip{k}}
+\newcommand{\Sioloc}{\Siloc{1}}
+\newcommand{\Sioploc}{\Siploc{1}}
+\newcommand{\Siop}{\Sip{1}}
+\newcommand{\Sitloc}{\Siloc{2}}
+\newcommand{\Sitploc}{\Siploc{2}}
+\newcommand{\Sitp}{\Sip{2}}
+\newcommand{\Sikloc}{\Siloc{k}}
+\newcommand{\Sikploc}{\Siploc{k}}
+\newcommand{\Sikp}{\Sip{k}}
+
+\newcommand{\LDnP}{\PLD^{[\n]}}
+\newcommand{\LDn}{\LD^{[\n]}}
+\newcommand{\PLD}{\mathsf{PolyLOCAL}}
+\newcommand{\NPLD}{\mathsf{NPolyLOCAL}}
+
+%languages
+\newcommand{\HALT}{{\mathrm{HALT}}}
+\newcommand{\HALTC}{{\overline{\mathrm{HALT}}}}
+\newcommand{\HALTe}{{\mathrm{HALT}_\epsilon}}
+\newcommand{\HALTeC}{{\overline{\mathrm{HALT}_\epsilon}}}
+\newcommand{\HALTd}{{\HALT^D}}
+\newcommand{\HALTCd}{{\HALTC^D}}
+
+\newcommand{\ITER}{{\mathrm{ITER}}}
+\newcommand{\ITERIN}{{\mathrm{ITER\text{-}BOUND}}}
+\newcommand{\PITER}{{\mathrm{POLY\text{-}ITER}_c}}
+\newcommand{\ALTS}{{\mathrm{ALTS}}}
+\newcommand{\EXTS}{{\mathrm{EXTS}}}
+\newcommand{\clq}{{\mathrm{CLIQUE}}}
+\newcommand{\cld}{{\mathrm{CLIQUE}^D}}
+\newcommand{\nocld}{{\mathrm{no\text{-}CLIQUE}^{D}}}
+\newcommand{\extclqd}{{\mathrm{EXACT\text{-}CLIQUE}^D}}
+\newcommand{\extclq}{{\mathrm{EXACT\text{-}CLIQUE}}}
+\newcommand{\Keyex}{\mathrm{KEYEX}}
+\newcommand{\Path}{\text{\textsc{Path}}}
+\newcommand{\instgen}{\mathcal{IG}}
+
+%other shortenings
+
+\newcommand{\LOCAL}{{\mathcal{LOCAL}}}
+
+\newcommand{\LDcond}[0]{\begin{gather*}
+	(G,x)\in \mathcal{L} \Rightarrow \forall id\in \IDG \forall u\in V(G): \mathcal{A}_{G,x}(u)=accept \notag\\
+	(G,x)\notin \mathcal{L} \Rightarrow \forall id \in \IDG \exists u\in V(G): \mathcal{A}_{G,x}(u)=reject
+\end{gather*}}
+\newcommand{\pitercond}{$$\PITER = \left\{ (G,x)\in \ITER | M_x^{time}(a)\leq |a|^c, M_x^{time}(b)\leq |b|^c  \right\}$$}
+\newcommand{\ALTSdef}{$$\ALTS = \left\{(G,x):\ \forall u\in V(G), x(u)\in \{\top,\bot\}\ and\  \left|\left\{u\in V(G): x(u)=1\right\}\right|\geq 2\right\}$$}
+\newcommand{\EXTSdef}{$$\EXTS = \left\{(G,x):\ \forall u\in V(G), x(u)\in \{\top,\bot\}\ and\  \left|\left\{u\in V(G): x(u)=1\right\}\right|= 2\right\}$$}
+
+
+\newcommand{\cldcond}{$$\cld =  \left\{ (G,x):\ \exists k\in \mathbb{N} \forall u\in V(G), x(u)=k \ and\ G \ has\ a\ k\mathsf{-clique} \right \}$$}
+\newcommand{\nocldcond}{$$\nocld =  \left\{ (G,x):\  \exists k\in \mathbb{N} \forall u\in V(G), x(u)=k \ and\ G \ does\ not\ have\ a\ k\mathsf{-clique} \right \}$$}
+\newcommand{\extclqdcond}{$$\extclqd =  \left\{ (G,x):\  \exists k\in \mathbb{N} \forall u\in V(G), x(u)=k \ and\ the\ largest\ clique\ in\ G \ is\ of\ size\  k  \right \}$$}
+\newcommand{\IDG}{{\mathsf{ID}(G)}}
+\newcommand{\A}{{\mathcal{A}}} %for an algorithm
+\newcommand{\polyhie}{\textit{polynomial hierarchy}}
+\newcommand{\pls}{\textit{proof labeling schemes}}
+\newcommand{\lcl}{\textit{locally checkable proofs}}
+\newcommand{\idobl}{\textit{identity oblivious}}
+\newcommand{\CG}{\mathcal{C}(G)}
+\newcommand{\balliuResult}{{\LD\subsetneq\Pioloc\subsetneq\NLD=\Sitloc\subsetneq\Pitloc=\ALL}}
+
+\newcommand{\prob}[2]{\ensuremath{\underset{#1}{\text{Pr}}\left [#2\right ]}}
+\newcommand{\Prob}[1]{\ensuremath{\emph{Pr}\left [#1\right ]}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\negl}{\operatorname{negl}}
+\newcommand{\Lan}{\ensuremath{\mathcal{L}}}
+\newcommand{\Adv}{\ensuremath{\mathcal{A}}}
+\newcommand{\Pro}{\mathcal{P}}
+\newcommand{\Ver}{\mathcal{V}}
+\newcommand{\VC}{\mathsf{VC}}
+\newcommand{\Gen}{\mathsf{Gen}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Open}{\mathsf{Open}}
+\newcommand{\Verify}{\mathsf{Ver}}
+\newcommand{\VCGen}{\VC.\Gen}
+\newcommand{\VCCom}{\VC.\Com}
+\newcommand{\VCOpen}{\VC.\Open}
+\newcommand{\VCVer}{\VC.\Verify}
+\newcommand{\GC}{\mathsf{GC}}
+\newcommand{\GCGen}{\GC.\Gen}
+\newcommand{\GCCom}{\GC.\Com}
+\newcommand{\GCOpen}{\GC.\Open}
+\newcommand{\GCVer}{\GC.\Ver}
+\newcommand{\GCPro}{\GC.\Pro}
+\newcommand{\SNARK}{\mathsf{SNARK}}
+\newcommand{\SNARKGen}{\SNARK.\Gen}
+\newcommand{\SNARKVer}{\SNARK.\Ver}
+\newcommand{\SNARKPro}{\SNARK.\Pro}
+\newcommand{\Ext}{\mathcal{E}}
+\newcommand{\SNARKExt}{\SNARK.\Ext}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\VerNext}{\Ver\mathsf{Next}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\SNARG}{\mathsf{SNARG}}
+\newcommand{\SNARGGen}{\SNARG.\Gen}
+\newcommand{\SNARGVer}{\SNARG.\Ver}
+\newcommand{\SNARGPro}{\SNARG.\Pro}
+\newcommand{\Digest}{\mathsf{Digest}}
+\newcommand{\SNARGDigest}{\SNARG.\Digest}
+\newcommand{\HT}{\mathsf{HT}}
+\newcommand{\HTGen}{\HT.\Gen}
+\newcommand{\HTHash}{\HT.\Hash}
+\newcommand{\HTOpen}{\HT.\Open}
+\newcommand{\HTVer}{\HT.\Verify}
+
+\newcommand{\crssnarg}{\crs_{\SNARG}}
+\newcommand{\pisnarg}{\pi_{\SNARG}}
+
+\newcommand{\Lancom}{\ensuremath{\Lan^{\comm}}}
+
+\newcommand{\Hash}{\mathsf{Hash}}
+
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calP}{\mathcal{P}}
+
+\newcommand{\hash}{\mathsf{Hash}}
+
+
+\newcommand{\Enc}{\mathsf{Enc}}
+\newcommand{\Dec}{\mathsf{Dec}}
+
+\newcommand{\prb}[2]{
+	\Pr
+	\left[
+        \begin{array}{ll}
+		#1
+        \end{array}
+        \middle\vert
+        \begin{array}{ll}
+		#2
+        \end{array}
+\right]
+}
+
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+\newcommand{\SCRH}{\mathsf{SCRH}}
+\newcommand{\SCRHGen}{\SCRH.\Gen}
+\newcommand{\SCRHHash}{\SCRH.\Hash}
+\newcommand{\crsh}{\crs_\textsc{h}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\hk}{\mathsf{hk}}
+
+\newcommand{\SNARKBreak}{\var{SNARKBreak}}
+\newcommand{\VCBreak}{\var{VCBreak}}
+\newcommand{\VCCompBreak}{\var{VCCompBreak}}
+\newcommand{\ICRBreak}{\var{VCICRBreak}}
+\newcommand{\SNARGCompBreak}{\var{SNARGCompBreak}}
+\newcommand{\SNARGComBreak}{\SNARGCompBreak}
+\newcommand{\SNARGSoundBreak}{\var{SNARGSoundBreak}}
+
+\newcommand{\LIN}{\mathsf{LIN}}
+\newcommand{\QR}{\mathsf{QR}}

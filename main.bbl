@@ -1,0 +1,555 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{47}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[ZKS({[n.\,d.]})]%
+        {ZKSnarks}
+ \bibinfo{year}{[n.\,d.]}\natexlab{}.
+\newblock \bibinfo{title}{What are zero-knowledge proofs?}
+\newblock
+  \bibinfo{howpublished}{\url{https://ethereum.org/en/zero-knowledge-proofs/}}.
+\newblock
+
+
+\bibitem[Zca({[n.\,d.]})]%
+        {Zcash}
+ \bibinfo{year}{[n.\,d.]}\natexlab{}.
+\newblock \bibinfo{title}{What are zk-SNARKs?}
+\newblock \bibinfo{howpublished}{\url{https://z.cash/technology/zksnarks/}}.
+\newblock
+
+
+\bibitem[Sta({[n.\,d.]})]%
+        {Starkware}
+ \bibinfo{year}{[n.\,d.]}\natexlab{}.
+\newblock \bibinfo{title}{What Is ZK-STARK?}
+\newblock \bibinfo{howpublished}{\url{https://starkware.co/stark/}}.
+\newblock
+
+
+\bibitem[fil({[n.\,d.]})]%
+        {filecoin}
+ \bibinfo{year}{[n.\,d.]}\natexlab{}.
+\newblock \bibinfo{title}{zk-SNARKs for the World}.
+\newblock
+  \bibinfo{howpublished}{\url{https://research.protocol.ai/sites/snarks/}}.
+\newblock
+
+
+\bibitem[Aiello et~al\mbox{.}(2000)]%
+        {aiello2000fast}
+\bibfield{author}{\bibinfo{person}{William Aiello}, \bibinfo{person}{Sandeep~N
+  Bhatt}, \bibinfo{person}{Rafail Ostrovsky}, {and}
+  \bibinfo{person}{Sivaramakrishnan Rajagopalan}.}
+  \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{Fast Verification of Any Remote Procedure Call:
+  Short Witness-Indistinguishable One-Round Proofs for NP}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 27th International Colloquium on
+  Automata, Languages and Programming}}. \bibinfo{pages}{463--474}.
+\newblock
+
+
+\bibitem[Aldema~Tshuva and Oshman(2022)]%
+        {BA}
+\bibfield{author}{\bibinfo{person}{Eden Aldema~Tshuva} {and}
+  \bibinfo{person}{Rotem Oshman}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Brief Announcement: On Polynomial-Time Local
+  Decision}. In \bibinfo{booktitle}{\emph{{PODC}}}. \bibinfo{publisher}{{ACM}},
+  \bibinfo{pages}{48--50}.
+\newblock
+
+
+\bibitem[Balliu et~al\mbox{.}(2018)]%
+        {balliu2018can}
+\bibfield{author}{\bibinfo{person}{Alkida Balliu}, \bibinfo{person}{Gianlorenzo
+  D'Angelo}, \bibinfo{person}{Pierre Fraigniaud}, {and} \bibinfo{person}{Dennis
+  Olivetti}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{What can be verified locally?}
+\newblock \bibinfo{journal}{\emph{J. Comput. System Sci.}}
+  \bibinfo{volume}{97} (\bibinfo{year}{2018}), \bibinfo{pages}{106--120}.
+\newblock
+
+
+\bibitem[Baruch et~al\mbox{.}(2015)]%
+        {baruch2015randomized}
+\bibfield{author}{\bibinfo{person}{Mor Baruch}, \bibinfo{person}{Pierre
+  Fraigniaud}, {and} \bibinfo{person}{Boaz Patt-Shamir}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Randomized proof-labeling schemes}. In
+  \bibinfo{booktitle}{\emph{Symposium on Principles of Distributed Computing
+  (PODC)}}. ACM, \bibinfo{pages}{315--324}.
+\newblock
+
+
+\bibitem[Bitansky et~al\mbox{.}(2012)]%
+        {bitansky2012extractable}
+\bibfield{author}{\bibinfo{person}{Nir Bitansky}, \bibinfo{person}{Ran
+  Canetti}, \bibinfo{person}{Alessandro Chiesa}, {and} \bibinfo{person}{Eran
+  Tromer}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{From extractable collision resistance to succinct
+  non-interactive arguments of knowledge, and back again}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 3rd Innovations in Theoretical
+  Computer Science Conference}}. \bibinfo{pages}{326--349}.
+\newblock
+
+
+\bibitem[Bitansky et~al\mbox{.}(2013)]%
+        {bitansky2013recursive}
+\bibfield{author}{\bibinfo{person}{Nir Bitansky}, \bibinfo{person}{Ran
+  Canetti}, \bibinfo{person}{Alessandro Chiesa}, {and} \bibinfo{person}{Eran
+  Tromer}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Recursive composition and bootstrapping for SNARKs
+  and proof-carrying data}. In \bibinfo{booktitle}{\emph{Proceedings of the
+  forty-fifth annual ACM symposium on Theory of computing}}.
+  \bibinfo{pages}{111--120}.
+\newblock
+
+
+\bibitem[Canetti and Fischlin(2001)]%
+        {canetti2001universally}
+\bibfield{author}{\bibinfo{person}{Ran Canetti} {and} \bibinfo{person}{Marc
+  Fischlin}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \showarticletitle{Universally composable commitments}. In
+  \bibinfo{booktitle}{\emph{Annual International Cryptology Conference}}.
+  Springer, \bibinfo{pages}{19--40}.
+\newblock
+
+
+\bibitem[Catalano and Fiore(2013)]%
+        {catalano2013vector}
+\bibfield{author}{\bibinfo{person}{Dario Catalano} {and} \bibinfo{person}{Dario
+  Fiore}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Vector commitments and their applications}. In
+  \bibinfo{booktitle}{\emph{International Workshop on Public Key
+  Cryptography}}. Springer, \bibinfo{pages}{55--72}.
+\newblock
+
+
+\bibitem[Choudhuri et~al\mbox{.}(2021a)]%
+        {choudhuri2021non}
+\bibfield{author}{\bibinfo{person}{Arka~Rai Choudhuri},
+  \bibinfo{person}{Abhishek Jain}, {and} \bibinfo{person}{Zhengzhong Jin}.}
+  \bibinfo{year}{2021}\natexlab{a}.
+\newblock \showarticletitle{Non-interactive batch arguments for np from
+  standard assumptions}. In \bibinfo{booktitle}{\emph{Annual International
+  Cryptology Conference}}. Springer, \bibinfo{pages}{394--423}.
+\newblock
+
+
+\bibitem[Choudhuri et~al\mbox{.}(2021b)]%
+        {choudhuri2021snargs}
+\bibfield{author}{\bibinfo{person}{Arka~Rai Choudhuri},
+  \bibinfo{person}{Abhishek Jain}, {and} \bibinfo{person}{Zhengzhong Jin}.}
+  \bibinfo{year}{2021}\natexlab{b}.
+\newblock \showarticletitle{SNARGs for P from LWE.}
+\newblock \bibinfo{journal}{\emph{IACR Cryptol. ePrint Arch.}}
+  \bibinfo{volume}{2021} (\bibinfo{year}{2021}), \bibinfo{pages}{808}.
+\newblock
+
+
+\bibitem[Damg{\aa}rd(1992)]%
+        {KOE}
+\bibfield{author}{\bibinfo{person}{Ivan Damg{\aa}rd}.}
+  \bibinfo{year}{1992}\natexlab{}.
+\newblock \showarticletitle{Towards Practical Public Key Systems Secure Against
+  Chosen Ciphertext attacks}. In \bibinfo{booktitle}{\emph{Advances in
+  Cryptology --- CRYPTO '91}}. \bibinfo{pages}{445--456}.
+\newblock
+
+
+\bibitem[Devadas et~al\mbox{.}(2022)]%
+        {devadas2022rate}
+\bibfield{author}{\bibinfo{person}{Lalita Devadas}, \bibinfo{person}{Rishab
+  Goyal}, \bibinfo{person}{Yael Kalai}, {and} \bibinfo{person}{Vinod
+  Vaikuntanathan}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Rate-1 non-interactive arguments for batch-NP and
+  applications}. In \bibinfo{booktitle}{\emph{2022 IEEE 63rd Annual Symposium
+  on Foundations of Computer Science (FOCS)}}. IEEE,
+  \bibinfo{pages}{1057--1068}.
+\newblock
+
+
+\bibitem[Di~Crescenzo and Lipmaa(2008)]%
+        {di2008succinct}
+\bibfield{author}{\bibinfo{person}{Giovanni Di~Crescenzo} {and}
+  \bibinfo{person}{Helger Lipmaa}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Succinct NP proofs from an extractability
+  assumption}. In \bibinfo{booktitle}{\emph{Conference on Computability in
+  Europe}}. Springer, \bibinfo{pages}{175--185}.
+\newblock
+
+
+\bibitem[Dwork et~al\mbox{.}(2004)]%
+        {dwork2004succinct}
+\bibfield{author}{\bibinfo{person}{Cynthia Dwork}, \bibinfo{person}{Michael
+  Langberg}, \bibinfo{person}{Moni Naor}, \bibinfo{person}{Kobbi Nissim}, {and}
+  \bibinfo{person}{Omer Reingold}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Succinct proofs for NP and spooky interactions}.
+\newblock \bibinfo{journal}{\emph{Unpublished manuscript, available at
+  http://www. cs. bgu. ac. il/\~{} kobbi/papers/spooky\_ sub\_crypto. pdf}}
+  (\bibinfo{year}{2004}).
+\newblock
+
+
+\bibitem[Emek et~al\mbox{.}(2022)]%
+        {EGK22}
+\bibfield{author}{\bibinfo{person}{Yuval Emek}, \bibinfo{person}{Yuval Gil},
+  {and} \bibinfo{person}{Shay Kutten}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{Locally Restricted Proof Labeling Schemes}}. In
+  \bibinfo{booktitle}{\emph{36th International Symposium on Distributed
+  Computing (DISC 2022)}}, Vol.~\bibinfo{volume}{246}.
+  \bibinfo{pages}{20:1--20:22}.
+\newblock
+
+
+\bibitem[Feuilloley(2021)]%
+        {CertSurvey}
+\bibfield{author}{\bibinfo{person}{Laurent Feuilloley}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{{Introduction to local certification}}.
+\newblock \bibinfo{journal}{\emph{{Discrete Mathematics and Theoretical
+  Computer Science}}} \bibinfo{volume}{23}, \bibinfo{number}{3}
+  (\bibinfo{year}{2021}).
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.46298/dmtcs.6280}
+\showDOI{\tempurl}
+
+
+\bibitem[Feuilloley and Fraigniaud(2016)]%
+        {LDSurvey}
+\bibfield{author}{\bibinfo{person}{Laurent Feuilloley} {and}
+  \bibinfo{person}{Pierre Fraigniaud}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{title}{{Survey of Distributed Decision}}.
+  (\bibinfo{year}{2016}).
+\newblock
+\urldef\tempurl%
+\url{https://hal.archives-ouvertes.fr/hal-01331880}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Feuilloley et~al\mbox{.}(2021)]%
+        {FFHPP21}
+\bibfield{author}{\bibinfo{person}{Laurent Feuilloley}, \bibinfo{person}{Pierre
+  Fraigniaud}, \bibinfo{person}{Juho Hirvonen}, \bibinfo{person}{Ami Paz},
+  {and} \bibinfo{person}{Mor Perry}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Redundancy in distributed proofs}.
+\newblock \bibinfo{journal}{\emph{Distributed Comput.}} \bibinfo{volume}{34},
+  \bibinfo{number}{2} (\bibinfo{year}{2021}), \bibinfo{pages}{113--132}.
+\newblock
+
+
+\bibitem[Fraigniaud et~al\mbox{.}(2013a)]%
+        {fraigniaud2013can}
+\bibfield{author}{\bibinfo{person}{Pierre Fraigniaud}, \bibinfo{person}{Mika
+  G{\"o}{\"o}s}, \bibinfo{person}{Amos Korman}, {and} \bibinfo{person}{Jukka
+  Suomela}.} \bibinfo{year}{2013}\natexlab{a}.
+\newblock \showarticletitle{What can be decided locally without identifiers?}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 2013 ACM symposium on
+  Principles of distributed computing}}. \bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{157--165}.
+\newblock
+
+
+\bibitem[Fraigniaud et~al\mbox{.}(2013b)]%
+        {fraigniaud2013towards}
+\bibfield{author}{\bibinfo{person}{Pierre Fraigniaud}, \bibinfo{person}{Amos
+  Korman}, {and} \bibinfo{person}{David Peleg}.}
+  \bibinfo{year}{2013}\natexlab{b}.
+\newblock \showarticletitle{Towards a complexity theory for local distributed
+  computing}.
+\newblock \bibinfo{journal}{\emph{Journal of the ACM (JACM)}}
+  \bibinfo{volume}{60}, \bibinfo{number}{5} (\bibinfo{year}{2013}),
+  \bibinfo{pages}{1--26}.
+\newblock
+
+
+\bibitem[Gentry and Wichs(2011)]%
+        {gentry2011separating}
+\bibfield{author}{\bibinfo{person}{Craig Gentry} {and} \bibinfo{person}{Daniel
+  Wichs}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Separating succinct non-interactive arguments from
+  all falsifiable assumptions}. In \bibinfo{booktitle}{\emph{Proceedings of the
+  forty-third annual ACM symposium on Theory of computing}}.
+  \bibinfo{pages}{99--108}.
+\newblock
+
+
+\bibitem[Goldreich(2001)]%
+        {OdedBook}
+\bibfield{author}{\bibinfo{person}{Oded Goldreich}.}
+  \bibinfo{year}{2001}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{The Foundations of Cryptography - Volume 1:
+  Basic Techniques.}}
+\newblock \bibinfo{publisher}{Cambridge University Press}.
+\newblock
+\showISBNx{9780511546891}
+
+
+\bibitem[Goldreich and Levin(1989)]%
+        {GL89}
+\bibfield{author}{\bibinfo{person}{O. Goldreich} {and} \bibinfo{person}{L.~A.
+  Levin}.} \bibinfo{year}{1989}\natexlab{}.
+\newblock \showarticletitle{A Hard-Core Predicate for All One-Way Functions}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the Twenty-First Annual ACM
+  Symposium on Theory of Computing}} \emph{(\bibinfo{series}{STOC '89})}.
+  \bibinfo{pages}{25--32}.
+\newblock
+
+
+\bibitem[G{\"{o}}{\"{o}}s and Suomela(2016)]%
+        {LCP}
+\bibfield{author}{\bibinfo{person}{Mika G{\"{o}}{\"{o}}s} {and}
+  \bibinfo{person}{Jukka Suomela}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Locally Checkable Proofs in Distributed Computing}.
+\newblock \bibinfo{journal}{\emph{Theory Comput.}} \bibinfo{volume}{12},
+  \bibinfo{number}{1} (\bibinfo{year}{2016}), \bibinfo{pages}{1--33}.
+\newblock
+
+
+\bibitem[Groth(2010)]%
+        {groth2010short}
+\bibfield{author}{\bibinfo{person}{Jens Groth}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Short pairing-based non-interactive zero-knowledge
+  arguments}. In \bibinfo{booktitle}{\emph{International Conference on the
+  Theory and Application of Cryptology and Information Security}}. Springer,
+  \bibinfo{pages}{321--340}.
+\newblock
+
+
+\bibitem[Groth(2016)]%
+        {groth2016size}
+\bibfield{author}{\bibinfo{person}{Jens Groth}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{On the size of pairing-based non-interactive
+  arguments}. In \bibinfo{booktitle}{\emph{Annual international conference on
+  the theory and applications of cryptographic techniques}}. Springer,
+  \bibinfo{pages}{305--326}.
+\newblock
+
+
+\bibitem[Hartmanis and Stearns(1965)]%
+        {hartmanis1965computational}
+\bibfield{author}{\bibinfo{person}{Juris Hartmanis} {and}
+  \bibinfo{person}{Richard~E Stearns}.} \bibinfo{year}{1965}\natexlab{}.
+\newblock \showarticletitle{On the computational complexity of algorithms}.
+\newblock \bibinfo{journal}{\emph{Trans. Amer. Math. Soc.}}
+  \bibinfo{volume}{117} (\bibinfo{year}{1965}), \bibinfo{pages}{285--306}.
+\newblock
+
+
+\bibitem[Hulett et~al\mbox{.}(2022)]%
+        {hulett2022snargs}
+\bibfield{author}{\bibinfo{person}{James Hulett}, \bibinfo{person}{Ruta
+  Jawale}, \bibinfo{person}{Dakshita Khurana}, {and}
+  \bibinfo{person}{Akshayaram Srinivasan}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{SNARGs for P from Sub-exponential DDH and QR}. In
+  \bibinfo{booktitle}{\emph{Annual International Conference on the Theory and
+  Applications of Cryptographic Techniques}}. Springer,
+  \bibinfo{pages}{520--549}.
+\newblock
+
+
+\bibitem[Jawale et~al\mbox{.}(2021)]%
+        {jawale2021snargs}
+\bibfield{author}{\bibinfo{person}{Ruta Jawale}, \bibinfo{person}{Yael~Tauman
+  Kalai}, \bibinfo{person}{Dakshita Khurana}, {and} \bibinfo{person}{Rachel
+  Zhang}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{SNARGs for bounded depth computations and PPAD
+  hardness from sub-exponential LWE}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the 53rd Annual ACM SIGACT Symposium on Theory of Computing}}.
+  \bibinfo{pages}{708--721}.
+\newblock
+
+
+\bibitem[Kalai et~al\mbox{.}(2022)]%
+        {cryptoeprint:2022/1320}
+\bibfield{author}{\bibinfo{person}{Yael~Tauman Kalai}, \bibinfo{person}{Alex
+  Lombardi}, \bibinfo{person}{Vinod Vaikuntanathan}, {and}
+  \bibinfo{person}{Daniel Wichs}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \bibinfo{title}{Boosting Batch Arguments and RAM Delegation}.
+\newblock \bibinfo{howpublished}{Cryptology ePrint Archive, Paper 2022/1320}.
+\newblock
+\urldef\tempurl%
+\url{https://eprint.iacr.org/2022/1320}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{\url{https://eprint.iacr.org/2022/1320}}.
+
+
+\bibitem[Kalai and Paneth(2016)]%
+        {KP16}
+\bibfield{author}{\bibinfo{person}{Yael~Tauman Kalai} {and}
+  \bibinfo{person}{Omer Paneth}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Delegating {RAM} Computations}. In
+  \bibinfo{booktitle}{\emph{{TCC} {(B2)}}} \emph{(\bibinfo{series}{Lecture
+  Notes in Computer Science}, Vol.~\bibinfo{volume}{9986})}.
+  \bibinfo{pages}{91--118}.
+\newblock
+
+
+\bibitem[Kalai et~al\mbox{.}(2019)]%
+        {kalai2019delegate}
+\bibfield{author}{\bibinfo{person}{Yael~Tauman Kalai}, \bibinfo{person}{Omer
+  Paneth}, {and} \bibinfo{person}{Lisa Yang}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{How to delegate computations publicly}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 51st Annual ACM SIGACT Symposium
+  on Theory of Computing}}. \bibinfo{pages}{1115--1124}.
+\newblock
+
+
+\bibitem[Kilian(1992)]%
+        {kilian1992note}
+\bibfield{author}{\bibinfo{person}{Joe Kilian}.}
+  \bibinfo{year}{1992}\natexlab{}.
+\newblock \showarticletitle{A note on efficient zero-knowledge proofs and
+  arguments}. In \bibinfo{booktitle}{\emph{Proceedings of the twenty-fourth
+  annual ACM symposium on Theory of computing}}. \bibinfo{pages}{723--732}.
+\newblock
+
+
+\bibitem[Kol et~al\mbox{.}(2018)]%
+        {KOS18}
+\bibfield{author}{\bibinfo{person}{Gillat Kol}, \bibinfo{person}{Rotem Oshman},
+  {and} \bibinfo{person}{Raghuvansh~R. Saxena}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Interactive Distributed Proofs}. In
+  \bibinfo{booktitle}{\emph{Symposium on Principles of Distributed Computing
+  (PODC)}}. \bibinfo{pages}{255--264}.
+\newblock
+
+
+\bibitem[Korman et~al\mbox{.}(2005)]%
+        {korman2005proof}
+\bibfield{author}{\bibinfo{person}{Amos Korman}, \bibinfo{person}{Shay Kutten},
+  {and} \bibinfo{person}{David Peleg}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Proof labeling schemes}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the twenty-fourth annual ACM
+  symposium on Principles of distributed computing}}. \bibinfo{pages}{9--18}.
+\newblock
+
+
+\bibitem[Merkle(1989)]%
+        {merkle1989certified}
+\bibfield{author}{\bibinfo{person}{Ralph~C Merkle}.}
+  \bibinfo{year}{1989}\natexlab{}.
+\newblock \showarticletitle{A certified digital signature}. In
+  \bibinfo{booktitle}{\emph{Conference on the Theory and Application of
+  Cryptology}}. Springer, \bibinfo{pages}{218--238}.
+\newblock
+
+
+\bibitem[Micali(2000)]%
+        {micali2000computationally}
+\bibfield{author}{\bibinfo{person}{Silvio Micali}.}
+  \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{Computationally sound proofs}.
+\newblock \bibinfo{journal}{\emph{SIAM J. Comput.}} \bibinfo{volume}{30},
+  \bibinfo{number}{4} (\bibinfo{year}{2000}), \bibinfo{pages}{1253--1298}.
+\newblock
+
+
+\bibitem[Naor et~al\mbox{.}(2020)]%
+        {NPY20}
+\bibfield{author}{\bibinfo{person}{Moni Naor}, \bibinfo{person}{Merav Parter},
+  {and} \bibinfo{person}{Eylon Yogev}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{The Power of Distributed Verifiers in Interactive
+  Proofs}. In \bibinfo{booktitle}{\emph{Symposium on Discrete Algorithms
+  {(SODA)}}}, \bibfield{editor}{\bibinfo{person}{Shuchi Chawla}} (Ed.).
+  \bibinfo{pages}{1096--115}.
+\newblock
+
+
+\bibitem[Naor and Stockmeyer(1995)]%
+        {NS95}
+\bibfield{author}{\bibinfo{person}{Moni Naor} {and} \bibinfo{person}{Larry
+  Stockmeyer}.} \bibinfo{year}{1995}\natexlab{}.
+\newblock \showarticletitle{What Can be Computed Locally?}
+\newblock \bibinfo{journal}{\emph{SIAM J. Comput.}} \bibinfo{volume}{24},
+  \bibinfo{number}{6} (\bibinfo{year}{1995}), \bibinfo{pages}{1259--1277}.
+\newblock
+
+
+\bibitem[Ostrovsky et~al\mbox{.}(2017)]%
+        {ostrovsky2017space}
+\bibfield{author}{\bibinfo{person}{Rafail Ostrovsky}, \bibinfo{person}{Mor
+  Perry}, {and} \bibinfo{person}{Will Rosenbaum}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Space-Time Tradeoffs for Distributed Verification}.
+  In \bibinfo{booktitle}{\emph{International Colloquium on Structural
+  Information and Communication Complexity}}. Springer,
+  \bibinfo{pages}{53--70}.
+\newblock
+
+
+\bibitem[Paneth and Pass(2022)]%
+        {paneth2022incrementally}
+\bibfield{author}{\bibinfo{person}{Omer Paneth} {and} \bibinfo{person}{Rafael
+  Pass}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Incrementally Verifiable Computation via Rate-1
+  Batch Arguments}. In \bibinfo{booktitle}{\emph{2022 IEEE 63rd Annual
+  Symposium on Foundations of Computer Science (FOCS)}}. IEEE,
+  \bibinfo{pages}{1045--1056}.
+\newblock
+
+
+\bibitem[Patt-Shamir and Perry(2017)]%
+        {patt2017proof}
+\bibfield{author}{\bibinfo{person}{Boaz Patt-Shamir} {and} \bibinfo{person}{Mor
+  Perry}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Proof-labeling schemes: broadcast, unicast and in
+  between}. In \bibinfo{booktitle}{\emph{International Symposium on
+  Stabilization, Safety, and Security of Distributed Systems}}. Springer,
+  \bibinfo{pages}{1--17}.
+\newblock
+
+
+\bibitem[Valiant(2008)]%
+        {valiant2008incrementally}
+\bibfield{author}{\bibinfo{person}{Paul Valiant}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Incrementally verifiable computation or proofs of
+  knowledge imply time/space efficiency}. In \bibinfo{booktitle}{\emph{Theory
+  of Cryptography Conference}}. Springer, \bibinfo{pages}{1--18}.
+\newblock
+
+
+\end{thebibliography}

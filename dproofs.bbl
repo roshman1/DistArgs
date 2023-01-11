@@ -1,0 +1,51 @@
+\begin{thebibliography}{1}
+
+\bibitem{barak2002universal}
+B.~Barak and O.~Goldreich.
+\newblock Universal arguments and their applications.
+\newblock In {\em Proceedings 17th IEEE Annual Conference on Computational
+  Complexity}, pages 194--203. IEEE, 2002.
+
+\bibitem{bitansky2012extractable}
+N.~Bitansky, R.~Canetti, A.~Chiesa, and E.~Tromer.
+\newblock From extractable collision resistance to succinct non-interactive
+  arguments of knowledge, and back again.
+\newblock In {\em Proceedings of the 3rd Innovations in Theoretical Computer
+  Science Conference}, pages 326--349, 2012.
+
+\bibitem{catalano2013vector}
+D.~Catalano and D.~Fiore.
+\newblock Vector commitments and their applications.
+\newblock In {\em International Workshop on Public Key Cryptography}, pages
+  55--72. Springer, 2013.
+
+\bibitem{gentry2011separating}
+C.~Gentry and D.~Wichs.
+\newblock Separating succinct non-interactive arguments from all falsifiable
+  assumptions.
+\newblock In {\em Proceedings of the forty-third annual ACM symposium on Theory
+  of computing}, pages 99--108, 2011.
+
+\bibitem{oded2006foundations}
+O.~Goldreich.
+\newblock {\em Foundations of Cryptography: Volume 1, Basic Tools}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem{kilian1992note}
+J.~Kilian.
+\newblock A note on efficient zero-knowledge proofs and arguments.
+\newblock In {\em Proceedings of the twenty-fourth annual ACM symposium on
+  Theory of computing}, pages 723--732, 1992.
+
+\bibitem{merkle1989certified}
+R.~C. Merkle.
+\newblock A certified digital signature.
+\newblock In {\em Conference on the Theory and Application of Cryptology},
+  pages 218--238. Springer, 1989.
+
+\bibitem{micali2000computationally}
+S.~Micali.
+\newblock Computationally sound proofs.
+\newblock {\em SIAM Journal on Computing}, 30(4):1253--1298, 2000.
+
+\end{thebibliography}
