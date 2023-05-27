@@ -1,223 +1,117 @@
 \section{Preliminaries}
 \label{sec:prelim}
 
+%\subsection{Local distributed algorithms.}
+%\input{prelim:model}
 
-\paragraph{Local distributed algorithms.}
-We study the \emph{local decision} model of~\cite{fraigniaud2013towards},%
-\footnote{Except that unlike~\cite{fraigniaud2013towards,balliu2018can},
-we do not restrict the use of UIDs, as explained above.}
-where we have an unknown communication network $G$ and an input assignment $x : V(G) \rightarrow \set{0,1}^*$.
-The pair $(G, x)$ is called a \emph{configuration},
-and we use $n$ to denote the size of the graph ($n = |V(G)|$).
-A \emph{distributed language} $\calL$ is a set of configurations.
-The \emph{locality radius} of a distributed algorithm is $t : \nat \rightarrow \nat$
-if all nodes halt within $t(n)$ rounds in networks of size $n$.
-We let $N_G(v)$ denote the neighborhood of node $v$ in $G$, omitting the subscript $G$
-when the graph is clear from the context.
+%\subsection{On security parameters, succinctness and efficient provers.}
+%\input{prelim:secpars}
+%\TODO{Should this be here?}
 
+%\subsection{Common reference string (CRS) model}
+%\input{prelim:crs}
+%\TODO{Should this be here?}
 
-We assume that the nodes have unique identifiers, drawn from some large domain $\calU$,
-and we typically assume that a UID from $\calU$ can be represented using $O(\log n)$ bits.%
-\footnote{This assumption is not essential, as UIDs from a larger domain can be hashed down to $\set{1,\ldots,n}$
-in our constructions.}%
-\footnote{In Section~\ref{sec:local}, when we consider networks of unknown size, we do not make
-any assumptions on the encoding of the UIDs, and in fact our results continue to hold even
-in anonymous networks.}
-We often conflate nodes with their UIDs.
-We assume that we have some linear ordering $\calU$ of the UID space, that is, for any two UIDs $u \neq v$ from $\calU$,
-either $u < v$ or $v < u$.
+\subsection{Recursively constructable hash families with local openings}
+A hash family with local opening allows a sender to produce a short hash value of a long input (which we'll refer to as an input vector), and than locally open specific locations in the input. In \cite{merkle1989certified}, Merkle shows how to construct it from a collision-resistant hash family (CRH). The original construction by Merkle has some useful properties that we can properly define and use once opening the black-box and externalizing the underlying CRH. So, we first give here the definition of CRH for completeness and then proceed to define recursively constructable hash families with local openings ($\MT$).
 
-%When we need to encode a graph $G$, we represent it as an adjacency list, $L(G) = (N(v_1),\ldots,N(v_n))$,
-%where $N(v_i)$ is the neighborhood of node $v_i$.
-%The nodes appear in $L(G)$ in order of their UIDs, $v_1 < \ldots < v_n$.
-%
-The local computation of each network node $v \in V(G)$ is represented by a Turing machine which takes as input the UID $v$,
-the neighborhood $N(v)$
-of $v$ in $G$ and its input $x(v)$, and in each round, reads the messages received by $v$ from a dedicated input tape,
-and writes the messages sent by $v$ on a dedicated output tape.
-Eventually, the machine enters a halting state, which is either accepting or rejecting.
-A configuration $(G, x)$ is \emph{accepted} iff all nodes accept, and otherwise the configuration is \emph{rejected};
-a distributed algorithm $D$ \emph{decides} the distributed language $\calL(D)$
-of configurations $(G,x)$ that are accepted when $D$ is executed in $(G,x)$.
+\begin{definition}
+    A hash family $\calH = (\calH.\Gen, \calH.\Hash)$ is collision resistant if there exists a negligible function $\negl$ such that for any poly-time adversary $\Adv$ the following holds:
+    \begin{gather*}
+        \prb{
+        \calH.\Hash(hk, x_1) = \calH.\Hash(hk, x_2)
+        }{
+        \hk\leftarrow \calH.\Gen(1^\secpar) \\
+        x_1, x_2 \leftarrow \Adv(\hk)}
+    \end{gather*}
+\end{definition}
 
-\paragraph{On security parameters, succinctness and efficient provers.}
-Throughout \Cref{sec:dargs,sec:distprover}, we use cryptographic primitives
-that are sound against adversaries whose running time is bounded, typically polynomially, as a function
-of a security parameter, $\lambda \in \nat$.
-The \emph{succinctness} of these primitives---that is, the encoding length of whatever object they produce (e.g., the length of a hash value, or a proof)---is $\poly(\lambda, \log n)$.
-To get proofs of length $\polylog(n)$, the security parameter we use is $\lambda = \log^c(n)$
-for some $c > 1$;
-we are interested in adversaries whose running time is polynomial in $n$,
-which means they are sub-exponential in $\lambda$. % (e.g., if we set $\lambda = \log^2 n$, then $n^d = 2^{d \sqrt{\lambda}}$).
-To allow for such provers, our hardness assumptions require security not against a polynomial-time adversary
-but against a sub-exponential one.
-It is relatively common to assume sub-exponential hardness;
-for example, the learning-with-errors (LWE) problem is believed to be sub-exponentially hard.
-%\TODO{citations}.
-
-In the sequel, whenever we say ``efficient adversary/prover'',
-we mean sub-exponential in $\lambda$ and polynomial in $n$.
-
-\paragraph{Common reference string (CRS) model}
-The cryptographic primitives that we use are proved sound in the \emph{common reference string} (CRS) model,
-where we assume that a trusted setup phase has occurred, during which all parties get access to
-a \emph{common reference string} drawn from a known distribution.
-For example, the CRS can be used to select a random hash function
-from a family of hash functions.
-%which is essentially shared randomness between the prover and the verifiers (which the prover is not able to influence): for example, the prover and the verifiers may need to agree on a hash function, which is chosen uniformly at random from a large family of functions. CRS is a common assumption, underlying most of the work on delegated computation.
-%We believe that CRS is an appropriate assumption for our setting, %where the prover is not truly ``malicious'' but rather ``misguided'' or ``misinformed'', reflecting bugs in the code or changes in the network.
-In the distributed prover of Section~\ref{sec:distprover},
-the CRS can be generated by having every node $v$ propose a random string $r_v$,
-and summing the strings up a spanning tree to produce $\crs = \oplus_{v \in V} r_v$,
-which is then disseminated to all the nodes. As long as a single node generates its random string honestly, the resulting $\crs$
-will be uniformly random.
-
-\paragraph{Hash functions.}
-A hash family is accessed using two procedures, $\Gen$ and $\Hash$:
-$\Gen(1^\secpar, \ell)\rightarrow \hk$ is a setup procedure that takes the security parameter $\lambda$
-(in unary) and the length $\ell$ of the values to be hashed, and returns a \emph{hash key} $\hk$;
-$\Hash(\hk, x)$ takes a hash key and a value $x$, and returns a hashed value.
-
-\paragraph{Vector commitment schemes}
-A vector commitment produces a short commitment for a vector $(m_1,\ldots,m_q)$,
-such that an efficient adversary cannot later convince a verifier that it committed to a value $m_i' \neq m_i$
-in any position $i$.
-The commitment
-consists of the following algorithms.
-
-%\vspace{-1ex}
+\paragraph{$\MT$: Syntax.}
+A recursively constructable hash family ($\MT$) with succinct local openings is defined with respect to a collision resistant hash family:
+$$\calH = \calH.\Gen, \calH.\Hash$$
+and consists of the following algorithms:
 \begin{itemize}
-    \item $\Gen(1^\secpar, q)\to \crs$: a randomized algorithm that takes as input the security parameter $\secpar$ and the length $q$ of the committed vector, and outputs a common reference string $\crs$.
-    \item $\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$: a deterministic algorithm that takes $q$ a vector $m_1,\ldots, m_q$ and a common reference string $\crs$, and outputs a commitment string $c$ together with auxiliary information $\aux$ (which may just be $m_1,\ldots,m_1$ itself, but can also be more general).
-    \item $\Open(\crs, m, i, \aux)\to \Lambda_i$: a deterministic algorithm that takes the \crs, a value $m$, an index $i$, and auxiliary information \aux, and produces a proof $\Lambda_i$ that $m$ is the \ith committed value.
-    \item $\Verify(\crs, C, m, i, \Lambda)\to b$: a verification algorithm that takes the \crs, a value $m$, an index $i$, and a proof $\Lambda$, and outputs an acceptance bit.
+    \item $\Gen(1^\secpar, 1^N
+    )\to \hk$: a randomized algorithm that takes as input the security parameter $\secpar$ and the length $N$ of the vector to be hashed,
+    and outputs a hash key $\hk$ = $\calH.\Gen(1^\secpar)$. \TODO{Decide how this work with $N$}
+    \item $\Hash(\hk, x)\to \val$: a deterministic algorithm that takes a vector $x$ and a hash key $\hk$, and outputs a hash value $\val$.
+    \item $\Open(\hk, x, i)\to b, \rho_i$: a deterministic algorithm that takes a hash key $\hk$, a vector $x$ and an index $i$, and outputs a bit $b$ and an opening $\rho_i$.
+    \item $\Verify(\hk, \val, i, b, \rho ) \in \zo$: a verification algorithm that takes a hash key $\hk$, a value $\val$, an index $i$, a bit $b$, and an opening $\rho$, and outputs an acceptance bit.
 \end{itemize}
 
-\begin{definition} [Vector Commitments]\label{def:VC}
-A VC $(\Gen, \Com, \Open, \Verify)$ is required to satisfy:
-\vspace{-1ex}
+\begin{definition} [Properties of $\MT$]\label{def:MT}
+An $\MT$ $(\Gen, \Hash, \Open, \Verify)$ is required to satisfy:
 \begin{itemize}
-    \item \emph{Completeness. } For every value sequence, $m_1,\ldots m_q$,
-\begin{gather*}
-    \prob{}
-    {
-    \begin{array}{ll}
-    \forall i\in [q]: 
-         \Verify(\crs, C, m_i, i, \Lambda_i) = 1
-    \end{array}
-    \middle\vert
-    \begin{array}{ll}
-         \crs \leftarrow \Gen(1^\secpar, q)\\
-         C, aux\leftarrow\Com(\crs, m_1,\ldots,m_q) \\
-         \forall i\in [q]: \Lambda_i \leftarrow \Open(\crs, m_i, i, \aux))
-    \end{array}
-    } = 1
-\end{gather*}
-    \item \emph{Position-Binding.} For every $i\in [q]$, for any efficient adversary $\Adv$, there exists a negligible function $\epsilon(\cdot)$ such that for every $\secpar$, % the following probability (which is taken over all honestly generated parameters) is at most negligible in $k$:
-\begin{gather*}
-    \prob{}
-    {
-    \begin{array}{ll}
-    \Verify(\crs, C, m, i, \Lambda_i) = 1 \ \wedge \\
-    \Verify(\crs, C, m', i, \Lambda_i') = 1
-    \end{array}
-    \middle\vert
-    \begin{array}{cc}
-         &  \crs \leftarrow \Gen(1^\secpar, q)\\
-         & (C, m, m', i, \Lambda, \Lambda_i')\leftarrow\Adv(\crs)
-    \end{array}
-    } \leq \epsilon(\secpar)
-\end{gather*}
-    \item \emph{Succinctness.} The length of the commitment $c$ output by $\Com$ and the length of the opening $\Lambda_i$ output by $\Open$ are both bounded by $\poly(\lambda, \log q)$.
+    \item \emph{Succinctness. } \TODO{}
+    \item \emph{Opening completeness. } For any $\secpar \in \nat$, any $N \leq 2^\secpar$, any $x\in\zo^N$ and any index $i\in[N]$
+    \begin{gather*}
+        \prb{
+        b= x_i \\
+        \wedge ~\Verify(\hk, \val, i, b, \rho)
+        }{
+        \hk \leftarrow \Gen(1^\secpar, 1^N)
+        )\\
+        v \leftarrow \Hash(\hk, x) \\
+        (b, \rho) = \Open(\hk, x, i) \\
+        } = 1
+    \end{gather*}
+    \item \emph{Collision resistance w.r.t opening. } For any poly-size adversary $\Adv$ there exists a negligible function $\negl(·)$ such that for every $\secpar \in \nat$,
+    \begin{gather*}
+        \prb{
+        \Verify(\hk, \val, i, 0, \rho_0 ) = 1 \\
+        \wedge ~\Verify(\hk, \val, i, 1, \rho_1 ) = 1
+        }{
+        \hk \leftarrow \Gen(1^\secpar, 1^N
+        ) \\
+        \val, i, \rho_0, \rho_1 \leftarrow \Adv(\hk)
+        } \leq \negl(\secpar)
+    \end{gather*}
+    %\item \emph{Global determinism w.r.t opening. } \TODO{Add N (in binary, not unary) to the hash value, and just double it when recursively constructing} For every (unbounded) adversary $\Adv$
+    %\begin{gather*}
+    %    \prb{
+    %    \forall i\in[N] ~\Verify(\hk, \val_1, i, x_i, \rho_1^i ) = 1 \\
+    %    \wedge ~\forall i\in[N] ~\Verify(\hk, \val_2, i, x_i, \rho_2^i ) = 1 \\
+    %    \wedge ~\val_1 \neq \val_2
+    %    }{
+    %    \hk \leftarrow \Gen(1^\secpar%, 1^N
+    %    ) \\
+    %    \wedge ~ x, \val_1, \val_2, \set{\rho_1^i}_{i\in[N]}, \set{\rho_2^i}_{i\in[N]} \leftarrow \Adv(\hk)
+    %    } = 0
+    %\end{gather*}
+    \item \emph{Recursive Constructability. }
+    For every $\secpar\in\nat, N\leq 2^\secpar$, for every $\hk$ such that $\Pr[\hk = \Gen(1^\secpar, N)] > 0$, for every two vectors of the same length $x_1, x_2$, the following holds:
+    \begin{itemize}
+        \item $\Hash(\hk, x_1 || x_2) = \calH(\hk, \Hash(\hk, x_1), \Hash(\hk, x_2))$
+        \item For $i\in[N]$, let:
+        \begin{itemize}
+            \item $b^1_i, \rho^1_i=\Open(\hk, x_1, i)$
+            \item $b^2_i, \rho^2_i=\Open(\hk, x_2, i)$
+        \end{itemize}
+        So: 
+        \begin{itemize}
+            \item $\Open(\hk, x_1||x_2, i) = b^1_i, \Hash(\hk, x_2) || \rho^1_i$
+            \item $\Open(\hk, x_1||x_2, N+i) = b^2_i, \Hash(\hk, x_1) || \rho^2_i$
+        \end{itemize}
+    \end{itemize}
+    
 \end{itemize}
 \end{definition}
 
-
-%Our constructions in Sections~\ref{sec:dargsForNP} and Appendix~\ref{app:dargsForP} use a \emph{vector commitment scheme} (VC), which allows a prover to produce a short commitment $c$ to a vector $(m_1,\ldots,m_q)$, such that for every $1 \leq i \leq q$, the prover can later provide a short \emph{local opening} $\Lambda_i$ that would convince the verifier that the $i$-th value it committed to is $m_i$. A vector commitment is required to be \emph{complete} and \emph{position-binding}. Completeness asserts that verifying an honestly-generated commitment and opening always succeeds. The position-binding property requires that an efficient adversary cannot open the same location of a vector commitment to two different values, such that the verifier is convinced by both, except for a negligible probability \footnote{A function $\eps(n)$ is \emph{negligible} if it is asymptotically smaller than $1/n^c$ for every constant $c$.}. We require that the length of the commitment $c$, and the length of the opening $\Lambda_i$, are both of length $\poly(\lambda, \log q)$.
-%which produces a short commitment for a vector $(m_1,\ldots,m_q)$, such that for any $1 \leq i \leq q$, the prover can convince the verifier that the  $i$-th value it committed to is $m_i$, but it cannot convince the verifier of any other value $m_i' \neq m_i$.
-%The VC is accessed using the following functions:
-%\begin{itemize}
-%	\item $\Gen(1^\secpar, q)\to \crs$: takes the security parameter $\lambda$
-%		and a vector length $q$, and returns a $\crs$.
-%	\item $\Com(\crs, m_1,\ldots , m_q)\to (c,\aux)$: takes the $\crs$ and $q$ values $m_q,\ldots,m_q$,
-%		and returns a commitment $c$ and auxiliary information $\aux$.
-%	\item $\Open(\crs, m, i, \aux)\to \Lambda_i$: takes the $\crs$, a value $m$, a coordinate $i$
-%		and auxiliary information $\aux$,
-%		and produces a proof $\Lambda_i$ that $m$ is the $i$-th committed value.
-%		We refer to $\Lambda_i$ as the \emph{opening} for coordinate $i$.
-%	\item $\Verify(\crs, c, m, i, \Lambda)\to b$: takes the $\crs$,
-%		the commitment $c$, a value $m$, a coordinate $i$ and an opening 
-%		obtained from $\Open(\crs, m, i, \aux)$,
-%		and returns 0 or 1.
-%\end{itemize}
-%A vector commitment is required to be \emph{complete} and \emph{position-binding}.
-%Completeness asserts that verifying an honestly-generated commitment always succeeds:
-%\begin{gather*}
-    %\prob{}
-    %{
-    %\begin{array}{ll}
-    %\forall i\in [q]: 
-         %\Verify(\crs, c, m_i, i, \Lambda_i) = 1
-    %\end{array}
-    %\middle\vert
-    %\begin{array}{ll}
-         %\crs \leftarrow \Gen(1^\secpar, q)\\
-         %c, aux\leftarrow\Com(\crs, m_1,\ldots,m_q) \\
-         %\forall i\in [q]: \Lambda_i \leftarrow \Open(\crs, m_i, i, \aux))
-    %\end{array}
-    %} = 1
-    %.
-%\end{gather*}
-%The position-binding property requires that an efficient adversary cannot lie about the values it committed to: for every $i\in [q]$, for any efficient adversary $\Adv$, there exists a negligible function%
-%\footnote{A function $\eps(n)$ is \emph{negligible} if it is asymptotically smaller than $1/n^c$
-%for every constant $c$.}
-%$\epsilon(\cdot)$ such that for every $\secpar$,
-%\begin{gather*}
-%    \prob{}
-%    {
-%    \begin{array}{ll}
-%    \Verify(\crs, C, m, i, \Lambda_i) = 1 \ \wedge \\
-%    \Verify(\crs, C, m', i, \Lambda_i') = 1
-%    \end{array}
-%    \middle\vert
-%    \begin{array}{cc}
-%         &  \crs \leftarrow \Gen(1^\secpar, q)\\
-%         & (C, m, m', i, \Lambda, \Lambda_i')\leftarrow\Adv(\crs)
-%    \end{array}
-%    } \leq \epsilon(\secpar)
-%    .
-%\end{gather*}
-%We require that the length of the commitment $c$ output by $\Com$,
-%and the length of the opening $\Lambda_i$ output by $\Open$,
-%are both of length $\poly(\lambda, \log q)$.
-
-%where the prover sends a short commitment $c$ to a vector $(m_1,\ldots,m_1)$,
-%such that for any coordinate $i$, the prover can produce an \emph{opening} $\Lambda_i$
-%that convinces the verifier that the value of the vector in coordinate $i$ is $m_i$.
-%The commitment is \emph{binding}: after committing to $(m_1,\ldots,m_1)$,
-%the prover cannot convince the verifier that the $i$-th coordinate is $m_i'$ for any $m_i' \neq m_i$
-%(except with negligible probability).
-
-\paragraph{Succinct non-interactive arguments of knowledge (SNARKs).}
-A SNARK consists of the procedures:
+\subsection{SNARGs, SNARKs and RAM SNARGs}
+A SNARG (or a SNARK) consists of the procedures:
 \begin{itemize}
-    \item $\Gen(1^\secpar, \ell)\to \crs$: a setup procedure that takes a security parameter $\lambda$
-		and an instance length $\ell$, and generates a $\crs$.
-    \item $\Pro(\crs, x, w)\to \pi$: a proof generation algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
-		and a witness $w$ of length $\poly(\ell)$,
-		and produces a proof $\pi$.
-    \item $\Ver(\crs, x, \pi)\to \set{0,1}$: a verification algorithm that takes the $\crs$, an instance $x$ of length $\ell$,
-		and a proof $\pi$, and returns 1 or 0 (accept or reject).
+    \item $\Gen(1^\secpar, N)\to \crs$: a setup procedure that takes a security parameter $\secpar$ and an instance length $N$, and generates a $\crs$.
+    \item $\Pro(\crs, x, w)\to \pi$: a proof generation algorithm that takes the $\crs$, an instance $x\in\zo^N$, and a witness $w$ of length $\poly(\ell)$, 	and produces a proof $\pi$.
+    \item $\Ver(\crs, x, \pi)\to \set{0,1}$: a verification algorithm that takes the $\crs$, an instance $x\in\zo^N$, and a proof $\pi$, and returns an acceptance bit.
 \end{itemize}
-\vspace{-1ex}
-\vspace{-1ex}
-\begin{definition} [Succinct Non-Interactive Argument of Knowledge for $\NP$]\label{def:snarg}
-Let $\Lan$ be an $\NP$ language, with a verifying machine $M$
-such that $x \in \Lan$ iff $\exists w: M(x,w)=1$, and let $\secpar$ be a security parameter. $(\Gen, \Ver, \Pro)$ is a \emph{Succinct Non-Interactive Argument of Knowledge for $\Lan$}
+\begin{definition} [Succinct Non-Interactive Argument]\label{def:snarg}
+Let $\Lan$ be a language with a verifying machine $M$ such that $x \in \Lan$ iff $\exists w: M(x,w)=1$, and let $\secpar$ be a security parameter. $(\Gen, \Ver, \Pro)$ is a \emph{SNARG $\Lan$}
 if it satisfies the following properties.
-\vspace{-1ex}
 \begin{itemize}
-    \item For every $x$ and $w$ such that $M(x,w)=1$,
+    \item \emph{Succinctness and Efficiency.} The length of the proof $\pi$ produced by $\Pro$ is $\poly(\lambda, \log \ell)$.
+    $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$
+    and $\Pro$ runs in time $\poly(\lambda, n)$.
+    \item \emph{Completeness. } For every $x$ and $w$ such that $M(x,w)=1$,
     \begin{gather*}
         \prob{}
         { 
@@ -232,15 +126,21 @@ if it satisfies the following properties.
         } = 1
 	.
     \end{gather*}
-    \item \emph{Argument of Knowledge.} For any efficient prover $\Pro^*$, there exists an efficient extraction algorithm, $\Ext_{\Pro^*}$,
-%which produces a witness $w$ for an instance $x$,
-%which intuitively produces a witness for any instance that $\Pro^*$ can convince the verifier to accept.
-%, such that if $\Pro^*$ generates a statement $x$ and a proof $\pi$ that is accepted by $\Ver$ with some probability $p$,
-%then $\Ext^*$ generates a witness $w$ such that $M(x,w) = 1$ with probability close to $p$.
-%More formally,
-and a negligible function $\epsilon(\cdot)$, such that,
-%the probability that the prover ${\Pro^*}$ can convince the verifier to accept $x$ when $\Ext_{\Pro^*}$
-%produces an \emph{invalid} witness for $x$ is negligible:
+    \item \emph{(Addaptive) Soundness. }
+    For any poly-size prover $\Pro^*$, there exists a negligible function $\negl(\cdot)$ such that,
+    \begin{gather*}
+        \prb{
+        \Ver(\crs, x, \pi) = 1 \\
+        \wedge ~ x\notin \Lan
+        }{
+        \crs \leftarrow \Gen(1^\secpar, 1^N) \\
+        x, \pi \leftarrow \Pro^*(\crs)
+        } \leq \negl(\secpar)
+    \end{gather*}
+\end{itemize}
+We say $(\Gen, \Pro, \Ver)$ is a succinct non-interactive argument of knowledge (SNARK), if additionally,\footnote{This actually implies soundness and can replace it.} the following holds:
+\begin{itemize}
+    \item \emph{Argument of Knowledge.} For any efficient prover $\Pro^*$, there exists an efficient extraction algorithm, $\Ext_{\Pro^*}$, and a negligible function $\epsilon(\cdot)$, such that,
     \begin{gather*}
         \prob{}
         {
@@ -257,15 +157,16 @@ and a negligible function $\epsilon(\cdot)$, such that,
         } \leq \epsilon(\secpar)
 	.
     \end{gather*}
-    \item \emph{Succinctness and Efficiency.} The length of the proof $\pi$ produced by $\Pro$ is $\poly(\lambda, \log \ell)$.
-    $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$
-    and $\Pro$ runs in time $\poly(\lambda, n)$. 
 \end{itemize}
 \end{definition}
-Note that the prover $\Pro^*$ \emph{chooses} the statement $x$ that
-it would like to prove, and it does so after seeing the $\crs$.
-This is called \emph{adaptive soundness}, and it is stronger than asserting that there does not exist any $x \not \in \calL$
-that the prover can cause the verifier to accept with non-negligible probability
-(if there existed such an $x$, we could ``hard-wire''
-it into the prover in the adaptive definition).
+%Note that the prover $\Pro^*$ \emph{chooses} the statement $x$ that it would like to prove, and it does so after seeing the $\crs$. This is called \emph{adaptive soundness}, and it is stronger than asserting that there does not exist any $x \not \in \calL$ that the prover can cause the verifier to accept with non-negligible probability (if there existed such an $x$, we could ``hard-wire'' it into the prover in the adaptive definition).
 
+\TODO{Add theorems citations for existence of SNARKs for NP and SNARGs for P from respective assumptions}
+
+\subsection{RAM SNARGs / BARGs}
+\TODO{Decide to which of these we should refer}
+A RAM SNARG allows a  prover to prove to a verifier that $M(x) = 1$ for some machine $M$, where the verifier does not have access to $x$ itself but to an \emph{digest} of it, which is much shorter. We use RAM SNARGs that are defined w.r.t a hash family with local openings
+It has a similar syntax to that of a SNARG, with the following differences:
+\begin{itemize}
+    \item 
+\end{itemize}

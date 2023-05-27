@@ -1,0 +1,94 @@
+\section{Distributed Merkle Trees}
+\label{sec:distmerkle}
+In this section we define our notion of a distributed Merkle tree and show how to construct it from collision-resistant hash functions.
+
+Distributed Merkle trees (DMTs) are regular Merkle trees, that hold information of a distributed network, in a way that on one hand allows nodes to compute the Merkle root jointly and communication-wise efficiently, such that in the end of the computation each node also has a succinct opening from the Merkle root to the information it held originally. In the next section, we'll use DMTs as the $\MT$ family for the distributed SNARG construction.
+
+A $t(G,x)$-efficient distributed Merkle tree, is associated with a recursively constructable hash family with local openings collision-resistant hash family $\MT = (\MT.\Gen, \MT.\Hash, \MT.\Open, \MT.\Verify)$, and consists of the following algorithms.
+
+\begin{itemize}
+    \item $\Gen(1^\secpar, N)\to \hk$: a randomized algorithm that takes as input the security parameter $\secpar$ and the total size of the graph configuration, and outputs a hash key $\hk = \MT.\Gen(1^\secpar, N)$
+    \item $\DistConstruct(\hk, G, \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})\rightarrow \val, \{\{(\rt_{v,u}, h_{v,u}, I_{v,u}, \rho_{v,u})\}_{u\in N(v)}\}_{v\in V(G)}$ A distributed algorithm, that when running on a network $G$, with all nodes receiving the same hash key $\hk$, and each node $v$ receives for each neighbor $u\in N(v)$ an input $x_{v,u}$, outputs $\val$ at all nodes, and at each node $v$ an $\MT$ root, height, index and an opening path $\rho_u$ for every neighbor of $v$, $u\in N(v)$.
+    \item $\DistVer(\hk, G, \val, \{(\rt_v, I_v, \rho_v)\}_{v\in V(G)}) \rightarrow \{b_v\}_{v\in V(G)}$ : a distributed algorithm, that when running on a network $G$, with all nodes receiving the same hash key $\hk$, and each node $v$ receives an $\MT$ root $\rt_v$, index $I_v$, and opening path $I_v$, outputs an acceptence bit at each node.
+    \item $\Verify(\hk, \val, I, b, \rho) \in \{0,1\}$: a verification algorithm that takes a hash key $\hk$, a value $\val$, an index $I$, a bit $b$ and an opening $\rho$, and outputs an acceptance bit $a = \MT.\Verify(\hk, \val, (v,u), b, \rho)$.
+    %\item $\Verify(\hk, \val, (v,u), b, \rho) \in \{0,1\}$: a verification algorithm that takes a hash key $\hk$, a value $\val$, a node $u$, a bit $b$ and an opening $\rho$, and outputs an acceptance bit $a = \MT.\Verify(\hk, \val, (v,u), b, \rho)$, where $(v,u)$ is referred to as an index.
+\end{itemize}
+
+\begin{definition}[Properties of $\DMT$]
+    For a graph network $G$, we define the following centralized algorithms:
+    \begin{itemize}
+        \item $\DistHash_G(\hk, \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)}) \rightarrow \val$: the algorithm that on input $(\hk, \\ \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})$, simulates $\DistConstruct$ on $(\hk, G \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})$, parses the output into $\val, \{\{\rho_{v,u}\}_{u\in N(v)}\}_{v\in V(G)}$ and outputs only $\val$.
+        \item $\DistOpen_G(\hk, \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)}) \rightarrow x_{v,u}, \rho_{v,u}$: the algorithm that on input $(\hk, \\  \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})$, simulates $\DistConstruct$ on $(\hk, G \{\{x_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})$, parses the output into $\val, \{\{\rho_{v,u}\}_{u\in N(v)}\}_{v\in V(G)}$ and outputs only $x_{v,u}, \rho_{v,u}$.
+    \end{itemize}
+    $(\Gen, \DistConstruct, \DistVer, \Verify)$ is a $\DMT$ if for every network $G$, $(\Gen, \DistHash_G, \DistOpen_G, \Verify)$ is a recursively constractable hash family with local openings, and $\DistConstruct$ runs in \TODO{Communication efficiency?}
+    \TODO{A soundness condition on distributed verification}
+\end{definition}
+
+\subsection{Construction from $\MT$s}
+
+Let $\MT = (\MT.\Gen, \MT.\Hash, \MT.\Open, \MT.\Verify)$ be a recursively constructable hash family with local openings. The algorithms $\DMT.\Gen, \DMT.\Verify$ are simply $\MT.\Gen, \MT.\Verify$, respectively. We now describe the algorithm $\DMT.\DistConstruct$.
+
+On input $(\hk, G \{x((u,v), x(v,u))\}_{(v,u)\in E(G)})$, the distributed algorithm $\DistConstruct$ executes the following stages:
+
+
+\subsubsection{The algorithm $\DistConstruct$}
+
+\paragraph{Stage 1: Inner Merkle tree. } Each node $v$ computes $\rt_v = \MT.\Hash(\hk, \{x_{u,v}\}_{u\in N(v)})$.
+
+\paragraph{Stage 2: spanning tree. } The network jointly computes a spanning tree of itself, $\var{ST}(G)$, and certifies it. Meaning, at the end of the computation, each node $v$ holds $(\var(root), p(v), d(v), C(v))$, where $\var{root}\in V(G)$ is the UID of the root of the spanning tree, $p(v)$ is $v$'s parent in the spanning tree ($p(v)\in N(v)$), or $\bot$ if $v=\var{root}$, $d(V)$ is the distance between the root and $v$ in the spanning tree ($0 \leq d(v) \leq n$), and $C(v)\subseteq N(v)$ is the set of $v$'s children in the spanning tree (empty for spanning tree leaves). This is done as in \cite{korman2005proof}. \TODO{Check details: is this robust for an anonymous network where $n$ is not known? Does leaves now they're leaves? }
+
+\paragraph{Stage 3: converge-cast of Merkle forests. } In this stage, each node computes a Merkle forest while maintaining the forest structure. The root of the spanning tree computes the hash value.
+\begin{enumerate}
+    \item Set $S_v = (\rt_v, 0) \cup \bigcup_{u\in C(v)}F_u$.
+    \item Set $F_v = S_v$, $h = 0$. While $h \leq \max_{(\rt, h)\in S_v} h$:
+    \begin{enumerate}
+        \item If $|\{(\rt_c, h_c)\in F_v ~|~ h_c = h\}| \geq 2$:
+        \begin{enumerate}
+            \item Take two such tuples: $(rt_0, h) \neq (rt_1, h) \in F_v$,
+            \item Set $\rt = \calH(\hk, \rt_0 || \rt_1)$,
+            \item Set in $S_v$, $\rt_0.p = \rt$, $\rt_0.s = 0$
+            \item Set in $S_v$, $\rt_1.p = \rt$, $\rt_1.s = 1$
+            \item Set in $S_v$, $\rt.l = \rt_0$,
+            \item Set in $S_v$, $\rt.r = \rt_1$,
+            \item Update $F_v = (F_v \backslash \{(rt_1, h), (rt_2, h)\}) \cup (rt, h+1)$.
+        \end{enumerate}
+        \item Else, 
+        \begin{enumerate}
+            \item If $v = \var{root}$ and $|\{(\rt_c, h_c)\in F_v ~|~ h_c = h\}| = 1$,
+            \item Else, increment $h = h+1$
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+After this, $F_{\var{root}}$ contains only one tuple: $(\rt, h)$. Set $\val = \rt$.
+
+\paragraph{Stage 4: broadcast of Merkle openings}
+Starting from $\var{root}$, each node $v$, upon receiving input $(\val, \alpha_v)$, from its spanning tree parent $p(v)$, where $\alpha_v = \{(\rt_i, h_i, I_i, \rho_i)| (\rt_i, h_i) \in F_v\}$, does the following:
+\begin{enumerate}
+    \item For every spanning tree child of $v$, $c\in C(v)$:
+    \begin{enumerate}
+        \item Set $\alpha_c = \phi$, $I^F_c = \phi$
+        \item For every Merkle tuple $(\rt_a, h_a)\in F_c$:
+        \begin{enumerate}
+            \item Get $(\rt_a, h_a)$ in $S_v$, \ //Where the side and parent is documented
+            \item Set $\rho_a = I_a = \epsilon$ \ //The empty string
+            \item Set $\rt = \rt_a$. While $\rt.p \notin F_v$, do:
+            \begin{enumerate}
+                \item If $\rt.s = 0$: update $\rho_a = \rho_a || (\rt.p).l$
+                \item If $\rt.s = 1$: update $\rho_a = \rho_a || (\rt.p).r$
+                \item Update $I_a = \rt.s || I_a$
+                \item Update $\rt = \rt.p$
+            \end{enumerate}
+            \item Get $\rho, I$ such that $(\rt.p, h, I, \rho)\in \alpha_v$ for some $h$.
+            \item Set $\rho_a = \rho_a || \rho$
+            \item Set $I_a = I || I_a$
+            \item Update $\alpha_c = \alpha_c \cup \{(\rt_a, h_a, I_a, \rho_a)\}$
+        \end{enumerate}
+        \item Send $\alpha_c$ to $c$
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection{The algorithm $\DistVer$}
+
+\paragraph{}
+\TODO{Formalize and extend}
+Each node $v$ has $\hk, \val, \rt_v, p(v), C(v), F^I_V, I_v, \rho_v$. Upon receiving from each child $c\in C(v)$, $F^I_c$, it runs stage 3 of the algorithm $\DistConstruct$, obtains the Merkle forest $F'_v$, and verifies that $F'_v = F_v$. Then, since (unlike in $\DistConstruct$) it already has $I$ for every $rt\in F^I_v$, it also verifies that the indices in $F^I_c$ for every $c\in C(v)$ are correct.

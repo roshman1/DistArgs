@@ -27,6 +27,8 @@
 
 \newcommand{\secpar}{\lambda}
 \newcommand{\crs}{\ensuremath{\mathsf{crs}}\xspace}
+\newcommand{\rt}{\ensuremath{\mathsf{rt}}\xspace}
+\newcommand{\td}{\ensuremath{\mathsf{td}}\xspace}
 \newcommand{\aux}{\ensuremath{\mathsf{aux}}\xspace}
 \newcommand{\comm}{\ensuremath{\mathsf{com}}\xspace}
 \newcommand{\crsvc}{\crs_\textsc{vc}}
@@ -141,8 +143,8 @@
 % MACROS RELATED TO LOCAL ALGORITHMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\var}[1]{\mathit{ #1 } }
 \newcommand{\Rnote}[1]{ { \color{purple} Rotem: #1 } }
-%\newcommand{\Enote}[1]{ { \color{violet} Eden: #1 } }
-%\newcommand{\TODO}[1]{ { \color{red} TODO: #1 } }
+\newcommand{\Enote}[1]{ { \color{violet} Eden: #1 } }
+\newcommand{\TODO}[1]{ { \color{red} TODO: #1 } }
 
 
 \DeclareMathOperator{\dist}{dist}
@@ -301,11 +303,20 @@
 \newcommand{\calA}{\mathcal{A}}
 \newcommand{\SNARG}{\mathsf{SNARG}}
 \newcommand{\SNARGGen}{\SNARG.\Gen}
+\newcommand{\SNARGHash}{\SNARG.\Hash}
 \newcommand{\SNARGVer}{\SNARG.\Ver}
 \newcommand{\SNARGPro}{\SNARG.\Pro}
+\newcommand{\SNARGExt}{\SNARG.\Ext}
+\newcommand{\LVDSNARG}{\mathsf{LVD}-\SNARG}
+\newcommand{\DistConstruct}{\mathsf{DistConstruct}}
+\newcommand{\DistHash}{\mathsf{DistHash}}
+\newcommand{\DistOpen}{\mathsf{DistOpen}}
+\newcommand{\DistVer}{\mathsf{DistVer}}
+\newcommand{\DMT}{\mathsf{DMT}}
 \newcommand{\Digest}{\mathsf{Digest}}
 \newcommand{\SNARGDigest}{\SNARG.\Digest}
 \newcommand{\HT}{\mathsf{HT}}
+\newcommand{\MT}{\mathsf{MT}}
 \newcommand{\HTGen}{\HT.\Gen}
 \newcommand{\HTHash}{\HT.\Hash}
 \newcommand{\HTOpen}{\HT.\Open}
@@ -349,6 +360,8 @@
 \newcommand{\crsh}{\crs_\textsc{h}}
 \newcommand{\calD}{\mathcal{D}}
 \newcommand{\hk}{\mathsf{hk}}
+\newcommand{\val}{\mathsf{val}}
+\newcommand{\zo}{\set{0,1}}
 
 \newcommand{\SNARKBreak}{\var{SNARKBreak}}
 \newcommand{\VCBreak}{\var{VCBreak}}

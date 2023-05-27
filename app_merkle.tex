@@ -1,0 +1,433 @@
+\section{}
+\subsection{Soundness proof}
+\label{app:distprover}
+
+
+Let $G = (V, E)$ be a graph of size $n$, and let $\ell = \poly(n)$ be the maximum encoding length of
+a message sent by $D$ in graphs of size $n$.%
+%\footnote{Recall that the encoding of a message consists of the round number, the edge on which it is sent, and the message contents; for an algorithm that runs on polynomial rounds and sends polynomially-long messages, the encoding of a message is polynomial in $n$.}
+
+
+ 
+
+\begin{proof}[Proof of Soundness]
+Suppose for the sake of contradiction that there is an efficient adversary $\Pro^*$ such that for some
+non-negligible function $\alpha(\cdot)$
+and for all sufficiently large $n$,
+we have
+\begin{gather}\label{soundnesseq}
+    \prb
+    {
+    \calD(G, x)\neq y 
+    \\\wedge  ~\forall \var{v}\in V(G) : \\
+    \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1
+    }
+    {
+    \crs \leftarrow \Gen(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)
+    } \geq \alpha(\secpar)
+\end{gather}
+For every $G,x$, let $\widetilde{\rt}(G,x,y)$ be the Merkle tree root and the distributed proof of the true messages sent in the execution of $\calD$ on $G$. We would like to claim that \cref{soundnesseq} implies that there exists a negligible function $\mu(\cdot)$, such that
+\begin{gather}\label{same_rt_eq}
+    \prb
+    {
+    \calD(G, x)\neq y \\ 
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \wedge ~\rt = \widetilde{\rt}
+    }
+    {
+    \crs \leftarrow \Gen(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)
+    } \geq \alpha(\secpar) - \mu(\secpar)
+\end{gather}
+We show why this concludes the proof. For every $G,x,y$ such that $y\neq \calD(G,x)$, there exists some $v\in V(G)$ such that $y(v)\neq \calD(G,x)(v)$. Let $\widetilde{\pi}(crs, \rt, G,x,y,v)$ be the SNARG proof for that. Meaning, the checking TM $M$ in node $v$ should reject $y(v)$. Let $X_v = (v, x(v), y(v), N(v))$. We get that there is an efficient adversary $\Adv^*$ such that
+\begin{gather*}\label{same_rt}
+    \prb
+    {
+    \SNARGVer(\crs, \rt, X_v, 1, \pi) = 1 \\
+    \wedge ~\SNARGVer(\crs, \rt, X_v, 0, \widetilde{\pi}) = 1
+    }
+    {
+    \crs \leftarrow \Gen(1^\secpar, n) \\
+    (\rt, X_v, \pi, \widetilde{\pi}) \leftarrow \Adv^*(\crs, 1^\secpar, 1^n)
+    } \geq \alpha(\secpar) - \mu(\secpar)
+\end{gather*}
+which contradicts the soundness of the underlying SNARG.
+
+We now move to prove \cref{same_rt_eq}.% We use the fact that the CRH in use is deterministic given the hash key (which is part of the crs) and so if $\rt\neq\widetilde{\rt}$, then there must be a round $r$ and an edge $(v,u)\in E(G)$ such that there is no valid opening path from $\rt$ to the true message sent from $v$ to $u$ in round $r$. We contradict this by induction on the round $r$ and the edge $(v,u)$. Formally, for every round $r$ and edge $(v,u)\in E(G)$, let $m_{r,v,u}$ be the true message sent by node $v$ to node $u$ in round $r$ of the algorithm. There exists a negligible function $\nu(\cdot)$ such that for every round $r$ and every edge $(v,u)\in E(G)$
+
+Parse $\crs = (\HT.\hk, \SNARG.\crs)$. For every $r\in[R]$, let $\Gen_{r,i}$ be identical to $\Gen$, with round $r$ and inner round $i$ as the first binding index for all nodes. By the index hiding property of the SNARG, \cref{soundnesseq} implies that there exists a negligible function $\mu(\cdot)$ such that for every $(r,i)\in[R]\times[n]$:
+\begin{gather*}\label{soundness}
+    \prb
+    {
+    \calD(G, x)\neq y \\ 
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1
+    }
+    {
+    \crs \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)
+    } \geq \alpha(\secpar) - \mu(\secpar)
+\end{gather*}
+
+By the somewhere argument of knowledge property of the SNARG, the above implies that there exists a negligible function $\nu(\cdot)$ such that for every $r,i\in[R]\times [n]$:
+\begin{gather}\label{extracted}
+    \prb
+    {
+    \calD(G, x)\neq y \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \wedge ~ C_\var{v}(r, w_\var{v}) = 1
+    }
+    {
+    \crs, \td \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n) \\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(td, \pi(\var{v}))
+    } \geq \alpha(\secpar) - \nu(\secpar)
+\end{gather}
+Parse $w_\var{v} = (cf^\var{v}_{r, i-1}, cf^\var{v}_{r, i}, \rho^\var{v}_{r, i-1}, \rho^\var{v}_{r,i}, m^\var{v}_{r,i}, o^\var{v}_{r,i})$\footnote{$m^\var{v}_{r,i}$ could be either sent message or received message}, and for every node $\var{v}$ and round tuple $(r,i)$, let $\widetilde{cf^\var{v}_{r,i}}$, $\widetilde{m^\var{v}_{r,i}}$ be the true configuration and read message for node $\var{v}$ in round $(r,i)$. We argue that \cref{extracted} implies that there exists a negligible function $\xi(\cdot)$ such that for every $(r,i) \in [R]\times[n]$,
+
+\begin{gather}\label{induction}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}}
+    }
+    {
+    \crs, \td \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_v\}_{v\in V(G)}\leftarrow \SNARGExt(\td, \pi(v))
+    } \geq \alpha(\secpar) - r\cdot\xi(\secpar)
+\end{gather}
+If \cref{induction} is true for every round $r$, for every inner round $i$, it implies \cref{same_rt_eq} from the determinism of the $\HT$ scheme and the soundness of the $\HT$ construction scheme \TODO{prove/claim}. We prove \cref{induction} by induction on the round $r$. 
+
+\paragraph{Notation} Throughout the proof, we use the following notation:
+\begin{itemize}
+    \item For $v\in V(G)$, $i\in [n]$: $u(v,i)\in V(G)$ is the neighbor of $v$ from which $v$ reads the message sent in the last round, in inner round (of $v$) $i$.
+    %\item For $u\in V(G)$, $j\in [n]$, $v_{send}(u,j)\in V(G)$ is the neighbor of $u$ to which $u$ sends a message in inner round $j$.
+    \item For $u,v\in V(G)$, $j(u,v)$ is the inner round of $u$ in which $u$ sends message to $v$
+    %\item For $v,u\in V(G)$, $i_{recv}(v,u)$ is the inner round of $v$ in which $v$ reads the message that $u$ sent it in the last round.
+\end{itemize}
+%So, $u_{recv}(v, i_{send}(v,u))=u$.
+
+%by $u_{recv}(v,i)$, $v_{send}(u, i)$ the neighbor of $v$ which $v$ reads its message from the last round in inner round $i$, and
+
+%and by $j(u,v)$ the inner node $j$, in which $u$ sends a message to $v$. So, in every round $r$, in the inner round $i$ $v$ reads the message that $u$ sent $v$ in round $r-1$, in inner round $j$.
+
+\paragraph{Base Case} 
+For $r=1$, for every node $\var{v}$ and inner round $i$, since there is only one initial configuration $cf^{\var{v}}_0$, which entirely determine the first message that $\var{v}$ sends (and $\var{v}$ does not read a message in the first round), it follows from the definition of $C_\var{v}$ alongside the collision resistance property of the $\MT$ scheme \TODO{prove said CR, define $C_\var{v}$.} that \cref{extracted} implies there exists a negligible function $\xi'(\cdot)$ such that for every $v\in V(G)$:
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad 
+        \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+        \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+        \quad \wedge ~ C_\var{v}(1, w_\var{v}) = 1 \\
+    %
+    \wedge (~cf^v_{1,i} \neq \widetilde{cf^v_{r,1}} 
+    \vee ~m^v_{1,i} \neq \widetilde{m^v_{1,i}} )
+    }
+    {
+    \crs, \td \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n) \\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(td, \pi(\var{v}))
+    } \leq \xi'(\secpar)
+\end{gather*}
+
+Let $\xi_1(\cdot) = n\cdot \xi'(\cdot) + \nu(\cdot)$. $\xi_1(\cdot)$ is negligible as well. From union bound, we get the desired:
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad 
+        \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+        \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+        \quad \wedge ~ C_\var{v}(1, w_\var{v}) = 1 \\
+        \quad \wedge ~cf^\var{v}_{1,i} = \widetilde{cf^\var{v}_{1,i}} \\
+        \quad \wedge ~m^\var{v}_{1,i} = \widetilde{m^\var{v}_{1,i}}
+    }
+    {
+    \crs, \td \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n) \\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(td, \pi(\var{v}))
+    } \\ \geq \alpha(\secpar) - \xi_1(\secpar)
+\end{gather*}
+
+\paragraph{Induction Step} Under the assumption that \cref{induction} holds for round $r-1$ for every $i$, we prove it holds for $r$ for every $i$, by induction on $i$. For clearrance, we'll call the induction on $r$ the "$r$-induction", and the induction on $i$ the "$i$-induction".
+
+\paragraph{$i$ Base Case.} For $i=1$, from the $r$-induction hypothesis, we get for every $i$, and specifically, for $i=m$:
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}}
+    }
+    {
+    \crs, \td_{r-1,m} \leftarrow \Gen_{r-1,m}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v}))
+    } \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar)
+\end{gather*}
+
+For every $v\in V(G)$, let $Gen'(r,1,v)$ be as $Gen$ with the following binding indices:
+\begin{itemize}
+    \item All nodes have $(r-1,m)$ as the first binding index.
+    \item $v$ has $(r,1)$ as the second binding index.
+    \item Denote $u = u(u,1)$ and $j = j(u,v)$. $u$ has $(r-1, j)$ as his second binding index. 
+\end{itemize}
+From index hiding property of the SNARG, we get there exists a negligible function $\upsilon_1(\cdot)$ such that for every $v\in V(G)$:
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}}
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v}))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) -\upsilon_1(\secpar)
+\end{gather*}
+
+From the somewhere argument of knowledge of the SNARGs in $v$ and $u$, there exists a negligible function $\upsilon_2(\cdot)$ such that for every $v\in V(G)$:
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    \wedge ~C_{u}(r-1,j),w'_{u}) = 1
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    \wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar)
+\end{gather*}
+
+From the $r$-induction hypothesis, when applied with $i=j$, used specifically on $u$, we parse $$w'_{u} = (cf^{u}_{r-1,j-1}, cf^{u}_{r-1,j}, \rho^{u}_{r-1,j-1}, \rho^{u}_{r-1,j}, m^{u}_{r-1,j}, o^{u}_{r-1,j})$$ and get there exists a negligible function $\upsilon_3(\cdot)$ such that:
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    \wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    \wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    \wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    \wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar)
+\end{gather*}
+
+Parse $w'_v = (cf'^v_{r,0}, cf'^v_{r,1}, \rho'^v_{r,0}, \rho'^v_{r,1}, m'^v_{r,1}, o'^v_{r,1})$. Note that since $(r,0) = ((r-1),m)$, we get that in the last equation $cf^v_{r-1,m}$ is extracted twice: once as part of $w_v$ and once as part of $w'_v$. From the CR property of the SNARG we get that there's a negligible function $\upsilon_4(\cdot)$, such that the following holds:
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    \wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    \wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    \wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    \wedge ~cf'^v_{r,0} = cf^v_{r-1,m}
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    \wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar) - \upsilon_4(\secpar)
+\end{gather*}
+
+Moreover, $m^v_{r,1}$ is extracted twice: once from $w'_v$, as $v$ reads it in round $(r,1)$, and once from $w'_{u}$, as $u$ sends it in round $(r-1,j)$. From the CR property of the Merkle tree, we get there exists a negligible function $\upsilon_5(\cdot)$ such that:
+
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    \wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    \wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    \wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    \wedge ~cf'^v_{r,0} = cf^v_{r-1,m} \\
+    \wedge ~m^v_{r,1} = m^u_{r-1,j}
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    \wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar) - \upsilon_4(\secpar) - \upsilon_5(\secpar)
+\end{gather*}
+
+Now, since from the definition of the round indexing $\widetilde{cf^v_{r-1,m}} = \widetilde{cf^v_{r,0}}$ and from the definitions of $u,j$, $\widetilde{m^v_{r,1}} = \widetilde{m^u_{r-1, j}}$, We can re-writing the last equation as follows:
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    %\wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    %\wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    %\wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    \wedge ~cf'^v_{r,0} = \widetilde{cf^v_{r-1,m}} \\
+    \wedge ~m^v_{r,1} = \widetilde{m^v_{r,1}}
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    %\wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar) - \upsilon_4(\secpar) - \upsilon_5(\secpar)
+\end{gather*}
+and from the definition of $C_v$, we get that
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    %\wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    %\wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    %\wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    \wedge ~cf'^v_{r,0} = \widetilde{cf^v_{r-1,m}} \\
+    \wedge ~m^v_{r,1} = \widetilde{m^v_{r,1}} \\
+    \wedge ~cf^v_{r, 1} = \widetilde{cf^v_{r,1}}
+    }
+    {
+    \crs, \td_{r-1,m}, \td^v_{r,1}, \td^{u}_{r-1, j}\leftarrow \Gen'_{r,1,v}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    %\wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar) - \upsilon_4(\secpar) - \upsilon_5(\secpar)
+\end{gather*}
+
+From the index hiding property of the SNARG, there exists a negligible function $\upsilon_6(\cdot)$ such that the following holds:
+
+\begin{gather*}
+    \prb
+    {
+    \calD(G, x)\neq y  \\
+    \wedge\ \forall \var{v}\in V(G) : \\
+    \quad \Ver(\crs, \rt, \var{v}, (x(\var{v}), y(\var{v})),\\
+    \qquad \qquad N(\var{v}), \pi(\var{v})) = 1 \\
+    \quad \wedge ~C_\var{v}((r-1, m), w_\var{v}) = 1 \\
+    \quad \wedge ~cf^\var{v}_{r-1, m} = \widetilde{cf^\var{v}_{r-1,m}} \\
+    \quad \wedge ~m^\var{v}_{r-1,m} = \widetilde{m^\var{v}_{r-1,m}} \\
+    %
+    %\wedge ~C_{u}(r-1,j),w'_{u}) = 1 \\
+    %\wedge ~cf^u_{r-1,j} = \widetilde{cf^u_{r-1,j}} \\
+    %\wedge ~m^u_{r-1,j} = \widetilde{m^u_{r-1,j}} \\
+    %
+    \wedge ~C_v((r,1),w'_v) = 1 \\
+    %\wedge ~cf'^v_{r,0} = \widetilde{cf^v_{r-1,m}} \\
+    \wedge ~m^v_{r,1} = \widetilde{m^v_{r,1}} \\
+    \wedge ~cf^v_{r, 1} = \widetilde{cf^v_{r,1}}
+    }
+    {
+    \crs, \td \leftarrow \Gen_{r,i}(1^\secpar, n) \\
+    (G, x, y, \rt, \pi) \leftarrow \Pro^*(\crs, 1^\secpar, 1^n)\\
+    \wedge ~\{w_\var{v}\}_{\var{v}\in V(G)}\leftarrow \SNARGExt(\td_{r-1,m}, \pi(\var{v})) \\
+    \wedge ~w'_v\leftarrow \SNARGExt(\td^v_{r,1}, \pi(v)) \\
+    %\wedge ~w'_{u}\leftarrow \SNARGExt(\td^{u}_{r-1,j}, \pi(u))
+    }\\
+    \geq \alpha(\secpar) - (r-1)\cdot\xi(\secpar) - \upsilon_1(\secpar) - \upsilon_2(\secpar) - \upsilon_3(\secpar) - \upsilon_4(\secpar) - \upsilon_5(\secpar) -\upsilon_6(\secpar)
+\end{gather*}
+
+By applying the union bound (as with the base case of the $r$-induction), and setting $\xi(\cdot) = n\cdot\sum_{i=1}^6 \upsilon(\secpar)$, we get the $i$-induction base.
+
+
+\paragraph{$i$-Induction Step} The proof is exactly like for the base case, with the only difference being using the $i$-induction hypothesis instead of the $r$-induction hypothesis. That is, instead of using \cref{induction} with $r-1,m$, use it with $r,i-1$.
+
+
+
+\end{proof}

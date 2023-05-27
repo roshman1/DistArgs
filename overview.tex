@@ -1,0 +1,17 @@
+We construct a succinct distributed argument for polynomial-time distributed algorithm, where the prover is itself distributed. For algorithm that runs in $T$ rounds, the distributed prover runs in $T + O(\diam(G))$ rounds.
+
+Fix a distributed algorithm, represented by a deterministic Turing machine $D$ that executes at every node.
+Let $\calL_D$ be the distributed language consisting of all configurations $(G, x, y)$, where $G$ is the network graph, $x : V(G) \rightarrow \calX$ is an input assignment to the nodes, and $y : V(G) \rightarrow \calY$ is the output stored at the nodes, such that when $D$ is executed at every node of $G$ with input assignment $x$, each node $v \in V(G)$ produces the output $y(v)$. We construct a distributed prover for the statement ``$(G,x,y) \in \calL_D$''.
+
+
+\paragraph{Overview of the construction.}
+Proving the execution of the distributed algorithm $D$ essentially amounts to proving a collection of ``local'' statements, each asserting that at a specific node $v \in V(G)$, the algorithm $D$ indeed produces the output $y(v) = 1$. The prover at node $v$ can record the local computation at node $v$ as $D$ executes, and use a SNARG to prove that it is correct: for example, it can prove that incoming messages are handled correctly (according to $D$), outgoing messages are produced correctly, and eventually, the output of $v$ is indeed $y(v) = 1$.
+
+The main obstacle is verifying consistency across the nodes: how can we be sure that incoming messages recorded at node $v$ were indeed sent by $v$'s neighbors, and that $v$'s outgoing messages are indeed received by $v$'s neighbors?
+
+A na\"ive solution would be for node $v$ to record, for each neighbor $u \in N(v)$, a hash $H_{(v,u)}$ of all the messages that $v$ sends and receives on the edge $\set{v,u}$; on the other side of the edge, node $u$ would do the same, producing a hash $H_{(u,v)}$. At verification time, nodes $u$ and $v$ could compare their hashes, and reject if $H_{(v,u)} \neq H_{(u,v)}$. Unfortunately, this solution would require too much space, as node $v$ can have up to $n - 1$ neighbors; we cannot afford to store a separate hash for each edge. In fact, this is done in \cite{baruch2015randomized}, where the aim is to shorten the length of the messages, on the expanse of proof length.
+
+
+Our solution is instead to have the nodes jointly-compute a locally-openable hash of all messages sent throughout the protocol. We show that such a hash can be computed jointly, where each node inserts into the hash the messages it sent and obtains openings for all of the messages it needs to read.
+We do this by having the nodes compute a Merkle tree over a spanning tree of the network in a converge-cast, where each parent node obtains a Merkle forest that hashes the messages sent by all of that node's descendants. Then, nodes over the spanning tree pass to their children openning paths for their forests, such that in the end of that process, each node has the root of the Merkle tree and openning path to each message it sent.
+In the verification, each node sends to its parent the root of the Merkle tree and the roots to its Merkle forest. The parent then verifies that along with the root of his Merkle tree, it outputs its Merkle forest.

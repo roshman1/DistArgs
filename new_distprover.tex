@@ -1,0 +1,72 @@
+\section{Distributed Prover Locally-Verifiable SNARGs}
+
+\TODO{In this section we define...}
+
+In the sequel, fix a collision-resistant hash family $\calH$.
+
+The consistency of the local computation at a specific node is captured
+by a
+language $\calD$,
+which consists of all quadruplets $(I(v), x, y, W(v))$ such that:
+\begin{itemize}
+    \item $I(v) = (v, N(v))$, where $v \in \calU$ is the UID of a node and 		$N(v) \in \calU^{\ast}$ is the neighborhood of the node;
+    \item $W(v) = (\var{msgout}(v), \var{msgin}(v))$ consists of two message tables, each of $\deg(v)$ columns;
+    \item $(I(v), x, y, W(v)) \in \calD$ iff when the distributed algorithm $D$ is executed at a node with UID $v$ and neighbors $N(v)$, and the incoming messages at node $v$ are $\var{msgin}(v)$, then node $v$ sends the messages $\var{msgout}(v)$ and accepts (i.e., outputs 1).
+\end{itemize}
+%We think of $W(v) = (\var{msgout}(v), \var{msgin}(v))$ as a large input to a \emph{witness} to the correct computation at node $v$.
+%We refer to $s_{\var{in}}$ as the \emph{hash-sum of incoming messages}, and to $s_{\var{out}}$ as the \emph{hash-sum of outgoing messages}
+%at $v$.
+
+Since the algorithm $D$ is itself a polynomial-time Turing machine, there is a polynomial-time Turing machine $M_\calD$ that decides the language $\calD$.
+Fix a $\SNARG$  $(\SNARGGen, \SNARGPro, \SNARGVer, \SNARGExt)$ for $M_\calD$. The proving consists of two stages: one in which the $\DMT$ hash value is obtained by the network, and the other where each node constructs a $\SNARG$ proof for the running of the algorithm using that hash value.
+
+We start the proving stage after the distributed algorithm is finished, and each node has full (reliable) documentation of all of the communication over its own edges. First, the distributed prover at each node $v$ computes the following:
+\begin{itemize}
+    \item For every neighbor $u$, two Merkle trees: one of the array that on index $i$ contains the message sent from $u$ to $v$ on round $i$, and the other where on index $i$ contains the message sent from $u$ to $v$ on round $i$. In both cases, if no message is sent in that round, the content is $\bot$. Denote by $\rt_{v,u}, \rt_{u,v}$ the roots of the Merkle tree containing all messages sent from $v$ to $u$ and from $u$ to $v$, respectively.
+    %\item A Merkle tree of the array of $\rt_{v,u}$ for every $u\in N(v)$. Denote it's root by $\rt_v$.
+\end{itemize}
+
+Now, the network executes $\DMT.\DistConstruct$ where for each node $v$, for each of its neighbors $u$, the input is $\rt_{v,u}$. Meaning, the network executes $\DistConstruct$ on:
+$$(\hk, G, \{\{\rt_{v,u}\}_{u\in N(v)}\}_{v\in V(G)})$$
+
+
+%Second, the distributed prover computes a spanning tree of the network in $O(\diam(G))$ rounds \TODO{cite?}, and stores at each node $v$ the parent $p(v)$ of $v$ (or $\bot$, if $v$ is the root), and a spanning-tree certificate~\cite{korman2005proof} consisting of the UID of the root and the distance of $v$ from the root. Then, starting from the leaves of the ST, each node $v$, upon receiving a set of root and height tuples, $F_{u} = \set{\rt, h}$ from each ST child of his, $u$, does the following:
+%\begin{itemize}
+%    \item Define the set of all of the forest roots $S_v = (\rt_v, 0) \cup \bigcup_{u\in C(v)} F_{u}$, where $C(v)$ is the set of all of $v$'s spanning-tree children.
+%    \item Let $F_v = S_v$, $h=0$. While $h < \lceil \log n \rceil$, do:
+%    \begin{itemize}
+%        \item If there are at least two different tuples in $F_v$ with height $h$, pull them out and denote them $(\rt_a,h)$ and $(\rt_b,h)$. Let $\rt_c = \calH(hk; \rt_a, \rt_b)$ and insert $(_c, h+1)$ into $S$.
+%        \item Else, $h = h+1$
+%    \end{itemize}
+%\end{itemize}
+%It is important to note that since $v$ still has $S_v$ after the computation, for each $(_a, h)\in S_v$, $v$ maintains $\rho_{v,a}$: an opening path from one of the roots $_c$ in $F_v$, to the Merkle tree node $_a$. 
+%Then, $v$ sends $F_v$ to its parent in the spanning tree. Note that $F_v$ is of size at most $\lceil \log n \rceil$, since there is at most one root in $S_v$ of each height $h$ which is at most $\lceil \log n \rceil$.
+
+%When the root of the ST, $\var{root}$ finishes this process and obtains $F_{\var{root}}$, it pads wherever needed to make $F_{\var{root}}$ be a set containing only one tuple: $(^*, \lceil \log n\rceil )$. Then, it broadcasts it alongside with an opening path prefixes down the ST, as follows. Starting from $\var{root}$, each node $v$, upon receiving the following input from its ST parent $p$: $(\rt^*, \alpha_v )$ where $\alpha_v = \set{(\rt_i, h_i, \rho_i) ~|~ (\rt_i, h_i) \in F_v})$:
+%\begin{itemize}
+%    \item For every ST child of $v$, $c$:
+%    \begin{itemize}
+%        \item Set $S^\rho_c = \phi$
+%        \item For every root $rt_a$ in $F_c$:
+%        \begin{itemize}
+%            \item compute $\rt_{a,b}$: an opening path from the %respective root in $F_v$, $\rt_b$, to $\rt_a$.
+%            \item Add $\rho_a = \rho_b || \rho_{b,a}$ (a concatenation of $\rho_b$ and $\rho_{b,a}$ to $S^\rho_c$
+%        \end{itemize}
+%        \item Send $S^\rho_c$ to $c$.
+%    \end{itemize}
+%\end{itemize}
+%That way, each node $v$ obtains an opening path from $\rt^*$ to each %of the roots of his Merkle forest, and in particular, since it knows paths in his Merkle forest $F_v$ to each root in his Merkle set $S_v$, it obtains a full opening path to the root of its own Merkle tree, $\rt_v$, and in turn, to each message it sent throughout the algorithm execution. 
+
+%Denote by $\rho_{v,u}$ the opening path from $\rt^*$ to $\rt_{v,u}$, the root of the Merkle tree of the messages sent from $v$ to $u$. Recall that both $v$ and $u$ have the entire Merkle tree that its root is $\rt_{v,u}$, but $\rt_{v,u}$ is a part of $\rt_v$ and not a part of $\rt_u$, so $v$ has $\rho_v$, and $u$ doesn't. To fix that, we have a final step for each node $v$:
+%\begin{itemize}
+%    \item For every $u\in N(v)$:
+%    \begin{itemize}
+%        \item Compute $\rho_{v,u}$: the opening path from $\rt^*$ to $\rt_{v,u}$, and send it to $u$.
+%    \end{itemize}
+%\end{itemize}
+%As the last step before computing the SNARG proofs, each node $v$ sends to each of his neighbors $u\in N(v)$, the opening path to the root of the Merkle tree of the communication over their edge: $\rho_{v,u}$. Note that since $u$ has the Merkle tree, it can now produce a full opening path to every message sent from $v$ to $u$.
+
+Then, each node $v$ computes $\SNARG.\pi_v$, a proof that with input $x$, upon receiving the messages $\var{msgin}$, it would have sent messages $\var{msgout}$ and output $y$. It does so while using $\val$ as the $\HT$ root of the SNARG and all of the opening paths it learned during the computation over the spanning tree. It outputs $\SNARG.\pi_v$ alongside with $\DMT.\pi$ \TODO{make this compatible to the $\DMT$ definition}, which is a proof to be verified according to the $\DMT.\DistVer$ algorithm. 
+%$((p(v), d(v)), \rt_v, F_v)$, which are $v$'s spanning tree parent and distance from the ST root, the root of $v$'s Merkle tree and the roots of $v$'s Merkle forest.
+
+%In the verification, each node $v$ sends to its parent, $p(v)$, its Merkle forest $F_v$. Each node, upon receiving $F_c$ from each ST child $c$, constructs $F_v$ again using $rt_v$, and verifies that $F_v$ turns out right. Then, it verifies the SNARG proof $\pi_v$.

@@ -1,0 +1,16 @@
+Throughout \cref{sec:dargs,sec:distprover, sec:distmerkle}, we use cryptographic primitives that are sound against adversaries whose running time is bounded, typically polynomially, as a function
+of a security parameter, $\lambda \in \nat$.
+The \emph{succinctness} of these primitives---that is, the encoding length of whatever object they produce (e.g., the length of a hash value, or a proof)---is $\poly(\lambda, \log n)$.
+To get proofs of length $\polylog(n)$, the security parameter we use is $\lambda = \log^c(n)$
+for some $c > 1$;
+we are interested in adversaries whose running time is polynomial in $n$,
+which means they are sub-exponential in $\lambda$. % (e.g., if we set $\lambda = \log^2 n$, then $n^d = 2^{d \sqrt{\lambda}}$).
+To allow for such provers, our hardness assumptions require security not against a polynomial-time adversary
+but against a sub-exponential one.
+It is relatively common to assume sub-exponential hardness;
+for example, the learning-with-errors (LWE) problem is believed to be sub-exponentially hard.
+
+%\TODO{citations}.
+
+In the sequel, whenever we say ``efficient adversary/prover'',
+we mean sub-exponential in $\lambda$ and polynomial in $n$.

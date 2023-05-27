@@ -1,0 +1,31 @@
+We study the \emph{local decision} model of~\cite{fraigniaud2013towards},%
+\footnote{Except that unlike~\cite{fraigniaud2013towards,balliu2018can},
+we do not restrict the use of UIDs, as explained above.}
+where we have an unknown communication network $G$ and an input assignment $x : V(G) \rightarrow \set{0,1}^*$.
+The pair $(G, x)$ is called a \emph{configuration},
+and we use $n$ to denote the size of the graph ($n = |V(G)|$).
+A \emph{distributed language} $\calL$ is a set of configurations.
+The \emph{locality radius} of a distributed algorithm is $t : \nat \rightarrow \nat$
+if all nodes halt within $t(n)$ rounds in networks of size $n$.
+We let $N_G(v)$ denote the neighborhood of node $v$ in $G$, omitting the subscript $G$
+when the graph is clear from the context.
+
+
+We assume that the nodes have unique identifiers, drawn from some large domain $\calU$,
+and we typically assume that a UID from $\calU$ can be represented using $O(\log n)$ bits.%
+\footnote{This assumption is not essential, as UIDs from a larger domain can be hashed down to $\set{1,\ldots,n}$
+in our constructions.}%
+\footnote{In Section~\ref{sec:local}, when we consider networks of unknown size, we do not make
+any assumptions on the encoding of the UIDs, and in fact our results continue to hold even
+in anonymous networks.}
+We often conflate nodes with their UIDs.
+We assume that we have some linear ordering $\calU$ of the UID space, that is, for any two UIDs $u \neq v$ from $\calU$,
+either $u < v$ or $v < u$.
+
+%When we need to encode a graph $G$, we represent it as an adjacency list, $L(G) = (N(v_1),\ldots,N(v_n))$,
+%where $N(v_i)$ is the neighborhood of node $v_i$.
+%The nodes appear in $L(G)$ in order of their UIDs, $v_1 < \ldots < v_n$.
+
+The local computation of each network node $v \in V(G)$ is represented by a Turing machine which takes as input the UID $v$, the neighborhood $N(v)$ of $v$ in $G$ and its input $x(v)$, and in each round $r$, for each neighbor of $v$, $u$, reads the messages received by $v$ from $u$ on the previous round $r-1$, and writes the messages sent by $v$ to $u$, that will be read by $u$ on round $r+1$.
+For convenience of the analysis, at each node $v$, each round is divided into $\deg(v)$ inner rounds, where each inner-round $i$ is associated with a neighbor $u_i\in N(v)$. We denote the $i$th inner round of the $r$th round the $(r,i)$-round, and assume that round $(r,i)$, $v$ reads the message sent to it from $u$ in round $r-1$, and writes a message to $u$ that will be read by $u$ in the $r+1$ round. Eventually, the machine enters a halting state, which is either accepting or rejecting. A configuration $(G, x)$ is \emph{accepted} iff all nodes accept, and otherwise the configuration is \emph{rejected}; a distributed algorithm $D$ \emph{decides} the distributed language $\calL(D)$ of configurations $(G,x)$ that are accepted when $D$ is executed in $(G,x)$.
+\TODO{Should we say that if the number of rounds is constant we consider this a "local algorithm"? So we could say that the verification is "local"}

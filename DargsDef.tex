@@ -1,88 +1,68 @@
-\section{Succinct Distributed Arguments}\label{sec:dargs}
-In this section we define \emph{succinct distributed arguments} and show how to construct them for graph languages in
-$\PP$ and in $\NP$.
-%In Section~\ref{sec:dargsForP} we give a construction for graph languages in $\PP$, which is similar in spirit
-%but uses different cryptographic primitives and has a different soundness proof. In particular, it can be instantiated under \emph{standard} cryptographic assumptions.
-For simplicity, in this section and the next,
-we restrict attentiont to \emph{graph languages},
-where the nodes have no input.
-The definition and the constructions easily extend to the case where there are inputs
-(see Appendix~\ref{app:code}).
+In this section we define \emph{locally-verifiable distributed SNARGs} ($\LVDSNARG$s) and show how to construct them for distributed languages in
+$\PP$ from RAM SNARGs.
+\TODO{Put the NP stuff in the appendix and refer it}
 
-%\subsection{Defining Succinct Distributed Arguments}
-%\label{sec:def}
-A succinct distributed argument consists of the following algorithms.
+A \textcolor{red}{$t$-locally} verifiable distributed SNARG consists of the following algorithms.
+\TODO{Discuss the transformation from $\mathbin{\color{red}t}$-round verifier to just a verifier that receives $\pi_{N^{\mathbin{\color{red}t}}(v)}$.}
 
-\vspace{-1ex}
-\paragraph{$\Gen(1^\secpar, n)\to \var{\crs}$:} a randomized algorithm that takes as input a security parameter $1^\secpar$ and a graph size $n$, and outputs a common reference string $\var{\crs}$.
+\begin{itemize}
+    \item $\Gen(1^\secpar, n)\to \var{\crs}$: a randomized algorithm that takes as input a security parameter $1^\secpar$ and a graph size $n$, and outputs a common reference string $\var{\crs}$.
+    \item $\Pro(\var{\crs}, G, w)\to \{\pi_v\}_{v\in V(G)}$: takes a $\var{\crs}$ obtained from $\Gen(1^{\secpar}, n)$, a graph $G$ on $n$ nodes, and possibly a witness $w$ of length $\poly(n)$ (which may be empty, e.g., for languages in $\PP$), 
+    \footnote{For languages in $\PP$, we'll ommit $w$ from $\Pro$'s inputs.} 
+    and outputs a list of proofs $\{\pi_v\}_{v\in V(G)}$, one for each node $v \in G$.
+    \item $\Ver(\var{\crs}, v, N^{\mathbin{\color{red}t}}(v), \pi_v, \pi_{N^{\mathbin{\color{red}t}}(v)} )\to \{0,1\}$: takes a common reference string $\crs$ obtained from $\Gen(1^{\secpar}, n)$, a UID $v$, a list of ${\mathbin{\color{red}t-}}$neighbors $N(v)$, a proof $\pi_v$, and the proofs of the ${\mathbin{\color{red}t-}}$neighbors, $\pi_{N^{\mathbin{\color{red}t}}(v)} = \set{ \pi_u : u \in N^{\mathbin{\color{red}t}}(v) }$, 
+    \footnote{For simplicity, we follow the original design of proof labeling schemes~\cite{korman2005proof}, where neighbors only exchange their certificates with their immediate neighbors. The model can be generalized to allow for more general verification procedures.} 
+    and outputs an acceptance bit. 
+    \TODO{Do we need this $t$ thing}
+\end{itemize}
 
-\vspace{-1ex}
-\paragraph{$\Pro(\var{\crs}, G, w)\to \{\pi_v\}_{v\in V(G)}$:}
-%, c, L_i, \Lambda_i)$.}
-takes a $\var{\crs}$ obtained from $\Gen(1^{\secpar}, n)$,
-, %a node $v$, an index $i$, an adjacency list $L$, where the \ith row is $N(v)$
-a graph $G$ on $n$ nodes, and possibly a witness $w$ of length $\poly(n)$ (which may be empty, e.g., for languages in $\PP$),
-and outputs a list of proofs $\{\pi(v)\}_{v\in V(G)}$,
-one for each node $v \in G$.
 
-\vspace{-1ex}
-\paragraph{$\Ver(\var{\crs}, v, N(v), \pi(v), \pi(N(v)) )\to \{0,1\}$:}
-takes a common reference string $\crs$ obtained from $\Gen(1^{\secpar}, n)$,
-a UID $v$, a list of neighbors $N(v)$, a proof $\pi(v)$,
-and the proofs of the neighbors, $\pi(N(v)) = \set{ \pi(u) : u \in N(v) }$,%
-\footnote{For simplicity, we follow the original design of proof labeling schemes~\cite{korman2005proof},
-where neighbors only exchange their certificates with their immediate neighbors.
-The model can be generalized to allow for more general verification procedures.}
-and outputs an acceptance bit.
+
+
+
+
 
 %\rc{this should be in a definition environment}
 %\Enote{I'm not sure... }
 
 \begin{definition}\label{defSDarg}
-Let $\Lan$ and $\calR$ be an $\NP$ language and a compatible relation on graphs,
-such that $G \in \calL$ iff there exists a witness $w$ such that $(G,w) \in \calR$.
-A \emph{succinct distributed argument} for $\Lan$ and $\calR$, denoted $(\Gen, \Pro, \Ver)$, satisfies the following properties:
+%Let $\Lan$ and $\calR$ be an $\NP$ language and a compatible relation on graphs, such that $G \in \calL$ iff there exists a witness $w$ such that $(G,w) \in \calR$.
+Let $\Lan$ be a distributed language.
+A \emph{succinct distributed argument} for $\Lan$, %and $\calR$,
+denoted $(\Gen, \Pro, \Ver)$, satisfies the following properties:
 \vspace{-1ex}
-\paragraph{Completeness}  For $(G,w)\in \calR$,
+\paragraph{Completeness}  For $(G,x)\in \calL$,
 \begin{gather*}
     \prb
     {
     	\forall v \in V(G):\\
-	    \Ver(\crs, v, N(v), \pi(v), \pi(N(v))) = 1
+	    \Ver(\crs, v, x(v), N(v), \pi_v, \pi(N(v))) = 1
 	}
 	{
     \crs \leftarrow \Gen(1^\secpar, n) \\
-    \set{ \pi(v) }_{v\in V(G)} \leftarrow \Pro(\var{\crs}, G, w)
+    \set{ \pi_v }_{v\in V(G)} \leftarrow \Pro(\var{\crs}, G, x)
     }
     = 1
     .
 \end{gather*}
-\vspace{-1ex}
 \paragraph{Soundness}
-For any efficient algorithm $\Pro^*$ %, and $G\notin \Lan$,
+For any poly-size algorithm $\Pro^*$ %, and $G\notin \Lan$,
 there exists a negligible function $\epsilon(\cdot)$ such that
 \begin{gather*}
-    \prob{}
+    \prb
     {
-    \begin{array}{ll}
-    G\notin \Lan \\
+    (G,x)\notin \Lan \\
     \wedge\ \forall v\in V(G) :\\
-    \quad \Ver(\var{\crs}, v, N(v), \pi_{v}, \pi(N(v))) = 1
-    \end{array}
-    \middle\vert
-    \begin{array}{ll}
+    \quad \Ver(\var{\crs}, v, N^{\mathbin{\color{red}t}}(v), \pi_v, \pi_{N^{\mathbin{\color{red}t}}(v)} ) = 1
+    }
+    {
     \var{\crs} \leftarrow \Gen(1^\secpar, n) \\
-    ( G, \{\pi_{v}\}_{v\in V(G)}) \leftarrow \Pro^*(\var{\crs}, 1^\secpar, 1^n) \\
-    \end{array}
+    ( G, x, \{\pi_v\}_{v\in V(G)}) \leftarrow \Pro^*(\var{\crs}, 1^\secpar, 1^n)
     } \leq \epsilon(\secpar)
     .
 \end{gather*}
-Note that, as in the definition of SNARKs, the prover gets
-to choose the false statement it would like to prove after seeing the $\crs$.
+\paragraph{Succinctness} The $\crs$ and the proof $\pi$ are of length at most $\poly(\secpar, \log n)$.
 
-\vspace{-1ex}
-\paragraph{Succinctness} The $\var{\crs}$ and the proof $\pi$ are of length at most $\poly(\secpar, \log n)$.
-\vspace{-1ex}
 \paragraph{Efficiency.} $\Ver$ runs in time $\poly(\lambda, |\pi|) = \poly(\lambda, \log n)$,
 and $\Pro$ runs in time $\poly(\lambda, n)$.
 \end{definition}
